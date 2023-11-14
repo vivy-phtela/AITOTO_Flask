@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>プレビューページ</title>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+
+        .preview-container {
+            margin-top: 20px;
+            display: flex;
+        }
+
+        #previewImage {
+            max-width: 100%;
+            max-height: 400px;
+        }
+
+        .info-container {
+            margin-left: 20px;
+        }
+
+        input, textarea {
+            margin-bottom: 10px;
+            width: 100%;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="preview-container">
+        <img src="" alt="プレビュー画像" id="previewImage">
+        <div class="info-container">
+            <label for="dateInput">日付:</label>
+            <input type="text" id="dateInput" placeholder="日付を入力">
+
+            <label for="titleInput">タイトル:</label>
+            <input type="text" id="titleInput" placeholder="タイトルを入力">
+
+            <label for="memoInput">メモ:</label>
+            <textarea id="memoInput" placeholder="メモを入力" rows="10"></textarea>
+        </div>
+    </div>
+    <script>
+        window.onload = function () {
+            var previewImage = document.getElementById('previewImage');
+            var previewImageData = sessionStorage.getItem('previewImage');
+            if (previewImageData) {
+                previewImage.src = previewImageData;
+            }
+        };
+    </script>
+</body>
+
+</html>
