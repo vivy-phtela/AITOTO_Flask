@@ -1,12 +1,14 @@
 # AITOTO
+## 使用方法
 
+1. このリポジトリをクローン
 ```
 git clone https://github.com/Tsubasa-Watanabe/AITOTO_Flask.git
 ```
 
+2. 以下のファイルを実行
 ```
-cd AITOTO_Flask
 python3 server.py
 ```
 
-[ここをクリックすると作成したサイトに飛ぶ](http://127.0.0.1:5000)
+3. [ここ](http://127.0.0.1:5000)をクリックしてサイトへ
