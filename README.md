@@ -19,7 +19,7 @@ with app.app_context():
   db.create_all()
 ```
 
-4. 以下のファイルを実行
+4. 対話型シェルを閉じて, 以下のファイルを実行
 ```
 cd AITOTO_Flask
 python3 app.py
