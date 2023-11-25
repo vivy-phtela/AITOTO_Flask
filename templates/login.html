@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+    <style>
+      .login_form_btm {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        text-align: center;
+      }
+      .login_form_top {
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        text-align: center;
+      }
+    </style>
+</head>
+<body>
+    <div class="login_form_top">
+      <h1>LOGIN</h1>
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          {% for message in messages %}
+            <p>{{ message }}</p>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+    </div>
+    <form action="/login" method="post">
+      <div class="login_form_btm">
+        <input type="id" id="user" name="username" placeholder="UserID">
+        <input type="password" id="pass" name="password" placeholder="Password">
+        <button type="submit">ログイン</button>
+      </div>
+    </form>
+</body>
+</html>

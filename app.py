@@ -1,11 +1,14 @@
-from flask import Flask
-from flask import render_template
-from flask import request, redirect, url_for
+from flask import Flask, render_template, request, redirect, flash, session
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
 db = SQLAlchemy()
+
+app.config['SECRET_KEY'] = 'secret_key'
+app.config['USERNAME'] = 'user'
+app.config['PASSWORD'] = 'pass'
+
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///test.db"
 db.init_app(app)
 class Database(db.Model):
@@ -16,7 +19,25 @@ class Database(db.Model):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    session["flag"] = False
+    return redirect('/login')
+
+@app.route('/login', methods=['GET'])
+def login():
+    return render_template('login.html')
+
+@app.route('/login', methods=['POST'])
+def login_post():
+    username = request.form["username"]
+    password = request.form["password"]
+    if username != app.config['USERNAME'] or password != app.config['PASSWORD']:
+        flash('ユーザ名もしくはパスワードが異なります')
+    else:
+        session["flag"] = True
+    if session["flag"]:
+        return render_template('index.html', username=session["username"])
+    else:
+        return redirect('/login')
 
 @app.route('/preview_page', methods = ['GET', 'POST'])
 def preview_page():
