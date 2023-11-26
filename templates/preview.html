@@ -16,7 +16,7 @@
         }
 
         .preview-container {
-            margin-top: 20px;
+            margin-top: 30px;
             display: flex;
         }
 
@@ -26,7 +26,8 @@
         }
 
         .info-container {
-            margin-left: 20px;
+            margin-top: 40px;
+            margin-left: 40px;
         }
 
         input, textarea {
@@ -48,15 +49,13 @@
     <div class="preview-container">
         <img src="" alt="プレビュー画像" id="previewImage">
         <div class="info-container">
-            <label for="dateInput">Date:</label>
-            <input type="text" name="date" placeholder="e.g. 2001/04/05">
             <form method="POST">
                 <label for="title">Title:</label>
                 <input type="text" name="title">
 
                 <label for="memo">Note:</label>
                 <textarea name="note" rows="10"></textarea>
-                <input type="submit" value = "登録">
+                <input type="submit" value = "Resister">
             </form>
         </div>
     </div>
