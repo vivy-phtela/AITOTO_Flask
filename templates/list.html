@@ -4,16 +4,44 @@
 <head>
      <meta charset="UTF-8">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>登録一覧</title>
+     <title>LIST</title>
+     <style>
+        table {
+            border-collapse: collapse;
+        }
+        td.date{
+            text-align: center;
+        }
+        footer{
+            width: 100%;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            text-align: center;
+        }
+    </style>
 </head>
 
 <body>
-    <h1>登録一覧</h1>
-    {% for i in posts %}
-    <p>id:{{ i.id }}</p>
-    <p>タイトル：{{ i.title }}</p>
-    <p>メモ：{{ i.memo }}</p>
-    {% endfor %}
+    <h1>LIST</h1>
+    <table border="1" width="90%">
+        <tr>
+            <th>Date</th>
+            <th>Title</th>
+            <th>Note</th>
+        </tr>
+        {% for post in posts %}
+        <tr>
+            <td width="13%" class="date">{{ post.date.strftime('%Y-%m-%d %H:%M') }}</td>
+            <td width="30%">{{ post.title }}</td>
+            <td>{{ post.note }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="{{ url_for('login') }}">Upload new file</a>
+    <footer>
+        <p>AITOTO</p>
+    </footer>
 </body>
 
 </html>

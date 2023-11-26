@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>プレビューページ</title>
+    <title>PREVIEW</title>
     <style>
         body {
             display: flex;
@@ -34,6 +34,13 @@
             width: 100%;
         }
 
+        footer{
+            width: 100%;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            text-align: center;
+        }
     </style>
 </head>
 
@@ -41,18 +48,21 @@
     <div class="preview-container">
         <img src="" alt="プレビュー画像" id="previewImage">
         <div class="info-container">
-            <label for="dateInput">日付:</label>
-            <input type="text" id="dateInput" placeholder="日付を入力">
+            <label for="dateInput">Date:</label>
+            <input type="text" name="date" placeholder="e.g. 2001/04/05">
             <form method="POST">
-                <label for="title">タイトル:</label>
-                <input type="text" name="title" placeholder="タイトル">
+                <label for="title">Title:</label>
+                <input type="text" name="title">
 
-                <label for="memo">メモ:</label>
-                <textarea name="memo" placeholder="メモ" rows="10"></textarea>
+                <label for="memo">Note:</label>
+                <textarea name="note" rows="10"></textarea>
                 <input type="submit" value = "登録">
             </form>
         </div>
     </div>
+    <footer>
+        <p>AITOTO</p>
+    </footer>
     <script>
         window.onload = function () {
             var previewImage = document.getElementById('previewImage');

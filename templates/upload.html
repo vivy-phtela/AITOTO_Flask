@@ -49,9 +49,21 @@
             margin-right: -50%;
             transform: translate(-50%, -50%)
         }
+
+        footer{
+            width: 100%;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            text-align: center;
+        }
+
+        a.go-list{
+            margin-top: 60px;
+        }
     </style>
     <script src="{{ url_for('static', filename='javascript/script.js') }}"></script>
-    <title>テストWebアプリ</title>
+    <title>UPLOAD</title>
 </head>
 <body>
     <div class="container">
@@ -60,5 +72,9 @@
         <h2>ファイルをアップロード</h2>
         <div class="green-square"></div>
     </div>
+    <a href="{{ url_for('list') }}" class="go-list">Go your list</a>
+    <footer>
+        <p>AITOTO</p>
+    </footer>
 </body>
 </html>
