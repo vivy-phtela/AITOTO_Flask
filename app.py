@@ -44,7 +44,7 @@ def login_post():
     else:
         return redirect('/login')
 
-@app.route('/preview', methods = ['GET', 'POST'])
+@app.route('/preview_page', methods = ['GET', 'POST'])
 def preview():
     if request.method == 'POST': # POST
         title = request.form.get('title')
@@ -53,7 +53,7 @@ def preview():
 
         db.session.add(data) # 追加
         db.session.commit() # 反映
-        return redirect('/list') # トップページに戻る
+        return redirect('/list')
 
     else: # GET
         return render_template('preview.html')
