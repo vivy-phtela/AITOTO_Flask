@@ -6,6 +6,7 @@ app = Flask(__name__)
 
 db = SQLAlchemy()
 
+
 app.config['SECRET_KEY'] = 'secret_key'
 app.config['USERNAME'] = 'user'
 app.config['PASSWORD'] = 'pass'
