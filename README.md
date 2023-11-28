@@ -12,12 +12,14 @@ git clone https://github.com/Tsubasa-Watanabe/AITOTO_Flask.git
 python3
 ```
 
+<!--
 3 以下を実行して, dbファイルが作成されているか確認
 ```
 from app import app, db
 with app.app_context():
   db.create_all()
 ```
+-->
 
 4. 対話型シェルを閉じて, 以下のファイルを実行
 ```
