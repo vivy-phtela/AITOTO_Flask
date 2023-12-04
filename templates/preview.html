@@ -49,14 +49,18 @@
     <div class="preview-container">
         <img src="" alt="プレビュー画像" id="previewImage">
         <div class="info-container">
-            <form method="POST">
+            <form method="POST" enctype="multipart/form-data">
                 <label for="title">Title:</label>
                 <input type="text" name="title">
-
+            
                 <label for="memo">Note:</label>
                 <textarea name="note" rows="10"></textarea>
-                <input type="submit" value = "Resister">
+            
+                <input type="file" name="file" accept="image/*">
+                
+                <input type="submit" value="Resister">
             </form>
+            
         </div>
     </div>
     <footer>

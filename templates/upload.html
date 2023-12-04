@@ -67,10 +67,12 @@
 </head>
 <body>
     <div class="container">
-        <img src="{{ url_for('static', filename='images/arrow.png') }}" class="preview" id="previewImage" onclick="document.getElementById('fileInput').click();">
-        <input type="file" id="fileInput" accept='image/*' onchange="preview(this, 'previewImage');">
-        <h2>ファイルをアップロード</h2>
-        <div class="green-square"></div>
+        <form method="POST" enctype="multipart/form-data"></form>
+            <img src="{{ url_for('static', filename='images/arrow.png') }}" class="preview" id="previewImage" onclick="document.getElementById('fileInput').click();">
+            <input type="file" id="fileInput" accept='image/*' onchange="preview(this, 'previewImage');">
+            <h2>ファイルをアップロード</h2>
+            <div class="green-square"></div>
+        </form>
     </div>
     <a href="{{ url_for('list') }}" class="go-list">Go your list</a>
     <footer>

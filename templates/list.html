@@ -35,6 +35,7 @@
             <td width="13%" class="date">{{ post.date.strftime('%Y-%m-%d %H:%M') }}</td>
             <td width="30%">{{ post.title }}</td>
             <td>{{ post.note }}</td>
+            <img src="../static/up/{{filename}}">
         </tr>
         {% endfor %}
     </table>
