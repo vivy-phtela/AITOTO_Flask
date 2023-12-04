@@ -6,21 +6,19 @@ from werkzeug.utils import secure_filename
 import datetime, random
 from flask_migrate import Migrate
 
-
 app = Flask(__name__)
 
+app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///info.db"
 db = SQLAlchemy(app)
+
 migrate = Migrate(app, db)
 
 app.config['SECRET_KEY'] = 'secret_key'
 app.config['USERNAME'] = 'user'
 app.config['PASSWORD'] = 'pass'
 
-UPLOAD_FOLDER = './static/up'  # Set the path to the directory where you want to save the images
+UPLOAD_FOLDER = './static/up'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///info.db"
-db.init_app(app)
 
 class Database(db.Model):
     __tablename__ = 'database'
@@ -30,30 +28,33 @@ class Database(db.Model):
     note = db.Column(db.Text, nullable=True) # メモ
     file_path = db.Column(db.String(255), nullable=True)
 
+with app.app_context():
+    db.create_all()
+
 @app.route('/')
 def upload():
     session["flag"] = False
-    return redirect('/login')
+    return redirect('/preview_page')
 
-@app.route('/login', methods=['GET'])
-def login():
-    if session["flag"]:
-        return render_template('upload.html')
-    else:
-        return render_template('login.html')
+# @app.route('/login', methods=['GET'])
+# def login():
+#     if session["flag"]:
+#         return render_template('preview.html')
+#     else:
+#         return render_template('login.html')
 
-@app.route('/login', methods=['POST'])
-def login_post():
-    username = request.form["username"]
-    password = request.form["password"]
-    if username != app.config['USERNAME'] or password != app.config['PASSWORD']:
-        flash('ユーザ名もしくはパスワードが異なります')
-    else:
-        session["flag"] = True
-    if session["flag"]:
-        return render_template('upload.html')
-    else:
-        return redirect('/login')
+# @app.route('/login', methods=['POST'])
+# def login_post():
+#     username = request.form["username"]
+#     password = request.form["password"]
+#     if username != app.config['USERNAME'] or password != app.config['PASSWORD']:
+#         flash('ユーザ名もしくはパスワードが異なります')
+#     else:
+#         session["flag"] = True
+#     if session["flag"]:
+#         return render_template('preview.html')
+#     else:
+#         return redirect('/login')
 
 @app.route('/preview_page', methods=['GET', 'POST'])
 def preview():
@@ -68,7 +69,7 @@ def preview():
             flash("ファイルが選択されていません")
             return redirect('/preview_page')
 
-        savepath = os.path.join('static', 'up', filename) 
+        savepath = os.path.join('static', 'up', filename)
         file.save(savepath)
 
         data = Database(title=title, note=note, file_path=filename)
