@@ -1,0 +1,100 @@
+<!-- 会員登録画面 -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIGNUP</title>
+    <style>
+        .login_form_btm {
+            /* position: absolute; */
+            /* top: 52%; */
+            /* left: 50%; */
+            transform: translate(0%, 100%);
+            text-align: center;
+
+        }
+
+        .login_form_top {
+            /* position: absolute; */
+            /* top: 40%; */
+            /* left: 50%; */
+            margin-top: 150px;
+            transform: translate(0%, 250%);
+            text-align: center;
+        }
+
+        .margin {
+            margin-bottom: 30px;
+        }
+
+        .UserID_Label {
+            margin-left: 25px;
+        }
+
+        #birthday {
+            display: flex;
+            justify-content: center;
+
+        }
+
+        #birthday div {
+            margin-right: 10px;
+        }
+
+        .register {
+            display: flex;
+            position: absolute;
+            top: 60%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .register a {
+            margin-left: 10px;
+            margin-top: 15px;
+        }
+
+        footer {
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            text-align: center;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login_form_btm">
+        <h1>会員登録</h1>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        
+        <p>{{ message }}</p>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </div>
+    <form action="/register" method="post">
+        <div class="login_form_top">
+            <label for="">ユーザー名</label>
+            <input type="text" name="username">
+            <label for="">パスワード</label>
+            <input type="password" name="password">
+            <input type="submit" value="登録">
+        </div>
+    </form>
+    <div class="register">
+        <p>アカウントをお持ちですか？</p>
+        <a href="/login">ログイン</a>
+    </div>
+    <footer>
+        <p>AITOTO</p>
+    </footer>
+</body>
+
+</html>

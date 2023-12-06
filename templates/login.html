@@ -19,6 +19,18 @@
         transform: translate(-50%,-50%);
         text-align: center;
       }
+      .register {
+        display: flex;
+        position: absolute;
+        top: 60%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        text-align: center;
+      }
+      .register a {
+        margin-left: 10px;
+        margin-top: 15px;
+      }
       footer{
             width: 100%;
             position: absolute;
@@ -26,6 +38,7 @@
             bottom: 0;
             text-align: center;
         }
+
     </style>
 </head>
 <body>
@@ -46,6 +59,10 @@
         <button type="submit">ログイン</button>
       </div>
     </form>
+    <div class="register">
+      <p>アカウントを持ちでない場合は</p>
+      <a href="/register">新規登録</a>
+    </div>
     <footer>
       <p>AITOTO</p>
     </footer>
