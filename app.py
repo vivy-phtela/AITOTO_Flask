@@ -78,7 +78,7 @@ def register():
             return redirect('/register')
         else:
             # ユーザー情報をデータベースに登録
-            user = User(username=username, password=generate_password_hash(password, method='sha256'))
+            user = User(username=username, password=password)
             db.session.add(user)
             db.session.commit()
 
@@ -97,7 +97,7 @@ def login():
     
         user = User.query.filter_by(username=username).first()
         # パスワードはハッシュ化されているので、check_password_hashを使ってユーザー名、パスワードが正しいかチェック
-        if check_password_hash(user.password, password):
+        if (user.password == password):
             login_user(user)
             return redirect('/')
         else:
