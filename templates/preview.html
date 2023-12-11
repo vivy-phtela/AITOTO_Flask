@@ -22,7 +22,8 @@
             justify-content: center;
         }
 
-        input, textarea {
+        input,
+        textarea {
             margin-bottom: 10px;
             width: 100%;
         }
@@ -50,20 +51,21 @@
 
 <body>
     <div class="preview-container">
-            <form method="POST" enctype="multipart/form-data">
-                <label for="title">Title:</label>
-                <input type="text" name="title">
-            
-                <label for="memo">Note:</label>
-                <textarea name="note" rows="10"></textarea>
+        <form method="POST" enctype="multipart/form-data">
+            <label for="title">Title:</label>
+            <input type="text" name="title">
 
-                <img src="{{ url_for('static', filename='images/arrow.png') }}" class="preview" onclick="document.getElementById('fileInput').click();">
-                <input type="file" name="file" accept="image/*" id="fileInput">
-                <img src="" id="previewImage" class="preview">
+            <label for="memo">Note:</label>
+            <textarea name="note" rows="10"></textarea>
 
-                <input type="submit" value="Resister">
-            </form>
-            <a href="{{ url_for('list') }}" class="go-list">Go your list</a>
+            <img src="{{ url_for('static', filename='images/arrow.png') }}" class="preview"
+                onclick="document.getElementById('fileInput').click();">
+            <input type="file" name="file" accept="image/*" id="fileInput">
+            <img src="" id="previewImage" class="preview">
+
+            <input type="submit" value="Resister">
+        </form>
+        <a href="{{ url_for('list') }}" class="go-list">Go your list</a>
     </div>
 
     <script>
