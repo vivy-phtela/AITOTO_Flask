@@ -151,9 +151,11 @@
             <ul>
                 {% if current_user.is_authenticated %}
                     <li><a href="/logout">ログアウト</a></li>
+                    <li><a href="/submit_survey">アンケート</a></li>
                 {% else %}
                     <li><a href="/login">ログイン</a></li>
                     <li><a href="/register">会員登録</a></li>
+                    <li><a href="/submit_survey">アンケート</a></li>
                 {% endif %}
             </ul>
         </nav>

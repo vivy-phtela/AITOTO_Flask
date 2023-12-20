@@ -48,6 +48,17 @@ class User(UserMixin, db.Model):
         self.username = username
         self.password = password
 
+# アンケート情報を管理するデータベース
+class SurveyData(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    recipient_name = db.Column(db.String(255))
+    gender = db.Column(db.String(50))
+    age = db.Column(db.String(50))
+    relationship = db.Column(db.String(50))
+    occasion = db.Column(db.String(50))
+    gift_reason = db.Column(db.String(255))
+    additional_notes = db.Column(db.Text)
+
 # ユーザーローダー関数を設定
 @login_manager.user_loader
 def load_user(user_id):
@@ -61,9 +72,61 @@ with app.app_context():
 def index():
     if request.method == 'GET':
         return render_template('index.html')
-# def upload():
-#     session["flag"] = False
-#     return redirect('/preview_page')
+
+# アンケートページ
+@app.route('/submit_survey', methods=['GET', 'POST'])
+def submit_survey():
+    if request.method == 'POST': # POST
+        recipient_name = request.form.get('recipientName')
+        # genderだけbuttonなのでif文で仕分け
+        if request.form.get('genderMale') == 'male':
+            gender = 'male'
+        elif request.form.get('genderFemale') == 'female':
+            gender = 'female'
+        elif request.form.get('genderOther') == 'other':
+            gender = 'other'
+        else:
+            gender = 'Null'
+        age = request.form.get('age')
+        relationship = request.form.get('relationship')
+        occasion = request.form.get('occasion')
+        gift_reason = request.form.get('giftReason')
+        additional_notes = request.form.get('additionalNotes')
+
+        # デバッグ
+        print(recipient_name)
+        print(gender)
+        print(age)
+        print(relationship)
+        print(occasion)
+        print(gift_reason)
+
+        # すべてのデータが入力されているかチェック
+        if not recipient_name or not gender or not age or not relationship or not occasion or not gift_reason:
+            flash('必須項目を入力してください。', 'error')
+            return redirect(request.url)
+        
+        else:
+            flash('送信完了しました。', 'success')
+
+            # データベースに送信
+            survey_data = SurveyData(
+                recipient_name=recipient_name,
+                gender=gender,
+                age=age,
+                relationship=relationship,
+                occasion=occasion,
+                gift_reason=gift_reason,
+                additional_notes=additional_notes
+            )
+
+            db.session.add(survey_data)
+            db.session.commit()
+            
+            return redirect('/')
+    
+    else:
+        return render_template('question.html')
 
 # 会員登録機能を追加
 @app.route('/register', methods=['GET', 'POST'])
@@ -106,27 +169,6 @@ def login():
     
     else:
         return render_template('login.html')
-
-# 前回のコード（不要なら消してください）
-# @app.route('/login', methods=['GET'])
-# def login():
-#     if session["flag"]:
-#         return render_template('preview.html')
-#     else:
-#         return render_template('login.html')
-
-# @app.route('/login', methods=['POST'])
-# def login_post():
-#     username = request.form["username"]
-#     password = request.form["password"]
-#     if username != app.config['USERNAME'] or password != app.config['PASSWORD']:
-#         flash('ユーザ名もしくはパスワードが異なります')
-#     else:
-#         session["flag"] = True
-#     if session["flag"]:
-#         return render_template('preview.html')
-#     else:
-#         return redirect('/login')
 
 # ログアウト機能を追加
 @app.route('/logout')

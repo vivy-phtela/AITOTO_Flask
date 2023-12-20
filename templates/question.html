@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>プレゼントアンケート</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 2% 10%;
+        }
+
+        #survey-form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            /* display: block; */
+            margin-bottom: 10px;
+        }
+
+        input[type="text"],
+        input[type="radio"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+
+        .gender-buttons {
+            display: flex;
+
+        }
+
+
+        .css-button-sliding-to-left--rose {
+            min-width: 130px;
+            height: 40px;
+            color: #fff;
+            padding: 5px 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            display: inline-block;
+            outline: none;
+            border-radius: 5px;
+            z-index: 0;
+            background: #fff;
+            overflow: hidden;
+            border: 2px solid #ff0a78;
+            color: #ff0a78;
+        }
+
+        .css-button-sliding-to-left--rose:hover {
+            color: #fff;
+        }
+
+        .css-button-sliding-to-left--rose:hover:after {
+            width: 100%;
+        }
+
+        .css-button-sliding-to-left--rose:after {
+            content: "";
+            position: absolute;
+            z-index: -1;
+            transition: all 0.3s ease;
+            left: 0;
+            top: 0;
+            width: 0;
+            height: 100%;
+            background: #ff0a78;
+        }
+
+        .css-button-sliding-to-left--sky {
+            min-width: 130px;
+            height: 40px;
+            color: #fff;
+            padding: 5px 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            display: inline-block;
+            outline: none;
+            border-radius: 5px;
+            z-index: 0;
+            background: #fff;
+            overflow: hidden;
+            border: 2px solid #4433ff;
+            color: #4433ff;
+        }
+
+        .css-button-sliding-to-left--sky:hover {
+            color: #fff;
+        }
+
+        .css-button-sliding-to-left--sky:hover:after {
+            width: 100%;
+        }
+
+        .css-button-sliding-to-left--sky:after {
+            content: "";
+            position: absolute;
+            z-index: -1;
+            transition: all 0.3s ease;
+            left: 0;
+            top: 0;
+            width: 0;
+            height: 100%;
+            background: #4433ff;
+        }
+
+        .css-button-sliding-to-left--grey {
+            min-width: 130px;
+            height: 40px;
+            color: #fff;
+            padding: 5px 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            display: inline-block;
+            outline: none;
+            border-radius: 5px;
+            z-index: 0;
+            background: #fff;
+            overflow: hidden;
+            border: 2px solid #495057;
+            color: #495057;
+        }
+
+        .css-button-sliding-to-left--grey:hover {
+            color: #fff;
+        }
+
+        .css-button-sliding-to-left--grey:hover:after {
+            width: 100%;
+        }
+
+        .css-button-sliding-to-left--grey:after {
+            content: "";
+            position: absolute;
+            z-index: -1;
+            transition: all 0.3s ease;
+            left: 0;
+            top: 0;
+            width: 0;
+            height: 100%;
+            background: #495057;
+        }
+
+        .required-mark {
+            color: red;
+            /* 必須のマークの色 */
+            margin-left: 5px;
+            /* マークとラベルの間隔 */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="title">
+        <h1>どの方にプレゼントされますか？</h1>
+    </div>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div id="flash-messages">
+        {% for message in messages %}
+        <p>{{ message }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+    <div id="survey-form">
+        <form action="/submit_survey" method="post">
+            <label for="recipientName">贈り先の名前<span class="required-mark">*</span>:</label>
+            <input type="text" id="recipientName" name="recipientName">
+
+            <label for="gender">性別<span class="required-mark">*</span>:</label>
+            <div class="gender-buttons">
+                <!-- <div id="gender"> -->
+                <label class="gender-button" onclick="changeColor('blue')">
+                    <input type="hidden" id="maleHidden" name="genderMale" value=""> <!-- Flaskで取得するため追加（非表示）value値はJSの関数changeColorで挿入 -->
+                    <button type="button" id="male" class="css-button-sliding-to-left--sky" name="genderMale"
+                        value="male">男性</button>
+                </label>
+                <label class="gender-button" onclick="changeColor('red')">
+                    <input type="hidden" id="femaleHidden" name="genderFemale" value=""> <!-- Flaskで取得するため追加（非表示）value値はJSの関数changeColorで挿入 -->
+                    <button type="button" id="female" class="css-button-sliding-to-left--rose" name="genderFemale"
+                        value="female">女性</button>
+                </label>
+                <label class="gender-button" onclick="changeColor('gray')">
+                    <input type="hidden" id="otherHidden" name="genderOther" value=""> <!-- Flaskで取得するため追加（非表示）value値はJSの関数changeColorで挿入 -->
+                    <button type="button" id="other" class="css-button-sliding-to-left--grey" name="genderOther"
+                        value="other">その他</button>
+                </label>
+                
+                <!-- </div> -->
+
+            </div>
+
+
+            <label>年齢<span class="required-mark">*</span>:</label>
+            <select name="age" id="age">
+                <!-- 最初は空欄に -->
+                <option value="" disabled selected>選択してください</option>
+                <option value="under10">10歳未満</option>
+                <option value="10s">10代</option>
+                <option value="20s">20代</option>
+                <option value="30s">30代</option>
+                <option value="40s">40代</option>
+                <option value="50s">50代</option>
+                <option value="60s">60代以上</option>
+            </select>
+
+            <label>関係<span class="required-mark">*</span>:</label>
+            <select name="relationship" id="relationship">
+                <option value="" disabled selected>選択してください</option>
+                <option value="family">家族</option>
+                <option value="friends">友達</option>
+                <option value="partner">恋人</option>
+                <option value="spouse">夫婦</option>
+                <option value="acquaintance">知人</option>
+                <option value="teacher">先生</option>
+                <option value="student">学生</option>
+                <option value="colleague">同僚</option>
+                <option value="boss">上司</option>
+                <option value="otherRelation">その他</option>
+            </select>
+
+            <label>お祝いの種類<span class="required-mark">*</span>:</label>
+            <select name="occasion" id="occasion">
+                <option value="" disabled selected>選択してください</option>
+                <option value="birthday">誕生日</option>
+                <option value="graduation">卒業</option>
+                <option value="jobCelebration">就職</option>
+                <option value="marriageCelebration">結婚</option>
+                <option value="babyCelebration">出産</option>
+                <option value="acknowledgment">感謝</option>
+                <option value="noReason">特になし</option>
+                <option value="otherOccasion">その他</option>
+            </select>
+
+            <label for="giftReason">なぜこのプレゼントを贈りますか？<span class="required-mark">*</span>:</label>
+            <textarea id="giftReason" name="giftReason"></textarea>
+
+            <label for="additionalNotes">その他の注意事項:</label>
+            <textarea id="additionalNotes" name="additionalNotes"></textarea>
+
+            <button type="submit" onclick="submitSurvey()">送信</button>
+        </form>
+    </div>
+
+    <script>
+        // 性別のボタンの色を変える　かつ　性別の情報をボタンに合わせて書き換える
+        function changeColor(color) {
+            var male = document.getElementById('male');
+            var female = document.getElementById('female');
+            var other = document.getElementById('other');
+
+            // 初期化
+            male.style.backgroundColor = '';
+            male.style.color = '#4433ff';
+            female.style.backgroundColor = '';
+            female.style.color = '#ff0a78';
+            other.style.backgroundColor = '';
+            other.style.color = '#495057';
+
+            // 色を設定
+            if (color === 'blue') {
+                male.style.backgroundColor = '#4433ff';
+                // 文字の色を白にする
+                male.style.color = '#fff';
+                // 性別の情報をFlaskが取得できるように値を挿入
+                document.getElementById('maleHidden').value = 'male';
+            } else if (color === 'red') {
+                female.style.backgroundColor = '#ff0a78';
+                female.style.color = '#fff';
+                document.getElementById('femaleHidden').value = 'female';
+            } else if (color === 'gray') {
+                other.style.backgroundColor = '#495057';
+                other.style.color = '#fff';
+                document.getElementById('otherHidden').value = 'other';
+            }
+        }
+
+        function checkFormCompletion() {
+            var recipientName = document.getElementById('recipientName').value;
+            var gender = document.getElementById('gender').value;
+            var age = document.getElementById('age').value;
+            var relationship = document.getElementById('relationship').value;
+            var occasion = document.getElementById('occasion').value;
+            var giftReason = document.getElementById('giftReason').value;
+
+            // 全ての項目が入力されている場合に送信ボタンを有効にする
+            var submitButton = document.getElementById('submitButton');
+            // もし全ての項目が入力されていたら
+            if (recipientName && gender && age && relationship && occasion && giftReason) {
+                submitButton.disabled = false;
+            }
+            // もし全ての項目が入力されていなかったら
+            else {
+                submitButton.disabled = true;
+            }
+
+            return submitButton.disabled;
+        }
+
+        function submitSurvey() {
+            alert(selectedGender);
+            // フォームが完全に入力されているかチェック
+            var isFormCompleted = checkFormCompletion();
+            // 全ての項目が入力されていなかったら
+            if (isFormCompleted == false) {
+                alert('全ての項目を入力してください');
+                // /submit_surveyにリダイレクト
+                window.location.href = '/submit_survey';
+
+            }
+        }
+    </script>
+
+</body>
+
+</html>
