@@ -174,6 +174,30 @@
             margin-left: 5px;
             /* マークとラベルの間隔 */
         }
+
+        .flex_home{
+            display: flex;
+            justify-content: space-between;
+            margin: 0 20px 0 0;
+        }
+
+        /* ホームに戻るボタンのデザイン */
+        .flex_home a{
+            background-color: grey;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;   /* リンクをインラインブロック要素として扱う */
+            transition: opacity 0.5s;
+        }
+        .flex_home a:hover {
+            /* ホバー時は透明度を上げる */
+            opacity: 0.7;
+        }
+
     </style>
 </head>
 
@@ -265,9 +289,12 @@
 
             <label for="additionalNotes">その他の注意事項:</label>
             <textarea id="additionalNotes" name="additionalNotes"></textarea>
-
-            <button type="submit" onclick="submitSurvey()">送信</button>
+            <div class="flex_home">
+                <button type="submit" onclick="submitSurvey()">送信</button>
+                <a href="/">ホームに戻る</a>
+            </div>
         </form>
+       
     </div>
 
     <script>
