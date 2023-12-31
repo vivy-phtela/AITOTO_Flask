@@ -44,9 +44,16 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)  # ID
     username = db.Column(db.String(30), nullable=False, unique=True)  # ユーザー名
     password = db.Column(db.String(12), nullable=False)  # パスワード
-    def __init__(self, username, password):
+    birthday = db.Column(db.String(30), nullable=True) # 生年月日
+    gender = db.Column(db.String(50)) #性別
+
+    def __init__(self, username, password, birthday, gender):
+    # def __init__(self, username, password, birthday):
         self.username = username
         self.password = password
+        self.birthday = birthday
+        self.gender = gender
+
 
 # アンケート情報を管理するデータベース
 class SurveyData(db.Model):
@@ -134,6 +141,22 @@ def register():
     if request.method == 'POST':
         username = request.form.get("username")
         password = request.form.get("password")
+        birthday = request.form.get("birthday")
+        # genderだけbuttonなのでif文で仕分け
+        if request.form.get('genderMale') == 'male':
+            gender = 'male'
+        elif request.form.get('genderFemale') == 'female':
+            gender = 'female'
+        elif request.form.get('genderOther') == 'other':
+            gender = 'other'
+        else:
+            gender = 'Null'
+        
+
+        print(username)
+        print(password)
+        print(gender)
+        print(birthday)
 
         # ユーザー名が既に使用されているかどうかをチェック
         if User.query.filter_by(username=username).first():
@@ -141,7 +164,12 @@ def register():
             return redirect('/register')
         else:
             # ユーザー情報をデータベースに登録
-            user = User(username=username, password=password)
+            user = User(
+                username=username, 
+                password=password,
+                birthday=birthday,
+                gender=gender,
+                )
             db.session.add(user)
             db.session.commit()
 

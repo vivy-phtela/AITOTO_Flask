@@ -1,0 +1,188 @@
+
+
+#survey-form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    /* display: block; */
+    margin-bottom: 10px;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="radio"],
+input[type="password"],
+select,
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+.gender-buttons {
+    display: flex;
+
+}
+
+
+.css-button-sliding-to-left--rose {
+    min-width: 130px;
+    height: 40px;
+    color: #fff;
+    padding: 5px 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    outline: none;
+    border-radius: 5px;
+    z-index: 0;
+    background: #fff;
+    overflow: hidden;
+    border: 2px solid #ff0a78;
+    color: #ff0a78;
+}
+
+.css-button-sliding-to-left--rose:hover {
+    color: #fff;
+}
+
+.css-button-sliding-to-left--rose:hover:after {
+    width: 100%;
+}
+
+.css-button-sliding-to-left--rose:after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    transition: all 0.3s ease;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 100%;
+    background: #ff0a78;
+}
+
+.css-button-sliding-to-left--sky {
+    min-width: 130px;
+    height: 40px;
+    color: #fff;
+    padding: 5px 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    outline: none;
+    border-radius: 5px;
+    z-index: 0;
+    background: #fff;
+    overflow: hidden;
+    border: 2px solid #4433ff;
+    color: #4433ff;
+}
+
+.css-button-sliding-to-left--sky:hover {
+    color: #fff;
+}
+
+.css-button-sliding-to-left--sky:hover:after {
+    width: 100%;
+}
+
+.css-button-sliding-to-left--sky:after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    transition: all 0.3s ease;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 100%;
+    background: #4433ff;
+}
+
+.css-button-sliding-to-left--grey {
+    min-width: 130px;
+    height: 40px;
+    color: #fff;
+    padding: 5px 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    outline: none;
+    border-radius: 5px;
+    z-index: 0;
+    background: #fff;
+    overflow: hidden;
+    border: 2px solid #495057;
+    color: #495057;
+}
+
+.css-button-sliding-to-left--grey:hover {
+    color: #fff;
+}
+
+.css-button-sliding-to-left--grey:hover:after {
+    width: 100%;
+}
+
+.css-button-sliding-to-left--grey:after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    transition: all 0.3s ease;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 100%;
+    background: #495057;
+}
+
+.required-mark {
+    color: red;
+    /* 必須のマークの色 */
+    margin-left: 5px;
+    /* マークとラベルの間隔 */
+}
+
+.flex_home{
+    display: flex;
+    justify-content: space-between;
+    margin: 0 20px 0 0;
+}
+
+/* ホームに戻るボタンのデザイン */
+.flex_home a{
+    background-color: grey;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;   /* リンクをインラインブロック要素として扱う */
+    transition: opacity 0.5s;
+}
+.flex_home a:hover {
+    /* ホバー時は透明度を上げる */
+    opacity: 0.7;
+}

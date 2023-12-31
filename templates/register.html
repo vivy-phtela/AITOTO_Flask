@@ -5,25 +5,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/css/style.css">
+    
     <title>SIGNUP</title>
+
     <style>
+        /* 会員登録 */
         .login_form_btm {
             /* position: absolute; */
             /* top: 52%; */
             /* left: 50%; */
-            transform: translate(0%, 100%);
+            transform: translate(0%, 40%);
             text-align: center;
-
+            margin-bottom: 50px;
         }
 
-        .login_form_top {
-            /* position: absolute; */
-            /* top: 40%; */
-            /* left: 50%; */
-            margin-top: 150px;
-            transform: translate(0%, 250%);
-            text-align: center;
+        .register_style {
+            position: relative;
+            display: flex;
+            justify-content: center;
         }
+
+
 
         .margin {
             margin-bottom: 30px;
@@ -46,24 +49,31 @@
         .register {
             display: flex;
             position: absolute;
-            top: 60%;
+            bottom: 0;
             left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translate(-50%, 100%);
             text-align: center;
         }
 
         .register a {
             margin-left: 10px;
             margin-top: 15px;
+            text-decoration: none;
+        }
+
+        .submit_button{
+            margin-top: 10px;
         }
 
         footer {
-            position: fixed;
+            position: absolute;
+            display: inline-block;
             width: 100%;
             bottom: 0;
             text-align: center;
 
         }
+
     </style>
 </head>
 
@@ -73,28 +83,99 @@
         {% with messages = get_flashed_messages() %}
         {% if messages %}
         {% for message in messages %}
-        
+
         <p>{{ message }}</p>
         {% endfor %}
         {% endif %}
         {% endwith %}
     </div>
-    <form action="/register" method="post">
-        <div class="login_form_top">
-            <label for="">ユーザー名</label>
-            <input type="text" name="username">
-            <label for="">パスワード</label>
-            <input type="password" name="password">
-            <input type="submit" value="登録">
+    <div class="register_style">
+        <form action="/register" method="post">
+            <div class="login_form_top">
+                <label for="">ユーザー名<span class="required-mark">*</span></label>
+                <input type="text" name="username">
+                <label for="">パスワード<span class="required-mark">*</span></label>
+                <input type="password" name="password">
+                <label for="">生年月日<span class="required-mark">*</span></label>
+                <input type="date" name="birthday" id="birthday">
+            </div>
+            <label for="gender">性別<span class="required-mark">*</span></label>
+            <div class="gender-buttons">
+                <label class="gender-button" onclick="changeColor('blue')">
+                    <input type="hidden" id="maleHidden" name="genderMale" value="">
+                    <!-- Flaskで取得するため追加（非表示）value値はJSの関数changeColorで挿入 -->
+                    <button type="button" id="male" class="css-button-sliding-to-left--sky" name="genderMale"
+                        value="male">男性</button>
+                </label>
+                <label class="gender-button" onclick="changeColor('red')">
+                    <input type="hidden" id="femaleHidden" name="genderFemale" value="">
+                    <!-- Flaskで取得するため追加（非表示）value値はJSの関数changeColorで挿入 -->
+                    <button type="button" id="female" class="css-button-sliding-to-left--rose" name="genderFemale"
+                        value="female">女性</button>
+                </label>
+                <label class="gender-button" onclick="changeColor('gray')">
+                    <input type="hidden" id="otherHidden" name="genderOther" value="">
+                    <!-- Flaskで取得するため追加（非表示）value値はJSの関数changeColorで挿入 -->
+                    <button type="button" id="other" class="css-button-sliding-to-left--grey" name="genderOther"
+                        value="other">その他</button>
+                </label>
+            </div>
+            <button type="submit" class="submit_button">登録</button>
+        </form>
+        <div class="register">
+            <p>アカウントをお持ちですか？</p>
+            <a href="/login">ログインはこちら</a>
         </div>
-    </form>
-    <div class="register">
-        <p>アカウントをお持ちですか？</p>
-        <a href="/login">ログイン</a>
     </div>
+
     <footer>
         <p>AITOTO</p>
     </footer>
+
+    <script>
+        // 生年月日が1900~2030年の間でないと警告文を出す
+        document.getElementById('birthday').addEventListener('change', function () {
+            const dateValue = new Date(this.value);
+            if (dateValue.getFullYear() < 1900 || dateValue.getFullYear() > 2030) {
+                alert('年は4桁で入力してください。');
+                this.value = ''; // 入力値をクリア
+            }
+        });
+
+        // 性別のボタンの色を変える　かつ　性別の情報をボタンに合わせて書き換える
+        function changeColor(color) {
+            var male = document.getElementById('male');
+            var female = document.getElementById('female');
+            var other = document.getElementById('other');
+
+            // 初期化
+            male.style.backgroundColor = '';
+            male.style.color = '#4433ff';
+            female.style.backgroundColor = '';
+            female.style.color = '#ff0a78';
+            other.style.backgroundColor = '';
+            other.style.color = '#495057';
+
+            // 色を設定
+            if (color === 'blue') {
+                male.style.backgroundColor = '#4433ff';
+                // 文字の色を白にする
+                male.style.color = '#fff';
+                // 性別の情報をFlaskが取得できるように値を挿入
+                document.getElementById('maleHidden').value = 'male';
+            } else if (color === 'red') {
+                female.style.backgroundColor = '#ff0a78';
+                female.style.color = '#fff';
+                document.getElementById('femaleHidden').value = 'female';
+            } else if (color === 'gray') {
+                other.style.backgroundColor = '#495057';
+                other.style.color = '#fff';
+                document.getElementById('otherHidden').value = 'other';
+            }
+        }
+
+        
+    </script>
 </body>
 
 </html>
