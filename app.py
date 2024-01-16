@@ -5,8 +5,8 @@ from enum import unique
 
 import pytz
 from flask import Flask, flash, redirect, render_template, request, session
-from flask_login import (LoginManager, UserMixin, login_required, login_user,
-                         logout_user)
+from flask_login import (LoginManager, UserMixin, current_user, login_required,
+                         login_user, logout_user)
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -235,6 +235,7 @@ def preview():
 # ログイン中でないとアクセスできないようにする
 @login_required
 def list():
+    # posts = Database.query.filter_by(user_id=current_user.id).all() 
     posts = Database.query.all()
     return render_template('list.html', posts=posts)
 
