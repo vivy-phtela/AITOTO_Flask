@@ -200,7 +200,7 @@
                 <!-- 四角が押されたらlist.htmlに遷移 -->
                 <!-- ログイン中なら/list, 未ログインなら/loginに遷移 -->
                 {% if current_user.is_authenticated %}
-                    <a href="/list" class="go-reccomend">
+                    <a href="/submit_survey" class="go-reccomend">
                         <div class="green-square" onclick="window.location.href='/list';"></div>
                     </a>
                 {% else %}

@@ -55,7 +55,7 @@
         <div class="card">
             <div class="content">
                 <div class="header">
-                    <a href="preview_page">{{ post.title }}</a>
+                    <a href="{{ url_for('edit', id=post.id) }}">{{ post.title }}</a>
                 </div>
                 <div class="meta">
                     <!-- <span><i class="clock icon"></i> 8分</span> -->
@@ -65,7 +65,7 @@
                     <p>{{ post.note }}</p>
                 </div>
                 <div class="image">
-                    <a href="/preview_page"><img src="{{ url_for('static', filename='up/' + post.file_path) }}"></a>
+                    <a href="{{ url_for('edit', id=post.id) }}"><img src="{{ url_for('static', filename='up/' + post.file_path) }}"></a>
                 </div>
                 
                 <div class="description"></div>
