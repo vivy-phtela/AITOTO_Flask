@@ -4,65 +4,78 @@
 <head>
      <meta charset="UTF-8">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.0/dist/semantic.min.css">
      <title>LIST</title>
      <style>
+        body {
+            
+        }
+
+        .info-boxes {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            /* border: 10px solid #050505; */
+        }
+        .info-box{
+            width: 350px;
+            height: 330px;
+            border: 2px solid #030303;
+            background-color: #dbdbdb;
+            text-align: center;
+            margin: 2px;
+        }
         .title {
             margin: 30px 100px;
             text-align: center;
         }
 
-        a.go-list {
+        .image img {
+            max-width: 340px;
+            max-height: 180px;
+            cursor: pointer;
+        }
+
+        .go-list {
+            font-size: 20px;
             position: fixed;
             bottom: 10px;
             left: 50%;
             transform: translateX(-50%);
         }
-
-        .image {
-            text-align: center;
-        }
-
-        .image img{
-            width: 50%;
-            height: auto;
-            padding: 7%;
-        }
-
-        .card {
-            width: 28%!important;
-            font-size: 1.2rem!important;
-            line-height: 2.3rem!important;
-        }
     </style>
 </head>
 
 <body>
-    <div class="title">
-        <h1>MYLIST</h1>
-    </div>
-    <div class="ui centered cards">
-        {% for post in posts %}
-        <div class="card">
-            <div class="content">
-                <div class="header">
-                    <a href="preview_page">{{ post.title }}</a>
-                </div>
-                <div class="meta">
-                    <span><i class="calendar icon"></i> {{ post.date.strftime('%Y-%m-%d %H:%M') }}</span>
-                </div>
-                <div class="memo">
-                    <p>{{ post.note }}</p>
-                </div>
-                <div class="image">
-                    <a href="/preview_page"><img src="{{ url_for('static', filename='up/' + post.file_path) }}"></a>
+    <div class="list-container">
+        <div class="title">
+            <h1>MYLIST</h1>
+        </div>
+        <div class="info-boxes">
+            {% for post in posts %}
+            <div class="info-box">
+                <div class="content">
+                    <div class="meta">
+                        <span>{{ post.date.strftime('%Y-%m-%d %H:%M') }}</span>
+                    </div>
+                    <div class="header">
+                        <a href="preview_page">{{ post.title }}</a>
+                    </div>
+                    <div class="memo">
+                        <p>{{ post.note }}</p>
+                    </div>
+                    <div class="image">
+                        <a href="/preview_page"><img src="{{ url_for('static', filename='up/' + post.file_path) }}"></a>
+                    </div>
+                    <div class="return">
+                        <a href="">お返しをおすすめしてもらう</a>
+                    </div>
                 </div>
             </div>
+            {% endfor %}
         </div>
-        {% endfor %}
-    </div>
 
-    <a href="{{ url_for('preview') }}" class="go-list">新規登録</a>
+        <a href="{{ url_for('preview') }}" class="go-list">新規登録</a>
+    </div>
 </body>
 
 </html>

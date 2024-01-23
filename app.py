@@ -32,7 +32,7 @@ UPLOAD_FOLDER = './static/up'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 class Database(db.Model):
-    __tablename__ = 'database'
+    __tablename__ = 'picture'
     id = db.Column(db.Integer, primary_key=True)  # ID
     date = db.Column(db.DateTime, default=datetime.datetime.now(pytz.timezone('Asia/Tokyo'))) # 日付と時間
     title = db.Column(db.String(100), nullable=True) # タイトル
@@ -48,7 +48,6 @@ class User(UserMixin, db.Model):
     gender = db.Column(db.String(50)) #性別
 
     def __init__(self, username, password, birthday, gender):
-    # def __init__(self, username, password, birthday):
         self.username = username
         self.password = password
         self.birthday = birthday
@@ -235,7 +234,6 @@ def preview():
 # ログイン中でないとアクセスできないようにする
 @login_required
 def list():
-    # posts = Database.query.filter_by(user_id=current_user.id).all() 
     posts = Database.query.all()
     return render_template('list.html', posts=posts)
 
