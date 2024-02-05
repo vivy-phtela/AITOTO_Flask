@@ -2,6 +2,7 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f5f5f5;
+    position: relative;
 }
 
 .container {
@@ -39,37 +40,35 @@ header {
     transition: 0.3s;
 }
 
-/* リスト */
-.info-boxes {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    /* border: 10px solid #050505; */
+/* メイン */
+main {
+    padding-top: 10px;
+    padding-bottom: 30px;
 }
+
 .info-box{
     width: 350px;
-    height: 330px;
+    height: 320px;
     border: 2px solid #030303;
     /* background-color: #dbdbdb; */
     text-align: center;
     margin: 2px;
+    
 }
-.title {
-    margin: 30px 100px;
-    text-align: center;
-}
-
 .image img {
     max-width: 340px;
     max-height: 180px;
     cursor: pointer;
+}
+.content {
+    padding: 30px;
 }
 
 
 /* フッター */
 footer {
     width: 100%;
-    padding: 8px 0;
+    padding: 3px 0;
     background-color: #333;
     color: #fff;
     text-align: center;

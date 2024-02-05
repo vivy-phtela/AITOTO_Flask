@@ -41,7 +41,7 @@
     </header>
 
     <main>
-        <div class="info-boxes">
+        <div class="flex">
             {% for post in posts %}
             <div class="info-box">
                 <div class="content">
@@ -55,10 +55,13 @@
                         <p>{{ post.note }}</p>
                     </div>
                     <div class="image">
-                        <a href="{{ url_for('edit', id=post.id) }}"><img src="{{ url_for('static', filename='up/' + post.file_path) }}"></a>
+                        <img src="{{ url_for('static', filename='up/' + post.file_path) }}"></a>
                     </div>
                     <div class="return">
-                        <a href="">お返しをおすすめしてもらう</a>
+                        <a href="{{ url_for('submit_survey', id=post.id) }}">お返しをおすすめしてもらう</a>
+                    </div>
+                    <div class="edit">
+                        <a href="{{ url_for('edit', id=post.id) }}">編集</a>
                     </div>
                 </div>
             </div>
