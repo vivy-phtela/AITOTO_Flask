@@ -275,7 +275,7 @@ def edit(id):
         db.session.commit()
 
         flash('Post successfully updated!')
-        return redirect('/list')
+        return redirect('/')
 
     return render_template('edit.html', post=post)
 
