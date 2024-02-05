@@ -7,75 +7,67 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #f5f5f5;
-        }
-
-        footer {
-            width: 100%;
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            text-align: center;
-        }
-
-    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/destyle.css@3.0.2/destyle.css">
+    <link rel="stylesheet" href="static/css/index.css">
     <script src="{{ url_for('static', filename='javascript/script.js') }}"></script>
     <title>おもいでノート</title>
 </head>
 
 <body>
     <!-- もしログインしていなかったらログインと会員登録を表示、そうでなければログアウトだけ表示させたい-->
-    <header id="header">
-        <nav>
-            <ul>
+    <header class="container flex" id="header">
+        <a href="" class="logo">
+            <span>おもいでノート</span>
+        </a>
+            <ul class="menu flex">
                 {% if current_user.is_authenticated %}
+                    <li><a href="/preview_page">プレゼントアップロード</a></li>
                     <li><a href="/logout">ログアウト</a></li>
-                    <li><a href="/submit_survey">アンケート</a></li>
+                    <style>
+                        .menu {
+                            margin-right: 50%;
+                        }
+                    </style>
                 {% else %}
                     <li><a href="/login">ログイン</a></li>
                     <li><a href="/register">会員登録</a></li>
-                    <li><a href="/submit_survey">アンケート</a></li>
+                    <style>
+                        .menu {
+                            margin-right: 55%;
+                        }
+                    </style>
                 {% endif %}
             </ul>
-        </nav>
     </header>
-    <div class="title">
-        <h1>おもいでノート</h1>
-    </div>
-    
-    <div class="container">
-        <div id="upload">
-            {% if current_user.is_authenticated %}
-                <a href="/preview_page" class="go-list">
-                    <h2>ファイルをアップロード</h2>
-                </a>
-            {% else %}
-                <a href="/login" class="go-list">
-                    <h2>ファイルをアップロード</h2>
-                </a>
-            {% endif %}
-        </div>
-        <div class="right">
-            <div id="mylist">
-                {% if current_user.is_authenticated %}
-                    <a href="/list" class="go-list">
-                        <h2>マイリスト</h2>
-                    </a>
-                {% else %}
-                    <a href="/login" class="go-list">
-                        <p>マイリスト</p>
-                    </a>
-                {% endif %}
+
+    <main>
+        <div class="info-boxes">
+            {% for post in posts %}
+            <div class="info-box">
+                <div class="content">
+                    <div class="meta">
+                        <span>{{ post.date.strftime('%Y-%m-%d %H:%M') }}</span>
+                    </div>
+                    <div class="header">
+                        <a href="preview_page">{{ post.title }}</a>
+                    </div>
+                    <div class="memo">
+                        <p>{{ post.note }}</p>
+                    </div>
+                    <div class="image">
+                        <a href="/preview_page"><img src="{{ url_for('static', filename='up/' + post.file_path) }}"></a>
+                    </div>
+                    <div class="return">
+                        <a href="">お返しをおすすめしてもらう</a>
+                    </div>
+                </div>
             </div>
+            {% endfor %}
         </div>
-    </div>
+    </main>
     
     <footer>
-        <p>AITOTO</p>
+        <p>@AITOTO</p>
     </footer>
 </body>
 

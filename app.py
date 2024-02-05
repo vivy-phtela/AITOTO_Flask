@@ -75,9 +75,14 @@ with app.app_context():
 
 # トップページはシンプルにindex.htmlを表示するだけ
 @app.route('/', methods=['GET', 'POST'])
+# def index():
+#     if request.method == 'GET':
+#         return render_template('index.html')
+#     # ログイン中でないとアクセスできないようにする
+@login_required
 def index():
-    if request.method == 'GET':
-        return render_template('index.html')
+    posts = Database.query.all()
+    return render_template('index.html', posts=posts)
 
 # アンケートページ
 @app.route('/submit_survey', methods=['GET', 'POST'])
