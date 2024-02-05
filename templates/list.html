@@ -64,8 +64,7 @@
                         <p>{{ post.note }}</p>
                     </div>
                     <div class="image">
-                        <a href="/preview_page"><img src="{{ url_for('static', filename='up/' + post.file_path) }}"></a>
-                    </div>
+                        <a href="{{ url_for('edit', id=post.id) }}"><img src="{{ url_for('static', filename='up/' + post.file_path) }}"></a>
                     <div class="return">
                         <a href="">お返しをおすすめしてもらう</a>
                     </div>
