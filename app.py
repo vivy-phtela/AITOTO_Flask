@@ -9,6 +9,7 @@ from flask_login import (LoginManager, UserMixin, current_user, login_required,
                          login_user, logout_user)
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.utils import secure_filename
 
@@ -32,7 +33,7 @@ UPLOAD_FOLDER = './static/up'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 class Database(db.Model):
-    __tablename__ = 'picture'
+    __tablename__ = 'database'
     id = db.Column(db.Integer, primary_key=True)  # ID
     date = db.Column(db.DateTime, default=datetime.datetime.now(pytz.timezone('Asia/Tokyo'))) # 日付と時間
     title = db.Column(db.String(100), nullable=True) # タイトル
@@ -48,6 +49,7 @@ class User(UserMixin, db.Model):
     gender = db.Column(db.String(50)) #性別
 
     def __init__(self, username, password, birthday, gender):
+    # def __init__(self, username, password, birthday):
         self.username = username
         self.password = password
         self.birthday = birthday
@@ -75,11 +77,6 @@ with app.app_context():
 
 # トップページはシンプルにindex.htmlを表示するだけ
 @app.route('/', methods=['GET', 'POST'])
-# def index():
-#     if request.method == 'GET':
-#         return render_template('index.html')
-#     # ログイン中でないとアクセスできないようにする
-@login_required
 def index():
     posts = Database.query.all()
     return render_template('index.html', posts=posts)
@@ -222,7 +219,7 @@ def preview():
 
         if filename == '':
             flash("ファイルが選択されていません")
-            return redirect('/preview_page')
+            return redirect('/exit')
 
         savepath = os.path.join('static', 'up', filename)
         file.save(savepath)
@@ -231,16 +228,56 @@ def preview():
         db.session.add(data)
         db.session.commit()
 
-        return redirect('/list')
+        return redirect('/')
     else:
         return render_template('preview.html')
 
-@app.route('/list')
-# ログイン中でないとアクセスできないようにする
+# @app.route('/list')
+# # ログイン中でないとアクセスできないようにする
+# @login_required
+# def list():
+#     # posts = Database.query.filter_by(user_id=current_user.id).all() 
+#     posts = Database.query.all()
+#     return render_template('list.html', posts=posts)
+
+@app.route('/edit/<int:id>', methods=['GET', 'POST'])
 @login_required
-def list():
-    posts = Database.query.all()
-    return render_template('list.html', posts=posts)
+def edit(id):
+    post = db.session.query(Database).get(id)
+
+    if request.method == 'POST':
+        title = request.form.get('title')
+        note = request.form.get('note')
+        file = request.files['file']
+
+        # ファイルがアップロードされた場合のみ処理を行う
+        if file:
+            # 新しいファイル名を生成
+            dstr = datetime.datetime.now().strftime("%Y%m%d-%H%M%S-%f")
+            filename = dstr + str(random.randint(0, 10000)) + ".jpg"
+
+            # 既存のファイルがあれば削除
+            if post.file_path:
+                os.remove(os.path.join('static', 'up', post.file_path))
+
+            # ファイル保存
+            savepath = os.path.join('static', 'up', filename)
+            file.save(savepath)
+
+            # データベースの情報を更新
+            post.file_path = filename
+
+        # タイトルとノートの更新
+        post.title = title
+        post.note = note
+
+        # データベースの情報をコミット
+        db.session.commit()
+
+        flash('Post successfully updated!')
+        return redirect('/list')
+
+    return render_template('edit.html', post=post)
 
 if __name__ == '__main__':
     app.run(debug=True)

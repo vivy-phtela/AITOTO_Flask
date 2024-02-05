@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Page</title>
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.js"></script>
+    <style>
+        .title {
+            margin: 5% 5% 0 4.4%;
+            padding: 3% 0 0 0;
+
+        }
+
+        .body-bg {
+            background: #edf2f7;
+        }
+
+
+        .form-container {
+            padding: 2%;
+        }
+
+        .form-container .container {
+            background: #fff;
+            border-radius: 10px;
+            padding: 36px;
+            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .flex {
+            display: flex;
+            align-items: stretch;
+        }
+
+        .image {
+            padding: 5%;
+            text-align: center;
+            width: 50%;
+            height: auto;
+        }
+
+        /* 画像が全て入るように */
+        .image img {
+            max-width: 80%;
+            max-height: 80%;
+
+
+        }
+
+
+        .content {
+            padding: 5%;
+            width: 50%;
+            line-height: 2;
+        }
+
+        .description {
+            margin-top: 5%;
+            margin-bottom: 15%;
+        }
+
+        /* #submit-button {
+            margin-top: 16%;
+        } */
+
+        .button_flex {
+            margin: 10% 0 5% 0;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .button_flex .ui.button {
+            width: 48%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="body-bg">
+        <h1 class="title">Edit Page</h1>
+        <div class="form-container">
+            <div class="ui ccontainer" style="background: #fff;
+            border-radius: 10px;
+            padding: 36px;
+            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);">
+                <h2 id="editor-title" class="ui center aligned">投稿を編集</h2>
+                <div class="ui form">
+                    <form method="POST" enctype="multipart/form-data" action="">
+                        <div class="flex">
+                            <div class="image">
+                                <img src="{{ url_for('static', filename='up/' + post.file_path) }}" class="preview"
+                                    onclick="document.getElementById('fileInput').click();">
+
+                                <img src="" id="previewImage" class="preview" style="display: none;">
+                                <!-- ボタンを押したらファイル選択ができるようにしたい -->
+                                <button class="ui button" style="margin: 5%; " onclick="document.getElementById('fileInput').click(); return false;">
+                                    ファイルを変更
+                                </button>
+                                <input type="file" name="file" accept="image/*" id="fileInput" style="display: none;">
+                                <!-- <button class="ui button"> ファイルを変更　<input type="file" name="file" accept="image/*" id="fileInput" style="margin: 5%; "></button> -->
+
+                            </div>
+                            <div class="content">
+
+                                <label for="title">Title:</label>
+                                <input type="text" name="title" value="{{ post.title }}">
+                                <div class="description">
+                                    <label for="memo">Note:</label>
+                                    <textarea name="note" rows="10">{{ post.note }}</textarea>
+                                </div>
+
+
+                                <!-- <img src="{{ url_for('static', filename='images/arrow.png') }}" class="preview"
+                                        onclick="document.getElementById('fileInput').click();">
+                                    <input type="file" name="file" accept="image/*" id="fileInput">
+                                    <img src="" id="previewImage" class="preview"> -->
+
+                                <!-- <div class="ui huge blue label">
+                                        <input type="submit" value="Resister">
+                                    </div> -->
+
+                                <div class="button_flex">
+                                    <button id="submit-button" class="ui fluid large teal submit button"
+                                        type="submit">編集</button>
+                                    <a href="{{ url_for('index') }}" class="ui button">戻る</a>
+                                </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+
+    <script>
+        window.onload = function () {
+            var fileInput = document.getElementById('fileInput');
+            var previewImage = document.getElementById('previewImage');
+
+            fileInput.addEventListener('change', function (event) {
+                var file = event.target.files[0];
+
+                if (file) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        previewImage.src = e.target.result;
+                        previewImage.style.display = 'block'; // プレビュー画像を表示
+                        document.querySelector('.image img.preview').style.display = 'none'; // 元の画像を非表示
+
+                    };
+                    reader.readAsDataURL(file);
+                }
+                // フォームの submit を防ぐ
+                event.preventDefault();
+            });
+        };
+    </script>
+</body>
+
+</html>
