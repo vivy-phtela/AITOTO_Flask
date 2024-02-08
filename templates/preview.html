@@ -4,71 +4,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>PREVIEW</title>
-    <style>
-        body {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            flex-direction: column;
-            text-align: center;
-        }
-
-        .preview-container {
-            margin-top: 5px;
-        }
-
-        label{
-            display: block;
-        }
-
-        input,textarea {
-            width: 500px;
-        }
-
-        input[type="file"] {
-            display: none;
-        }
-
-        .image img {
-            display: inline-block;
-            max-width: 200px;
-            max-height: 200px;
-            cursor: pointer;
-            margin-top: 10px;
-            margin-bottom: 10px;
-        }
-
-        .register {
-            margin-bottom: 10px;
-            width: 100px;
-        }
-
-    </style>
+    <link rel="stylesheet" href="static/css/style-preview.css">
+    <title>プレゼント登録</title>
 </head>
 
 <body>
-    <div class="preview-container">
-        <form method="POST" enctype="multipart/form-data">
-            <div class="title">
-                <label for="title">プレゼント名</label>
-                <input type="text" name="title" required>
-            </div>
-            <div class="memo">
-                <label for="memo">メモ</label>
-                <textarea name="memo" cols="30" rows="10"></textarea>
-            </div>
-            <div class="image">
-                <img src="{{ url_for('static', filename='images/arrow2.png') }}" onclick="document.getElementById('fileInput').click();">
-                <input type="file" name="file" accept="image/*" id="fileInput" required>
-                <img src="" id="previewImage">
-            </div>
-            <input type="submit" class="register" value="登録">
-        </form>
-        <a href="{{ url_for('index') }}" class="go-list">一覧へ</a>
-    </div>
+    <header class="flex">
+        <a href="/" class="logo">
+            <img src="../static/images/logo.png">
+        </a>
+    </header>
+
+    <main>
+        <div class="container flex">
+            <form method="POST" enctype="multipart/form-data">
+                <div class="title">
+                    <label for="title">プレゼント名</label>
+                    <input type="text" name="title" required>
+                </div>
+                <div class="memo">
+                    <label for="memo">メモ</label>
+                    <textarea name="memo" cols="30" rows="10"></textarea>
+                </div>
+                <div class="image">
+                    <img src="{{ url_for('static', filename='images/arrow2.png') }}" onclick="document.getElementById('fileInput').click();">
+                    <input type="file" name="file" accept="image/*" id="fileInput" required>
+                    <img src="" id="previewImage">
+                </div>
+                <input type="submit" class="register" value="登録">
+            </form>
+        </div>
+    </main>
 
     <script>
         window.onload = function () {

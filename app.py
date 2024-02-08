@@ -5,8 +5,7 @@ from enum import unique
 
 import pytz
 from flask import Flask, flash, redirect, render_template, request, session
-from flask_login import (LoginManager, UserMixin, current_user, login_required,
-                         login_user, logout_user)
+from flask_login import (LoginManager, UserMixin, current_user, login_required, login_user, logout_user)
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import Session
@@ -40,6 +39,12 @@ class Database(db.Model):
     note = db.Column(db.Text, nullable=True) # メモ
     file_path = db.Column(db.String(255), nullable=True)
 
+    # ユーザーの投稿管理
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))  # ユーザーID
+
+    # ユーザーとの関連付け
+    user = db.relationship('User', back_populates='posts')
+
 # ユーザー情報を管理するデータベース
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)  # ID
@@ -47,6 +52,8 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(12), nullable=False)  # パスワード
     birthday = db.Column(db.String(30), nullable=True) # 生年月日
     gender = db.Column(db.String(50)) #性別
+     # ユーザーが投稿したデータの関連を定義する
+    posts = db.relationship('Database', backref='user_posts')
 
     def __init__(self, username, password, birthday, gender):
     # def __init__(self, username, password, birthday):
@@ -78,8 +85,8 @@ with app.app_context():
 # トップページはシンプルにindex.htmlを表示するだけ
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    posts = Database.query.all()
-    return render_template('index.html', posts=posts)
+    if request.method == 'GET':
+        return render_template('index.html')
 
 # アンケートページ
 @app.route('/submit_survey', methods=['GET', 'POST'])
@@ -211,6 +218,7 @@ def logout():
 @login_required
 def preview():
     if request.method == 'POST':
+        user_id = current_user.id
         title = request.form.get('title')
         note = request.form.get('note')
         file = request.files['file']
@@ -223,22 +231,24 @@ def preview():
 
         savepath = os.path.join('static', 'up', filename)
         file.save(savepath)
-
-        data = Database(title=title, note=note, file_path=filename)
+        data = Database(title=title, note=note, file_path=filename, user_id=user_id)
+        # data = Database(title=title, note=note, file_path=filename)
         db.session.add(data)
         db.session.commit()
 
-        return redirect('/')
+        return redirect('/list')
     else:
         return render_template('preview.html')
 
-# @app.route('/list')
-# # ログイン中でないとアクセスできないようにする
-# @login_required
-# def list():
-#     # posts = Database.query.filter_by(user_id=current_user.id).all() 
-#     posts = Database.query.all()
-#     return render_template('list.html', posts=posts)
+@app.route('/list')
+# ログイン中でないとアクセスできないようにする
+@login_required
+def list():
+    # 現在のユーザーのIDを取得
+    user_id = current_user.id
+    # ユーザーIDに基づいて投稿をフィルタリング
+    posts = Database.query.filter_by(user_id=user_id).all()
+    return render_template('list.html', posts=posts)
 
 @app.route('/edit/<int:id>', methods=['GET', 'POST'])
 @login_required
@@ -274,10 +284,30 @@ def edit(id):
         # データベースの情報をコミット
         db.session.commit()
 
-        flash('Post successfully updated!')
-        return redirect('/')
+        return redirect('/list')
 
     return render_template('edit.html', post=post)
+
+@app.route('/delete/<int:id>', methods=['POST'])
+@login_required
+def delete_entry(id):
+    entry = Database.query.get(id)
+    if entry:
+        # 既存のファイルがあれば削除
+        if entry.file_path:
+            os.remove(os.path.join('static', 'up', entry.file_path))
+        db.session.delete(entry)
+        db.session.commit()
+        flash('エントリが削除されました', 'success')
+    else:
+        flash('エントリが見つかりませんでした', 'error')
+    return redirect('/list')
+
+@app.route('/gift_return', methods=['GET', 'POST'])
+@login_required
+def gift_return():
+    if request.method == 'GET':
+        return render_template('gift_return.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

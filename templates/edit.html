@@ -8,6 +8,7 @@
     <title>Edit Page</title>
     <link rel="stylesheet" type="text/css"
         href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.css">
+    
     <script src="https://code.jquery.com/jquery-3.3.1.slim.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.js"></script>
     <style>
@@ -27,6 +28,13 @@
         }
 
         .form-container .container {
+            background: #fff;
+            border-radius: 10px;
+            padding: 36px;
+            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .ui-container {
             background: #fff;
             border-radius: 10px;
             padding: 36px;
@@ -79,10 +87,7 @@
     <div class="body-bg">
         <h1 class="title">Edit Page</h1>
         <div class="form-container">
-            <div class="ui ccontainer" style="background: #fff;
-            border-radius: 10px;
-            padding: 36px;
-            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);">
+            <div class="ui ccontainer">
                 <h2 id="editor-title" class="ui center aligned">投稿を編集</h2>
                 <div class="ui form">
                     <form method="POST" enctype="multipart/form-data" action="">
@@ -97,7 +102,6 @@
                                     ファイルを変更
                                 </button>
                                 <input type="file" name="file" accept="image/*" id="fileInput" style="display: none;">
-                                <!-- <button class="ui button"> ファイルを変更　<input type="file" name="file" accept="image/*" id="fileInput" style="margin: 5%; "></button> -->
 
                             </div>
                             <div class="content">
@@ -110,9 +114,13 @@
                                 </div>
 
                                 <div class="button_flex">
-                                    <button id="submit-button" class="ui fluid large teal submit button"
-                                        type="submit">編集</button>
-                                    <a href="{{ url_for('index') }}" class="ui button">戻る</a>
+                                    <button id="submit-button" class="ui fluid large teal submit button" type="submit">編集</button>
+                                    <a href="{{ url_for('list') }}" class="ui button large submit button">戻る</a>
+                                    <a href="{{ url_for('delete_entry', id=post.id) }}" class="ui button red large submit button">削除</a>
+
+                                    <!-- <form action="{{ url_for('delete_entry', id=post.id) }}" method="POST"></form>
+                                        <button id="delete-button" class="ui red large red submit button" type="submit">削除</button>
+                                    </form> -->
                                 </div>
 
                     </form>
@@ -128,17 +136,17 @@
         window.onload = function () {
             var fileInput = document.getElementById('fileInput');
             var previewImage = document.getElementById('previewImage');
-
+            var deleteButton = document.getElementById('delete-button');
+    
             fileInput.addEventListener('change', function (event) {
                 var file = event.target.files[0];
-
+    
                 if (file) {
                     var reader = new FileReader();
                     reader.onload = function (e) {
                         previewImage.src = e.target.result;
                         previewImage.style.display = 'block'; // プレビュー画像を表示
                         document.querySelector('.image img.preview').style.display = 'none'; // 元の画像を非表示
-
                     };
                     reader.readAsDataURL(file);
                 }
