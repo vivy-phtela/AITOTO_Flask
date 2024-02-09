@@ -27,3 +27,22 @@ header {
     width: 350px;
     height: 250px;
 }
+
+/* メイン */
+.phrase {
+    text-align: left;
+    font-size: 40px;
+    margin-left: 150px;
+}
+
+
+/* フッター */
+footer {
+    width: 100%;
+    padding: 3px 0;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    position: bottom;
+    bottom: 0;
+}

@@ -105,24 +105,15 @@ def submit_survey():
         age = request.form.get('age')
         relationship = request.form.get('relationship')
         occasion = request.form.get('occasion')
-        gift_reason = request.form.get('giftReason')
+        budget = request.form.get('budget')
         additional_notes = request.form.get('additionalNotes')
 
-        # デバッグ
-        print(recipient_name)
-        print(gender)
-        print(age)
-        print(relationship)
-        print(occasion)
-        print(gift_reason)
-
         # すべてのデータが入力されているかチェック
-        if not recipient_name or not gender or not age or not relationship or not occasion or not gift_reason:
+        if not recipient_name or not gender or not age or not relationship or not occasion or not budget:
             flash('必須項目を入力してください。', 'error')
             return redirect(request.url)
         
         else:
-            flash('送信完了しました。', 'success')
 
             # データベースに送信
             survey_data = SurveyData(
@@ -138,7 +129,7 @@ def submit_survey():
             db.session.add(survey_data)
             db.session.commit()
             
-            return redirect('/')
+            return redirect('/gift_return')
     
     else:
         return render_template('question.html')

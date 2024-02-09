@@ -47,33 +47,21 @@
 </head>
 
 <body>
-    <div class="title">
-        <h1>MyLIST</h1>
-    </div> 
+    <div class="title"><h1>MyLIST</h1></div>
     <div id="route-list" class="ui centered cards">
         {% for post in posts %}
         <div class="card">
             <div class="content">
-                <div class="header">
-                    <a href="{{ url_for('edit', id=post.id) }}">{{ post.title }}</a>
-                </div>
-                <div class="meta">
-                    <!-- <span><i class="clock icon"></i> 8分</span> -->
-                    <span><i class="calendar icon"></i> {{ post.date.strftime('%Y-%m-%d %H:%M') }}</span>
-                </div>
-                <div class="memo">
-                    <p>{{ post.note }}</p>
-                </div>
-                <div class="image">
-                    <a href="{{ url_for('edit', id=post.id) }}"><img src="{{ url_for('static', filename='up/' + post.file_path) }}"></a>
-                </div>
-                <div class="description"></div>
+                <div class="header"><a href="{{ url_for('edit', id=post.id) }}">{{ post.title }}</a></div>
+                <div class="meta"><span><i class="calendar icon"></i> {{ post.date.strftime('%Y-%m-%d %H:%M') }}</span></div>
+                <div class="memo"><p>{{ post.note }}</p></div>
+                <div class="image"><a href="{{ url_for('edit', id=post.id) }}"><img src="{{ url_for('static', filename='up/' + post.file_path) }}"></a></div>
+                <div class="question"><a href="{{ url_for('submit_survey') }}">アンケート</a></div>
             </div>
         </div>
         {% endfor %}
     </div>
 
-    <!-- 最初の画面に戻る -->
     <a href="{{ url_for('preview') }}" class="go-list">Upload new file</a>
 </body>
 

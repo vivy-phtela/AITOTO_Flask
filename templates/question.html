@@ -61,8 +61,7 @@
             <select name="age" id="age">
                 <!-- 最初は空欄に -->
                 <option value="" disabled selected>選択してください</option>
-                <option value="under10">10歳未満</option>
-                <option value="10s">10代</option>
+                <option value="10s">~10代</option>
                 <option value="20s">20代</option>
                 <option value="30s">30代</option>
                 <option value="40s">40代</option>
@@ -76,12 +75,7 @@
                 <option value="family">家族</option>
                 <option value="friends">友達</option>
                 <option value="partner">恋人</option>
-                <option value="spouse">夫婦</option>
                 <option value="acquaintance">知人</option>
-                <option value="teacher">先生</option>
-                <option value="student">学生</option>
-                <option value="colleague">同僚</option>
-                <option value="boss">上司</option>
                 <option value="otherRelation">その他</option>
             </select>
 
@@ -94,25 +88,31 @@
                 <option value="marriageCelebration">結婚</option>
                 <option value="babyCelebration">出産</option>
                 <option value="acknowledgment">感謝</option>
-                <option value="noReason">特になし</option>
                 <option value="otherOccasion">その他</option>
             </select>
 
-            <label for="giftReason">なぜこのプレゼントを贈りますか？<span class="required-mark">*</span>:</label>
-            <textarea id="giftReason" name="giftReason"></textarea>
+            <label>予算<span class="required-mark">*</span>:</label>
+            <select name="budget" id="budget">
+                <option value="" disabled selected>選択してください</option>
+                <option value="birthday">~1千円</option>
+                <option value="graduation">~3千円</option>
+                <option value="jobCelebration">~5千円</option>
+                <option value="marriageCelebration">~1万円</option>
+                <option value="babyCelebration">~2万円</option>
+                <option value="acknowledgment">2万円~</option>
+            </select>
 
             <label for="additionalNotes">その他の注意事項:</label>
             <textarea id="additionalNotes" name="additionalNotes"></textarea>
             <div class="flex_home">
-                <button type="submit" onclick="submitSurvey()">送信</button>
-                <a href="/gift_return">おすすめお返し品を見る</a>
+                <button type="submit" onclick="submitSurvey()">送信しておすすめ返礼品を見る</button>
             </div>
         </form>
 
     </div>
 
     <script>
-        // 性別のボタンの色を変える　かつ　性別の情報をボタンに合わせて書き換える
+        // 性別のボタンの色を変える，性別の情報をボタンに合わせて書き換える
         function changeColor(color) {
             var male = document.getElementById('male');
             var female = document.getElementById('female');
