@@ -52,7 +52,7 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(12), nullable=False)  # パスワード
     birthday = db.Column(db.String(30), nullable=True) # 生年月日
     gender = db.Column(db.String(50)) #性別
-     # ユーザーが投稿したデータの関連を定義する
+    # ユーザーが投稿したデータの関連を定義する
     posts = db.relationship('Database', backref='user_posts')
 
     def __init__(self, username, password, birthday, gender):
@@ -122,7 +122,7 @@ def submit_survey():
                 age=age,
                 relationship=relationship,
                 occasion=occasion,
-                gift_reason=gift_reason,
+                budget=budget,
                 additional_notes=additional_notes
             )
 
@@ -150,12 +150,6 @@ def register():
             gender = 'other'
         else:
             gender = 'Null'
-        
-
-        print(username)
-        print(password)
-        print(gender)
-        print(birthday)
 
         # ユーザー名が既に使用されているかどうかをチェック
         if User.query.filter_by(username=username).first():
@@ -174,7 +168,7 @@ def register():
 
         flash('会員登録が完了しました')
         return redirect('/login')
-    
+
     else:
         return render_template('register.html')
 
@@ -184,7 +178,7 @@ def login():
     if request.method == 'POST':
         username = request.form.get("username")
         password = request.form.get("password")
-    
+
         user = User.query.filter_by(username=username).first()
         # パスワードはハッシュ化されているので、check_password_hashを使ってユーザー名、パスワードが正しいかチェック
         if (user.password == password):
@@ -193,7 +187,7 @@ def login():
         else:
             flash('ユーザ名もしくはパスワードが異なります')
             return render_template('login.html')
-    
+
     else:
         return render_template('login.html')
 
@@ -279,20 +273,18 @@ def edit(id):
 
     return render_template('edit.html', post=post)
 
-@app.route('/delete/<int:id>', methods=['POST'])
+@app.route('/delete/<int:id>', methods=['GET', 'POST'])
 @login_required
 def delete_entry(id):
     entry = Database.query.get(id)
+
     if entry:
-        # 既存のファイルがあれば削除
-        if entry.file_path:
-            os.remove(os.path.join('static', 'up', entry.file_path))
+        # データベースからエントリを削除
         db.session.delete(entry)
         db.session.commit()
-        flash('エントリが削除されました', 'success')
-    else:
-        flash('エントリが見つかりませんでした', 'error')
+
     return redirect('/list')
+
 
 @app.route('/gift_return', methods=['GET', 'POST'])
 @login_required

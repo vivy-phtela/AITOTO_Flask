@@ -20,13 +20,6 @@
     <div class="title">
         <h1>どの方にプレゼントされますか？</h1>
     </div>
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    <div id="flash-messages">
-        {% for message in messages %}
-        <p>{{ message }}</p>
-        {% endfor %}
-    </div>
     {% endif %}
     {% endwith %}
     <div id="survey-form">
