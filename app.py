@@ -71,7 +71,7 @@ class SurveyData(db.Model):
     age = db.Column(db.String(50))
     relationship = db.Column(db.String(50))
     occasion = db.Column(db.String(50))
-    gift_reason = db.Column(db.String(255))
+    budget = db.Column(db.String(50))
     additional_notes = db.Column(db.Text)
 
 # ユーザーローダー関数を設定

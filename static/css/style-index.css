@@ -20,12 +20,12 @@ body {
 
 /* ヘッダー */
 header {
-    padding: 20px 0;
+    padding: 10px 5px;
     color: #000000;
 }
 .logo img {
-    width: 350px;
-    height: 250px;
+    width: 220px;
+    height: 150px;
 }
 .menu {
     font-size: 25px;
@@ -44,23 +44,53 @@ header {
 
 /* メイン */
 main {
-    padding: 70px 80px;
-}
-.main-figure {
-    width: 500px;
-    height: 250px;
-}
-.phrase {
-    text-align: left;
-    font-size: 40px;
+    padding: 0px 20px;
 }
 
+#hero {
+    background-image: url(../images/main.jpg);
+    background-position: center;
+    background-size: cover;
+    height: 600px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+    overflow: hidden;
+}
+#hero::before {
+    content: '';
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0.4;
+    z-index: 1;
+}
+.hero_inner {
+    z-index: 2;
+    color: white;
+    width: 100%;
+    text-align: center;
+}
+.hero_inner p {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 16px;
+}
+.hero_inner h1 {
+    font-size: 40px;
+    font-weight: 700;
+    margin-bottom: 30px;
+}
 
 /* フッター */
 footer {
     width: 100%;
     padding: 3px 0;
-    background-color: #333;
+    background-color: rgb(35, 35, 35);
     color: #fff;
     text-align: center;
     position: bottom;

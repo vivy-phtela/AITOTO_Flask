@@ -20,12 +20,12 @@ body {
 
 /* ヘッダー */
 header {
-    padding: 20px 0;
+    padding: 10px 5px;
     color: #000000;
 }
 .logo img {
-    width: 350px;
-    height: 250px;
+    width: 220px;
+    height: 150px;
 }
 
 /* メイン */
