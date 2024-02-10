@@ -112,9 +112,7 @@ def submit_survey():
         if not recipient_name or not gender or not age or not relationship or not occasion or not budget:
             flash('必須項目を入力してください。', 'error')
             return redirect(request.url)
-        
         else:
-
             # データベースに送信
             survey_data = SurveyData(
                 recipient_name=recipient_name,
@@ -128,9 +126,8 @@ def submit_survey():
 
             db.session.add(survey_data)
             db.session.commit()
-            
+ 
             return redirect('/gift_return')
-    
     else:
         return render_template('question.html')
 
@@ -199,7 +196,6 @@ def logout():
     return redirect('/login')
 
 @app.route('/preview_page', methods=['GET', 'POST'])
-# ログイン中でないとアクセスできないようにする
 @login_required
 def preview():
     if request.method == 'POST':
@@ -217,7 +213,6 @@ def preview():
         savepath = os.path.join('static', 'up', filename)
         file.save(savepath)
         data = Database(title=title, note=note, file_path=filename, user_id=user_id)
-        # data = Database(title=title, note=note, file_path=filename)
         db.session.add(data)
         db.session.commit()
 
@@ -226,7 +221,6 @@ def preview():
         return render_template('preview.html')
 
 @app.route('/list')
-# ログイン中でないとアクセスできないようにする
 @login_required
 def list():
     # 現在のユーザーのIDを取得
