@@ -2,65 +2,36 @@
 <html lang="ja">
 
 <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.0/dist/semantic.min.css">
-     <title>LIST</title>
-     <style>
-        .title {
-            margin: 30px 100px;
-        }
-        /* table {
-            border-collapse: collapse;
-        }
-        td.date{
-            text-align: center;
-        }
-        td.image img {
-            max-width: 100px;
-            max-height: 100px;
-        } */
-        a.go-list {
-            position: fixed;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .image {
-            text-align: center;
-        }
-
-        .image img{
-            
-            width: 50%;
-            height: auto;
-            padding: 7%;
-        }
-
-        .card {
-            width: 28%!important;
-            font-size: 1.2rem!important;
-            line-height: 2.3rem!important;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.0/dist/semantic.min.css">
+    <link rel="stylesheet" href="static/css/style-list.css">
+    <title>LIST</title>
 </head>
 
 <body>
-    <div class="title"><h1>MyLIST</h1></div>
-    <div id="route-list" class="ui centered cards">
-        {% for post in posts %}
-        <div class="card">
-            <div class="content">
-                <div class="header"><a href="{{ url_for('edit', id=post.id) }}">{{ post.title }}</a></div>
-                <div class="meta"><span><i class="calendar icon"></i> {{ post.date.strftime('%Y-%m-%d %H:%M') }}</span></div>
-                <div class="memo"><p>{{ post.note }}</p></div>
-                <div class="image"><a href="{{ url_for('edit', id=post.id) }}"><img src="{{ url_for('static', filename='up/' + post.file_path) }}"></a></div>
-                <div class="question"><a href="{{ url_for('submit_survey') }}">アンケート</a></div>
+    <header class="container flex">
+        <a href="/" class="logo">
+            <img src="../static/images/logo.png">
+        </a>
+    </header>
+
+    <main>
+        <div class="title"><h1>MyLIST</h1></div>
+        <div id="route-list" class="ui centered cards">
+            {% for post in posts %}
+            <div class="card">
+                <div class="content">
+                    <div class="header"><a href="{{ url_for('edit', id=post.id) }}">{{ post.title }}</a></div>
+                    <div class="meta"><span><i class="calendar icon"></i> {{ post.date.strftime('%Y-%m-%d %H:%M') }}</span></div>
+                    <div class="memo"><p>{{ post.note }}</p></div>
+                    <div class="image"><a href="{{ url_for('edit', id=post.id) }}"><img src="{{ url_for('static', filename='up/' + post.file_path) }}"></a></div>
+                    <div class="question"><a href="{{ url_for('submit_survey') }}">アンケート</a></div>
+                </div>
             </div>
+            {% endfor %}
         </div>
-        {% endfor %}
-    </div>
+    </main>
 
     <a href="{{ url_for('preview') }}" class="go-list">Upload new file</a>
 </body>

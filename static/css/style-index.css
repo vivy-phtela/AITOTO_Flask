@@ -88,7 +88,7 @@ main {
 
 .payment {
     align-items: center;
-    margin-top: 30px;
+    margin-top: 80px;
     margin-bottom: 30px;
     text-align: center;
 }
@@ -98,15 +98,22 @@ main {
     font-weight: 700;
     margin-bottom: 30px;
 }
-.payment button {
+
+.payment p {
     font-size: 20px;
-    font-weight: 700;
+    font-weight: 500;
+    margin-bottom: 30px;
+}
+.payment button {
+    font-size: 15px;
+    font-weight: 500;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
     background-color: #80BA4A;
     color: white;
     transition: 0.3s;
+    margin-bottom: 80px;
 }
 
 /* フッター */
