@@ -5,8 +5,7 @@ from enum import unique
 
 import pytz
 from flask import Flask, flash, redirect, render_template, request, session
-from flask_login import (LoginManager, UserMixin, current_user, login_required,
-                         login_user, logout_user)
+from flask_login import (LoginManager, UserMixin, current_user, login_required, login_user, logout_user)
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import Session
@@ -53,7 +52,7 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(12), nullable=False)  # パスワード
     birthday = db.Column(db.String(30), nullable=True) # 生年月日
     gender = db.Column(db.String(50)) #性別
-     # ユーザーが投稿したデータの関連を定義する
+    # ユーザーが投稿したデータの関連を定義する
     posts = db.relationship('Database', backref='user_posts')
 
     def __init__(self, username, password, birthday, gender):
@@ -72,7 +71,7 @@ class SurveyData(db.Model):
     age = db.Column(db.String(50))
     relationship = db.Column(db.String(50))
     occasion = db.Column(db.String(50))
-    gift_reason = db.Column(db.String(255))
+    budget = db.Column(db.String(50))
     additional_notes = db.Column(db.Text)
 
 # ユーザーローダー関数を設定
@@ -106,25 +105,14 @@ def submit_survey():
         age = request.form.get('age')
         relationship = request.form.get('relationship')
         occasion = request.form.get('occasion')
-        gift_reason = request.form.get('giftReason')
+        budget = request.form.get('budget')
         additional_notes = request.form.get('additionalNotes')
 
-        # デバッグ
-        print(recipient_name)
-        print(gender)
-        print(age)
-        print(relationship)
-        print(occasion)
-        print(gift_reason)
-
         # すべてのデータが入力されているかチェック
-        if not recipient_name or not gender or not age or not relationship or not occasion or not gift_reason:
+        if not recipient_name or not gender or not age or not relationship or not occasion or not budget:
             flash('必須項目を入力してください。', 'error')
             return redirect(request.url)
-        
         else:
-            flash('送信完了しました。', 'success')
-
             # データベースに送信
             survey_data = SurveyData(
                 recipient_name=recipient_name,
@@ -132,15 +120,14 @@ def submit_survey():
                 age=age,
                 relationship=relationship,
                 occasion=occasion,
-                gift_reason=gift_reason,
+                budget=budget,
                 additional_notes=additional_notes
             )
 
             db.session.add(survey_data)
             db.session.commit()
-            
-            return redirect('/')
-    
+ 
+            return redirect('/gift_return')
     else:
         return render_template('question.html')
 
@@ -160,12 +147,6 @@ def register():
             gender = 'other'
         else:
             gender = 'Null'
-        
-
-        print(username)
-        print(password)
-        print(gender)
-        print(birthday)
 
         # ユーザー名が既に使用されているかどうかをチェック
         if User.query.filter_by(username=username).first():
@@ -184,7 +165,7 @@ def register():
 
         flash('会員登録が完了しました')
         return redirect('/login')
-    
+
     else:
         return render_template('register.html')
 
@@ -194,7 +175,7 @@ def login():
     if request.method == 'POST':
         username = request.form.get("username")
         password = request.form.get("password")
-    
+
         user = User.query.filter_by(username=username).first()
         # パスワードはハッシュ化されているので、check_password_hashを使ってユーザー名、パスワードが正しいかチェック
         if (user.password == password):
@@ -203,7 +184,7 @@ def login():
         else:
             flash('ユーザ名もしくはパスワードが異なります')
             return render_template('login.html')
-    
+
     else:
         return render_template('login.html')
 
@@ -215,7 +196,6 @@ def logout():
     return redirect('/login')
 
 @app.route('/preview_page', methods=['GET', 'POST'])
-# ログイン中でないとアクセスできないようにする
 @login_required
 def preview():
     if request.method == 'POST':
@@ -233,7 +213,6 @@ def preview():
         savepath = os.path.join('static', 'up', filename)
         file.save(savepath)
         data = Database(title=title, note=note, file_path=filename, user_id=user_id)
-        # data = Database(title=title, note=note, file_path=filename)
         db.session.add(data)
         db.session.commit()
 
@@ -242,7 +221,6 @@ def preview():
         return render_template('preview.html')
 
 @app.route('/list')
-# ログイン中でないとアクセスできないようにする
 @login_required
 # def list():
 #     # posts = Database.query.filter_by(user_id=current_user.id).all() 
@@ -289,10 +267,28 @@ def edit(id):
         # データベースの情報をコミット
         db.session.commit()
 
-        flash('Post successfully updated!')
         return redirect('/list')
 
     return render_template('edit.html', post=post)
+
+@app.route('/delete/<int:id>', methods=['GET', 'POST'])
+@login_required
+def delete_entry(id):
+    entry = Database.query.get(id)
+
+    if entry:
+        # データベースからエントリを削除
+        db.session.delete(entry)
+        db.session.commit()
+
+    return redirect('/list')
+
+
+@app.route('/gift_return', methods=['GET', 'POST'])
+@login_required
+def gift_return():
+    if request.method == 'GET':
+        return render_template('gift_return.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

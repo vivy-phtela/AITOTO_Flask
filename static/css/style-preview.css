@@ -1,0 +1,60 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+    position: relative;
+}
+
+.container {
+    width: 50%;
+    margin: 0 auto;
+    position: relative;
+    text-align: center;
+}
+
+.flex {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    text-align: center;
+}
+
+/* ヘッダー */
+header {
+    padding: 10px 5px;
+    color: #000000;
+}
+.logo img {
+    width: 220px;
+    height: 150px;
+}
+
+.preview-container {
+    margin-top: 5px;
+}
+
+label{
+    display: block;
+}
+
+input,textarea {
+    width: 500px;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.image img {
+    display: inline-block;
+    max-width: 200px;
+    max-height: 200px;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.register {
+    margin-bottom: 10px;
+    width: 100px;
+}

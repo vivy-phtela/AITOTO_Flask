@@ -1,0 +1,48 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+    position: relative;
+}
+
+.container {
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+}
+
+.flex {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+/* ヘッダー */
+header {
+    padding: 10px 5px;
+    color: #000000;
+}
+.logo img {
+    width: 220px;
+    height: 150px;
+}
+
+/* メイン */
+.phrase {
+    text-align: left;
+    font-size: 40px;
+    margin-left: 150px;
+}
+
+
+/* フッター */
+footer {
+    width: 100%;
+    padding: 3px 0;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    position: bottom;
+    bottom: 0;
+}

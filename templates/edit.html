@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 
 <head>
     <meta charset="UTF-8">
@@ -8,6 +8,7 @@
     <title>Edit Page</title>
     <link rel="stylesheet" type="text/css"
         href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.css">
+    
     <script src="https://code.jquery.com/jquery-3.3.1.slim.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.js"></script>
     <style>
@@ -33,6 +34,13 @@
             box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
         }
 
+        .ui-container {
+            background: #fff;
+            border-radius: 10px;
+            padding: 36px;
+            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+        }
+
         .flex {
             display: flex;
             align-items: stretch;
@@ -49,8 +57,6 @@
         .image img {
             max-width: 80%;
             max-height: 80%;
-
-
         }
 
 
@@ -64,10 +70,6 @@
             margin-top: 5%;
             margin-bottom: 15%;
         }
-
-        /* #submit-button {
-            margin-top: 16%;
-        } */
 
         .button_flex {
             margin: 10% 0 5% 0;
@@ -85,10 +87,7 @@
     <div class="body-bg">
         <h1 class="title">Edit Page</h1>
         <div class="form-container">
-            <div class="ui ccontainer" style="background: #fff;
-            border-radius: 10px;
-            padding: 36px;
-            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);">
+            <div class="ui ccontainer">
                 <h2 id="editor-title" class="ui center aligned">投稿を編集</h2>
                 <div class="ui form">
                     <form method="POST" enctype="multipart/form-data" action="">
@@ -103,7 +102,6 @@
                                     ファイルを変更
                                 </button>
                                 <input type="file" name="file" accept="image/*" id="fileInput" style="display: none;">
-                                <!-- <button class="ui button"> ファイルを変更　<input type="file" name="file" accept="image/*" id="fileInput" style="margin: 5%; "></button> -->
 
                             </div>
                             <div class="content">
@@ -115,20 +113,10 @@
                                     <textarea name="note" rows="10">{{ post.note }}</textarea>
                                 </div>
 
-
-                                <!-- <img src="{{ url_for('static', filename='images/arrow.png') }}" class="preview"
-                                        onclick="document.getElementById('fileInput').click();">
-                                    <input type="file" name="file" accept="image/*" id="fileInput">
-                                    <img src="" id="previewImage" class="preview"> -->
-
-                                <!-- <div class="ui huge blue label">
-                                        <input type="submit" value="Resister">
-                                    </div> -->
-
                                 <div class="button_flex">
-                                    <button id="submit-button" class="ui fluid large teal submit button"
-                                        type="submit">編集</button>
-                                    <a href="{{ url_for('list') }}" class="ui button">戻る</a>
+                                    <button id="submit-button" class="ui fluid large teal submit button" type="submit">編集</button>
+                                    <a href="{{ url_for('list') }}" class="ui button large submit button">戻る</a>
+                                    <a href="{{ url_for('delete_entry', id=post.id) }}" class="ui button red large submit button" onclick="return confirm('本当に削除してもよろしいですか？')">削除</a>
                                 </div>
 
                     </form>
@@ -140,24 +128,11 @@
     </div>
     </div>
 
-    <!-- <div class="preview-container">
-        <form method="POST" enctype="multipart/form-data">
-            <label for="title">Title:</label>
-            <input type="text" name="title" value="{{ post.title }}">
-
-            <label for="memo">Note:</label>
-            <textarea name="note" rows="10">{{ post.note }}</textarea>
-
-
-            <input type="submit" value="Resister">
-        </form>
-        <a href="{{ url_for('list') }}" class="go-list">Go your list</a>
-    </div> -->
-
     <script>
         window.onload = function () {
             var fileInput = document.getElementById('fileInput');
             var previewImage = document.getElementById('previewImage');
+            var deleteButton = document.getElementById('delete-button');
 
             fileInput.addEventListener('change', function (event) {
                 var file = event.target.files[0];
@@ -168,13 +143,13 @@
                         previewImage.src = e.target.result;
                         previewImage.style.display = 'block'; // プレビュー画像を表示
                         document.querySelector('.image img.preview').style.display = 'none'; // 元の画像を非表示
-
                     };
                     reader.readAsDataURL(file);
                 }
                 // フォームの submit を防ぐ
                 event.preventDefault();
             });
+
         };
     </script>
 </body>

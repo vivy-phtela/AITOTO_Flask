@@ -1,0 +1,128 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+    position: relative;
+}
+
+.container {
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+}
+
+.flex {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+/* ヘッダー */
+header {
+    padding: 10px 5px;
+    color: #000000;
+}
+.logo img {
+    width: 220px;
+    height: 150px;
+}
+.menu {
+    font-size: 25px;
+    margin-right: 50px;
+}
+.menu li {
+    margin-left: 50px;
+}
+.menu li a {
+    transition: 0.3s;
+}
+.menu li a:hover {
+    color: #80BA4A;
+    transition: 0.3s;
+}
+
+/* メイン */
+main {
+    padding: 0px 20px;
+}
+
+#hero {
+    background-image: url(../images/main.jpg);
+    background-position: center;
+    background-size: cover;
+    height: 600px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+    overflow: hidden;
+}
+#hero::before {
+    content: '';
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0.4;
+    z-index: 1;
+}
+.hero_inner {
+    z-index: 2;
+    color: white;
+    width: 100%;
+    text-align: center;
+}
+.hero_inner p {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 16px;
+}
+.hero_inner h1 {
+    font-size: 40px;
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+
+.payment {
+    align-items: center;
+    margin-top: 80px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.payment h2 {
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+
+.payment p {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 30px;
+}
+.payment button {
+    font-size: 15px;
+    font-weight: 500;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #80BA4A;
+    color: white;
+    transition: 0.3s;
+    margin-bottom: 80px;
+}
+
+/* フッター */
+footer {
+    width: 100%;
+    padding: 3px 0;
+    background-color: rgb(35, 35, 35);
+    color: #fff;
+    text-align: center;
+    position: bottom;
+    bottom: 0;
+}

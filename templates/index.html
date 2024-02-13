@@ -1,5 +1,3 @@
-<!-- トップページとなるページを追加しました -->
-
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -7,211 +5,42 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #f5f5f5;
-        }
-
-        #header {
-            margin-top: 30px;
-            width: 100%;
-            position: absolute;
-            left: 0;
-            top: 0;
-            text-align: right;
-        }
-
-        #header ul {
-            display: flex;
-            justify-content: flex-end;
-
-            margin-top: 20px;
-            margin-right: 20px;
-        }
-
-        #header li {
- 
-            margin-right: 20px;
-            list-style: none;
-        }
-
-        .title {
-            margin-top: 100px;
-            text-align: center;
-        }
-
-        .container {
-            margin-top: 150px;
-        }
-
-        input[type="file"] {
-            display: none;
-        }
-
-    
-
-        #upload {
-            position: absolute;
-            top: 50%;
-            left: 25%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-        }   
-
-        img.preview {
-            left: 25%;
-            max-width: 100%;
-            max-height: 150px;
-            margin-bottom: 20px;
-            cursor: pointer;
-        }
-
-        #upload .green-square {
-            width: 550px;
-            height: 400px;
-            background-color: #ffffff;
-            border: 1px solid #08bf02;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: -1;
-        }
-
-        #mylist {
-            position: absolute;
-            top: 35%;
-            left: 75%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-        }
-
-        #mylist p {
-            margin: 20px 0;
-        }
-
-        #mylist .green-square {
-            width: 450px;
-            height: 200px;
-            background-color: #ffffff;
-            border: 1px solid #08bf02;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: -1;
-        }
-
-        #my_reccomend {
-            position: absolute;
-            top: 65%;
-            left: 75%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-        }
-
-        #my_reccomend p {
-            margin: 20px 0;
-        }
-
-        #my_reccomend .green-square {
-            width: 450px;
-            height: 200px;
-            background-color: #ffffff;
-            border: 1px solid #08bf02;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: -1;
-        }
-
-        footer {
-            width: 100%;
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            text-align: center;
-        }
-
-        a.go-list {
-            margin-top: 60px;
-        }
-    </style>
-    <script src="{{ url_for('static', filename='javascript/script.js') }}"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/destyle.css@3.0.2/destyle.css">
+    <link rel="stylesheet" href="static/css/style-index.css">
     <title>おもいでノート</title>
 </head>
 
 <body>
-    <!-- もしログインしていなかったらログインと会員登録を表示、そうでなければログアウトだけ表示させたい-->
-    <header id="header">
-        <nav>
-            <ul>
+    <header class="container flex">
+        <a href="/" class="logo">
+            <img src="../static/images/logo.png">
+        </a>
+            <ul class="menu flex">
                 {% if current_user.is_authenticated %}
+                    <li><a href="/preview_page">プレゼント登録</a></li>
+                    <li><a href="/list">マイリスト</a></li>
                     <li><a href="/logout">ログアウト</a></li>
-                    <li><a href="/submit_survey">アンケート</a></li>
                 {% else %}
                     <li><a href="/login">ログイン</a></li>
-                    <li><a href="/register">会員登録</a></li>
-                    <li><a href="/submit_survey">アンケート</a></li>
+                    <li><a href="/register">新規会員登録</a></li>
                 {% endif %}
             </ul>
-        </nav>
     </header>
-    <div class="title">
-        <h1>おもいでノート</h1>
-    </div>
-    
-    <div class="container">
-        <div id="upload">
-            {% if current_user.is_authenticated %}
-                <img src="{{ url_for('static', filename='images/arrow.png') }}" class="preview" id="previewImage"
-                    onclick="document.getElementById('fileInput').click();">
-                <input type="file" id="fileInput" accept='image/*' onchange="preview(this, 'previewImage');">
-                <h2>ファイルをアップロード</h2>
-                <div class="green-square"></div>
-            {% else %}
-                <img src="{{ url_for('static', filename='images/arrow.png') }}" class="preview" id="previewImage"
-                    onclick="document.getElementById('fileInput').click();">
-                <input type="file" id="fileInput" accept='image/*' onchange="noLogin(this, 'previewImage');">
-                <h2>ファイルをアップロード</h2>
-                <div class="green-square"></div>
-            {% endif %}
-        </div>
-        <div class="right">
-            <div id="mylist">
-                <p>マイリスト</p>
-                <!-- 四角が押されたらlist.htmlに遷移 -->
-                <!-- ログイン中なら/list, 未ログインなら/loginに遷移 -->
-                {% if current_user.is_authenticated %}
-                    <a href="/list" class="go-list">
-                        <div class="green-square" onclick="window.location.href='/list';"></div>
-                    </a>
-                {% else %}
-                    <a href="/login" class="go-list">
-                        <div class="green-square" onclick="window.location.href='/login';"></div>
-                    </a>
-                {% endif %}
+
+    <main>
+        <section id="hero" class="container">
+            <div class="hero_inner">
+                <h1>あなたの思い出をアーカイブ</h1>
+                <p>お返し選びをサポートします</p>
             </div>
-            <div id="my_reccomend">
-                <p>返礼品おすすめ</p>
-                <!-- 四角が押されたらlist.htmlに遷移 -->
-                <!-- ログイン中なら/list, 未ログインなら/loginに遷移 -->
-                {% if current_user.is_authenticated %}
-                    <a href="/submit_survey" class="go-reccomend">
-                        <div class="green-square" onclick="window.location.href='/list';"></div>
-                    </a>
-                {% else %}
-                    <a href="/login" class="go-list">
-                        <div class="green-square" onclick="window.location.href='/login';"></div>
-                    </a>
-                {% endif %}
-            </div>
+        </section>
+        <div class="payment">
+            <h2>プレミアム機能の紹介</h2>
+            <p>プレミアムプランを購入して頂くと，開発メンバー全員でお返しを一緒に考えます．</p>
+            <button><a href="https://buy.stripe.com/test_5kAfZaaUCg707YIaEE">購入する</a></button>
         </div>
-    </div>
-    
+    </main>
+
     <footer>
         <p>AITOTO</p>
     </footer>
