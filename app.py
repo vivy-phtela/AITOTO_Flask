@@ -5,7 +5,8 @@ from enum import unique
 
 import pytz
 from flask import Flask, flash, redirect, render_template, request, session
-from flask_login import (LoginManager, UserMixin, current_user, login_required, login_user, logout_user)
+from flask_login import (LoginManager, UserMixin, current_user, login_required,
+                         login_user, logout_user)
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import Session
@@ -193,7 +194,7 @@ def login():
 @login_required
 def logout():
     logout_user()
-    return redirect('/login')
+    return redirect('/')
 
 @app.route('/preview_page', methods=['GET', 'POST'])
 @login_required
