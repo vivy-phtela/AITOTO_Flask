@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/destyle.css@3.0.2/destyle.css">
     <link rel="stylesheet" href="static/css/style-index.css">
+    <script src="https://js.stripe.comz/v3/"></script>
     <title>おもいでノート</title>
 </head>
 
@@ -36,8 +37,11 @@
         </section>
         <div class="payment">
             <h2>プレミアム機能の紹介</h2>
-            <p>プレミアムプランを購入して頂くと，開発メンバー全員でお返しを一緒に考えます．</p>
-            <button><a href="https://buy.stripe.com/test_5kAfZaaUCg707YIaEE">購入する</a></button>
+            <p class="main">プレミアムプランを購入して頂くと，開発メンバー全員でお返しを一緒に考えます．</p>
+            <p class="sub">※購入していただくと</p>
+            <form action="/create-checkout-session" method="POST">
+                <button type="submit" id="checkout-button">購入する</button>
+            </form>
         </div>
     </main>
 
