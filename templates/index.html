@@ -48,7 +48,7 @@
                     {% endif %}
                 </div>
                 <br>
-                
+
             </div>
         </section>
         <div class="payment">
@@ -59,6 +59,8 @@
                 <button type="submit" id="checkout-button">購入する</button>
             </form>
         </div>
+        <a href="{{ url_for('success') }}">（デバッグ用）success.htmlへ</a>
+        <a href="{{ url_for('cancel') }}">（デバッグ用）cancel.htmlへ</a>
     </main>
 
     <footer>
