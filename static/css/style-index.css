@@ -5,6 +5,8 @@ body {
     position: relative;
 }
 
+
+
 .container {
     width: 100%;
     margin: 0 auto;
@@ -20,26 +22,12 @@ body {
 
 /* ヘッダー */
 header {
-    padding: 10px 5px;
+    padding: 10px 15px;
     color: #000000;
 }
 .logo img {
-    width: 220px;
-    height: 150px;
-}
-.menu {
-    font-size: 25px;
-    margin-right: 50px;
-}
-.menu li {
-    margin-left: 50px;
-}
-.menu li a {
-    transition: 0.3s;
-}
-.menu li a:hover {
-    color: #80BA4A;
-    transition: 0.3s;
+    width: 180px;
+    height: auto;
 }
 
 /* メイン */
@@ -86,11 +74,41 @@ main {
     margin-bottom: 30px;
 }
 
+.hero_inner a{
+    z-index: 2;
+    color: #fff;
+    width: 100%;
+    text-align: center;
+}
+
+.hero_inner a:hover {
+    /* 少し透明にする */
+    color: rgb(206, 204, 204);
+    transition: 0.3s;
+}
+
+#hero button {
+    margin: 40px 10px 0 10px;
+}
+
 .payment {
     align-items: center;
     margin-top: 80px;
     margin-bottom: 30px;
     text-align: center;
+}
+
+.payment a{
+    z-index: 2;
+    color: #fff;
+    width: 100%;
+    text-align: center;
+}
+
+.payment a:hover {
+    /* 少し透明にする */
+    color: rgb(206, 204, 204);
+    transition: 0.3s;
 }
 
 .payment h2 {
