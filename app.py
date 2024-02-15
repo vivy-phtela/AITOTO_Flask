@@ -4,14 +4,19 @@ import random
 from enum import unique
 
 import pytz
-from flask import Flask, flash, redirect, render_template, request, session
+import stripe
+from flask import (Flask, flash, redirect, render_template, request, session,
+                   url_for)
 from flask_login import (LoginManager, UserMixin, current_user, login_required,
                          login_user, logout_user)
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.orm import Session
+# from sqlalchemy.orm import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.utils import secure_filename
+
+# This is your test secret API key.
+stripe.api_key = 'sk_test_51OiS9FBJcq3dnxpdURiiEeGjg3ItDVUk9Z3kZUv1300ZMJATHqu2rdAU77W5HL4MyCVVGUWHZy90JyjvgOI1MbVY00uOkzgyyg'
 
 app = Flask(__name__)
 
@@ -290,6 +295,36 @@ def delete_entry(id):
 def gift_return():
     if request.method == 'GET':
         return render_template('gift_return.html')
+
+@app.route('/create-checkout-session', methods=['POST'])
+@login_required
+def create_checkout_session():
+    try:
+        checkout_session = stripe.checkout.Session.create(
+            line_items=[
+                {
+                    'price': 'price_1OiSYzBJcq3dnxpdbjGpmMOl',
+                    'quantity': 1,
+                },
+            ],
+            mode='payment',
+            success_url=url_for('success', _external=True),
+            cancel_url=url_for('cancel', _external=True),
+        )
+    except Exception as e:
+        return str(e) # その他エラーの場合
+
+    return redirect(checkout_session.url, code=303)
+
+@app.route('/success', methods=['GET', 'POST'])
+def success():
+    if request.method == 'GET':
+        return render_template('success.html')
+
+@app.route('/cancel', methods=['GET', 'POST'])
+def cancel():
+    if request.method == 'GET':
+        return render_template('cancel.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

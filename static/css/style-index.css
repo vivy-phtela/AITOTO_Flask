@@ -117,9 +117,14 @@ main {
     margin-bottom: 30px;
 }
 
-.payment p {
+.main {
     font-size: 20px;
     font-weight: 500;
+    margin-bottom: 30px;
+}
+.sub {
+    font-size: 15px;
+    font-weight: 300;
     margin-bottom: 30px;
 }
 .payment button {
