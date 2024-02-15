@@ -1,5 +1,7 @@
 .DS_Store
 
-info.db
+*.db
 
-*.png
+/static/up/*.png
+
+/static/up/*.jpg
