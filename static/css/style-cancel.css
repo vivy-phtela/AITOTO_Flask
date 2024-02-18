@@ -1,0 +1,34 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+    position: relative;
+}
+
+.container {
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+}
+
+.flex {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+/* ヘッダー */
+header {
+    padding: 10px 5px;
+    color: #000000;
+}
+.logo img {
+    width: 220px;
+    height: 150px;
+}
+
+/* メイン */
+main h3{
+    margin: 0 auto;
+}

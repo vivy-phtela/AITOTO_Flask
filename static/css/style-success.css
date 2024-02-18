@@ -27,3 +27,8 @@ header {
     width: 220px;
     height: 150px;
 }
+
+/* メイン */
+main h2 {
+    margin: 0 auto;
+}

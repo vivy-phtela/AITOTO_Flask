@@ -5,10 +5,8 @@ from enum import unique
 
 import pytz
 import stripe
-from flask import (Flask, flash, redirect, render_template, request, session,
-                   url_for)
-from flask_login import (LoginManager, UserMixin, current_user, login_required,
-                         login_user, logout_user)
+from flask import (Flask, flash, redirect, render_template, request, session, url_for)
+from flask_login import (LoginManager, UserMixin, current_user, login_required, login_user, logout_user)
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 # from sqlalchemy.orm import Session
@@ -139,7 +137,7 @@ def submit_survey():
 
             db.session.add(survey_data)
             db.session.commit()
- 
+
             return redirect('/gift_return')
     else:
         return render_template('question.html')

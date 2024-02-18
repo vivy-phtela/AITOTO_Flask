@@ -49,17 +49,21 @@
                     {% endif %}
                 </div>
                 <br>
-                
+
             </div>
         </section>
         <div class="payment">
             <h2>プレミアム機能の紹介</h2>
             <p class="main">プレミアムプランを購入して頂くと，開発メンバー全員でお返しを一緒に考えます．</p>
             <p class="sub">※購入していただくと</p>
+            {% if current_user.is_authenticated %}
             <form action="/create-checkout-session" method="POST">
                 <button type="submit" id="checkout-button">購入する</button>
             </form>
+            {% endif %}
         </div>
+        <a href="{{ url_for('success') }}">（デバッグ用）success.htmlへ</a>
+        <a href="{{ url_for('cancel') }}">（デバッグ用）cancel.htmlへ</a>
     </main>
 
     <footer class="footer">
