@@ -51,6 +51,13 @@ class Database(db.Model):
     # ユーザーとの関連付け
     user = db.relationship('User', back_populates='posts')
 
+    def __init__(self, title, note, file_path, user_id):
+        self.title = title
+        self.note = note
+        self.file_path = file_path
+        self.user_id = user_id
+        self.date = datetime.datetime.now(pytz.timezone('Asia/Tokyo'))
+
 # ユーザー情報を管理するデータベース
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)  # ID
@@ -207,7 +214,7 @@ def preview():
     if request.method == 'POST':
         user_id = current_user.id
         title = request.form.get('title')
-        note = request.form.get('note')
+        note = request.form.get('memo')
         file = request.files['file']
         dstr = datetime.datetime.now().strftime("%Y%m%d-%H%M%S-%f")
         filename = dstr + str(random.randint(0, 10000)) + ".jpg"

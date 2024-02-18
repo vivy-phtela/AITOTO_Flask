@@ -1,9 +1,15 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: #ffffff;
+    /* background-color: #ffffff; */
     position: relative;
 }
+
+main{
+  margin-top: 10vh;
+}
+
+
 
 .container {
     width: 100%;
@@ -38,18 +44,12 @@ body {
     width: 50%;
     margin: 0 auto;
     position: relative;
-    text-align: center;
+    text-align: left;
+    padding: 20px 4%;
+    line-height: 2.5;
 }
 
-/* ヘッダー */
-header {
-    padding: 10px 5px;
-    color: #000000;
-}
-.logo img {
-    width: 220px;
-    height: 150px;
-}
+
 
 .preview-container {
     margin-top: 5px;
@@ -81,13 +81,17 @@ input[type="file"] {
     width: 100px;
 }
 
-body {
-    font-family: sans-serif;
-    background-color: #eeeeee;
-  }
+.ui.positive.button {
+    margin: 45px 0;
+    width: 100%;
+}
+
+
+
+/**** 以降ファイルアップロードのデザイン ****/
   
   .file-upload {
-    background-color: #ffffff;
+    /* background-color: #ffffff; */
     width: 100%;
     height: 100%;
     margin: 0 auto;
@@ -141,6 +145,7 @@ body {
     margin-top: 20px;
     border: 4px dashed #1FB264;
     position: relative;
+    min-height: 300px;
   }
   
   .image-dropping,
@@ -156,6 +161,8 @@ body {
   
   .drag-text {
     text-align: center;
+    height: inherit;
+    
   }
   
   .drag-text h3 {
@@ -163,6 +170,7 @@ body {
     text-transform: uppercase;
     color: #15824B;
     padding: 60px 0;
+    line-height: 4;
   }
   
   .file-upload-image {
@@ -198,3 +206,5 @@ body {
     border: 0;
     transition: all .2s ease;
   }
+
+  /* ********************************* */

@@ -6,34 +6,127 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.0/dist/semantic.min.css">
     <link rel="stylesheet" href="static/css/style-list.css">
+    <link rel="stylesheet" href="static/css/style-common.css">
     <title>LIST</title>
 </head>
 
 <body>
-    <header class="container flex">
-        <a href="/" class="logo">
-            <img src="../static/images/logo.png">
-        </a>
+    <header>
+        <div class="ui secondary menu stackable header-sticky">
+            <a href="/" class="logo">
+                <img src="../static/images/logo.png">
+            </a>
+            {% if current_user.is_authenticated %}
+            <a class="item" href="/">トップページ</a>
+            <a class="item" href="/preview_page">プレゼント登録</a>
+            <a class="item" href="/list">マイリスト</a>
+            <div class="right menu">
+                <a class="ui item" href="/logout">ログアウト</a>
+            </div>
+            {% else %}
+            <div class="right menu">
+                <a class="ui item" href="/register">新規会員登録</a>
+                <a class="ui item" href="/login">ログイン</a>
+            </div>
+            {% endif %}
+        </div>
     </header>
 
     <main>
-        <div class="title"><h1>MYLIST</h1></div>
-        <div id="route-list" class="ui centered cards">
-            {% for post in posts %}
-            <div class="card">
-                <div class="content">
-                    <div class="header"><a href="{{ url_for('edit', id=post.id) }}">{{ post.title }}</a></div>
-                    <div class="meta"><span><i class="calendar icon"></i> {{ post.date.strftime('%Y-%m-%d %H:%M') }}</span></div>
-                    <div class="memo"><p>{{ post.note }}</p></div>
-                    <div class="image"><a href="{{ url_for('edit', id=post.id) }}"><img src="{{ url_for('static', filename='up/' + post.file_path) }}"></a></div>
-                    <div class="question"><a href="{{ url_for('submit_survey') }}">アンケート</a></div>
-                </div>
+        <div class="container">
+            <div class="title">
+                <h1>MYLIST</h1>
             </div>
-            {% endfor %}
+            <div class="flex-container">
+                <a href="{{ url_for('preview') }}" class="ui button teal"><i class="pen icon"></i>新しくプレゼントを投稿</a>
+                <!-- <button id="open-search-modal" class="ui button"><i class="search icon"></i>ルートを検索する</button> -->
+            </div>
+            <div id="route-list" class="ui centered cards">
+                {% for post in posts %}
+                <div class="card">
+                    <div class="content">
+                        <div class="header"><a href="{{ url_for('edit', id=post.id) }}">{{ post.title }}</a></div>
+                        <div class="meta"><span><i class="calendar icon"></i> {{ post.date.strftime('%Y-%m-%d %H:%M')
+                                }}</span></div>
+                        <div class="memo">
+                            <p>{{ post.note }}</p>
+                        </div>
+                        <div class="image"><a href="{{ url_for('edit', id=post.id) }}"><img
+                                    src="{{ url_for('static', filename='up/' + post.file_path) }}"></a></div>
+                    </div>
+                    <div class="extra content">
+                        <span class="right floated">
+                            <a href="{{ url_for('submit_survey') }}"><i class="gift icon"></i>おすすめ返礼品</a>
+                        </span>
+                        <span>
+                            <a href="{{ url_for('edit', id=post.id) }}"><i class="edit icon"></i>編集</a>
+                        </span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <!-- <div class="centered-contents">
+                <div id="pagination" class="ui pagination menu">
+                    <a class="item" id="prev-page"><i class="angle double left icon"></i></a> -->
+                    <!-- ページ番号はここに追加されます -->
+                    <!-- <a class="item" id="next-page"><i class="angle double right icon"></i></a>
+                </div>
+            </div> -->
+            
         </div>
     </main>
 
-    <a href="{{ url_for('preview') }}" class="go-list">Upload new file</a>
+    <footer class="footer">
+        <div class="footer_container">
+            <p>&copy; 2024 AITOTO. All rights reserved.</p>
+        </div>
+    </footer>
+    <!-- ページネーション機能 -->
+    <!-- <script>
+        $(document).ready(function() {
+            let currentPage = 1;
+            const postsPerPage = 9;
+    
+            function loadPosts(page) {
+                $.ajax({
+                    url: '/get_posts',
+                    type: 'GET',
+                    data: { page: page },
+                    success: function(data) {
+                        $('#route-list').html(data);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            }
+    
+            // 初回読み込み
+            loadPosts(currentPage);
+    
+            // 次のページを読み込む
+            $('#next-page').click(function() {
+                currentPage++;
+                loadPosts(currentPage);
+            });
+    
+            // 前のページを読み込む
+            $('#prev-page').click(function() {
+                if (currentPage > 1) {
+                    currentPage--;
+                    loadPosts(currentPage);
+                }
+            });
+    
+            // ページ番号をクリックしたとき
+            $('#pagination').on('click', '.page-link', function() {
+                currentPage = parseInt($(this).text());
+                loadPosts(currentPage);
+            });
+        });
+    </script> -->
+    
+    <!-- <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.0/dist/semantic.min.js"></script> -->
 </body>
 
 </html>

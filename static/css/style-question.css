@@ -1,59 +1,32 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #fff;
-    margin: 0;
-    padding: 0;
-    position: relative;
-}
-
-.container {
-    width: 100%;
-    margin: 0 auto;
-    position: relative;
-}
-
-.flex {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    align-items: center;
-}
-
-/* ヘッダー */
-header {
-    padding: 10px 5px;
-    color: #000000;
-}
-.logo img {
-    width: 220px;
-    height: 150px;
-}
-
 main {
-    padding: 0% 10%;
-    margin-bottom: 50px;
+    background-color:  #edf2f7;
+    padding: 50px 10%;
 }
 
+.title {
+    margin-bottom: 30px;
+}
 #survey-form {
-    background-color: #c9c9c9;
+    background-color: #fff;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    line-height: 2.5;
 }
 
+
 label {
+    /* display: block; */
     margin-bottom: 10px;
 }
 
 input[type="text"],
-input[type="date"],
 input[type="radio"],
-input[type="password"],
 select,
 textarea {
     width: 100%;
     padding: 10px;
-    margin-bottom: 15px;
+    margin-bottom: 20px!important;
     box-sizing: border-box;
 }
 
@@ -66,10 +39,12 @@ button {
     cursor: pointer;
 }
 
+
 .gender-buttons {
     display: flex;
 
 }
+
 
 .css-button-sliding-to-left--rose {
     min-width: 130px;

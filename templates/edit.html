@@ -3,130 +3,88 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Page</title>
+
     <link rel="stylesheet" type="text/css"
         href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.css">
-    
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.js"></script>
-    <style>
-        .title {
-            margin: 5% 5% 0 4.4%;
-            padding: 3% 0 0 0;
-
-        }
-
-        .body-bg {
-            background: #edf2f7;
-        }
-
-
-        .form-container {
-            padding: 2%;
-        }
-
-        .form-container .container {
-            background: #fff;
-            border-radius: 10px;
-            padding: 36px;
-            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
-        }
-
-        .ui-container {
-            background: #fff;
-            border-radius: 10px;
-            padding: 36px;
-            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
-        }
-
-        .flex {
-            display: flex;
-            align-items: stretch;
-        }
-
-        .image {
-            padding: 5%;
-            text-align: center;
-            width: 50%;
-            height: auto;
-        }
-
-        /* 画像が全て入るように */
-        .image img {
-            max-width: 80%;
-            max-height: 80%;
-        }
-
-
-        .content {
-            padding: 5%;
-            width: 50%;
-            line-height: 2;
-        }
-
-        .description {
-            margin-top: 5%;
-            margin-bottom: 15%;
-        }
-
-        .button_flex {
-            margin: 10% 0 5% 0;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .button_flex .ui.button {
-            width: 48%;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="/static/css/style-common.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/style-edit.css">
+    <!-- <link rel="stylesheet" type="text/css" href="/static/css/style-index.css"> -->
+    <title>Edit Page</title>
 </head>
+<header>
+    <div class="ui secondary menu stackable header-sticky">
+        <a href="/" class="logo">
+            <img src="../static/images/logo.png">
+        </a>
+        {% if current_user.is_authenticated %}
+        <a class="item" href="/">トップページ</a>
+        <a class="item" href="/preview_page">プレゼント登録</a>
+        <a class="item" href="/list">マイリスト</a>
+        <div class="right menu">
+            <a class="ui item" href="/logout">ログアウト</a>
+        </div>
+        {% else %}
+        <div class="right menu">
+            <a class="ui item" href="/register">新規会員登録</a>
+            <a class="ui item" href="/login">ログイン</a>
+        </div>
+        {% endif %}
+    </div>
+</header>
 
 <body>
-    <div class="body-bg">
-        <h1 class="title">Edit Page</h1>
-        <div class="form-container">
-            <div class="ui ccontainer">
-                <h2 id="editor-title" class="ui center aligned">投稿を編集</h2>
-                <div class="ui form">
-                    <form method="POST" enctype="multipart/form-data" action="">
-                        <div class="flex">
-                            <div class="image">
-                                <img src="{{ url_for('static', filename='up/' + post.file_path) }}" class="preview"
-                                    onclick="document.getElementById('fileInput').click();">
+    <div class="form-container">
+        <div class="ui ccontainer">
+            <h2 id="editor-title" class="ui center aligned">投稿を編集</h2>
+            <div class="ui form">
+                <form method="POST" enctype="multipart/form-data" action="">
+                    <div class="flex">
+                        <div class="image">
+                            <img src="{{ url_for('static', filename='up/' + post.file_path) }}" class="preview"
+                                onclick="document.getElementById('fileInput').click();">
 
-                                <img src="" id="previewImage" class="preview" style="display: none;">
-                                <!-- ボタンを押したらファイル選択ができるようにしたい -->
-                                <button class="ui button" style="margin: 5%; " onclick="document.getElementById('fileInput').click(); return false;">
-                                    ファイルを変更
-                                </button>
-                                <input type="file" name="file" accept="image/*" id="fileInput" style="display: none;">
+                            <img src="" id="previewImage" class="preview" style="display: none;">
+                            <!-- ボタンを押したらファイル選択ができるようにしたい -->
+                            <button class="ui button" style="margin: 5%; "
+                                onclick="document.getElementById('fileInput').click(); return false;">
+                                ファイルを変更
+                            </button>
+                            <input type="file" name="file" accept="image/*" id="fileInput" style="display: none;">
+
+                        </div>
+                        <div class="content">
+
+                            <label for="title">Title:</label>
+                            <input type="text" name="title" value="{{ post.title }}">
+                            <div class="description">
+                                <label for="memo">Note:</label>
+                                <textarea name="note" rows="10">{{ post.note }}</textarea>
+                            </div>
+
+                            <div class="button_flex">
+                                <button id="submit-button" class="ui fluid large teal submit button"
+                                    type="submit">更新する</button>
+
+                                <a href="{{ url_for('delete_entry', id=post.id) }}"
+                                    class="ui button red large submit button"
+                                    onclick="return confirm('本当に削除してもよろしいですか？')">削除</a>
 
                             </div>
-                            <div class="content">
-
-                                <label for="title">Title:</label>
-                                <input type="text" name="title" value="{{ post.title }}">
-                                <div class="description">
-                                    <label for="memo">Note:</label>
-                                    <textarea name="note" rows="10">{{ post.note }}</textarea>
-                                </div>
-
-                                <div class="button_flex">
-                                    <button id="submit-button" class="ui fluid large teal submit button" type="submit">編集</button>
-                                    <a href="{{ url_for('list') }}" class="ui button large submit button">戻る</a>
-                                    <a href="{{ url_for('delete_entry', id=post.id) }}" class="ui button red large submit button" onclick="return confirm('本当に削除してもよろしいですか？')">削除</a>
-                                </div>
-
-                    </form>
-
-                </div>
+                            <div class="button_back"><a href="{{ url_for('list') }}"
+                                    class="ui button large submit button">戻る</a></div>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-    </div>
-    </div>
+    <footer class="footer">
+        <!-- <div class="container"> -->
+        <p>&copy; 2024 AITOTO. All rights reserved.</p>
+        <!-- </div> -->
+    </footer>
 
     <script>
         window.onload = function () {

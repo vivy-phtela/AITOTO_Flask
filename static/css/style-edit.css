@@ -1,1 +1,75 @@
-/* ここにcssをうつすとバグる．．． */
+.title {
+    margin: 5% 5% 0 4.4%;
+    padding: 3% 0 0 0;
+
+}
+
+
+.form-container {
+    background: #edf2f7;
+    padding: 2%;
+}
+
+.form-container .container {
+    background: #fff;
+    border-radius: 10px;
+    padding: 36px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+.ui-container {
+    background: #fff;
+    border-radius: 10px;
+    padding: 36px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+#editor-title{
+    /* background: #edf2f7; */
+    padding: 1% 7%;
+}
+
+.flex {
+    display: flex;
+    align-items: stretch;
+}
+
+.image {
+    padding: 5%;
+    text-align: center;
+    width: 50%;
+    height: auto;
+}
+
+/* 画像が全て入るように */
+.image img {
+    max-width: 80%;
+    max-height: 80%;
+}
+
+
+.content {
+    padding: 2% 5%;
+    width: 50%;
+    line-height: 2;
+}
+
+.description {
+    margin-top: 5%;
+    margin-bottom: 15%;
+}
+
+.button_flex {
+    margin: 10% 0 5% 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.button_flex .ui.button {
+    width: 48%;
+}
+
+.button_back {
+    margin: 5% 0 0 0;
+    text-align: right;
+}

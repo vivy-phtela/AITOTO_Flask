@@ -4,22 +4,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="/static/css/style-question.css">
+    <link rel="stylesheet" href="/static/css/style-common.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.0/dist/semantic.min.css">
     <title>プレゼントアンケート</title>
-    <link rel="stylesheet" href="static/css/style-question.css">
 </head>
 
 <body>
-    <header class="container flex">
-        <a href="/" class="logo">
-            <img src="../static/images/logo.png">
-        </a>
+    <header>
+        <div class="ui secondary menu stackable header-sticky">
+            <a href="/" class="logo">
+                <img src="../static/images/logo.png">
+            </a>
+            {% if current_user.is_authenticated %}
+                <a class="item" href="/">トップページ</a>
+                <a class="item" href="/preview_page">プレゼント登録</a>
+                <a class="item" href="/list">マイリスト</a>
+                <div class="right menu">
+                    <a class="ui item" href="/logout">ログアウト</a>
+                </div>
+            {% else %}
+                <div class="right menu">
+                    <a class="ui item" href="/register">新規会員登録</a>
+                    <a class="ui item" href="/login">ログイン</a>
+                </div>
+            {% endif %}
+        </div>
     </header>
     
     <main>
-        <div class="title">
-            <h1>どの方にプレゼントされますか？</h1>
-        </div>
-        <div id="survey-form">
+        
+        <div id="survey-form" class="ui form">
+            <div class="title">
+                <h1>どの方にどんなプレゼントをされますか？</h1>
+            </div>
             <form action="/submit_survey" method="post">
                 <label for="recipientName">贈り先の名前<span class="required-mark">*</span>:</label>
                 <input type="text" id="recipientName" name="recipientName">
@@ -101,6 +120,12 @@
     
         </div>
     </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 AITOTO. All rights reserved.</p>
+        </div>
+    </footer>
 
     <script>
         // 性別のボタンの色を変える，性別の情報をボタンに合わせて書き換える

@@ -18,15 +18,7 @@ body {
     align-items: center;
 }
 
-/* ヘッダー */
-header {
-    padding: 10px 5px;
-    color: #000000;
-}
-.logo img {
-    width: 220px;
-    height: 150px;
-}
+
 
 /* メイン */
 .phrase {
@@ -35,14 +27,3 @@ header {
     margin-left: 150px;
 }
 
-
-/* フッター */
-footer {
-    width: 100%;
-    padding: 3px 0;
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    position: bottom;
-    bottom: 0;
-}

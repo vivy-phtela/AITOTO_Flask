@@ -5,36 +5,95 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="static/css/style-preview.css">
+    <link rel="stylesheet" href="static/css/style-index.css">
+    <link rel="stylesheet" href="static/css/style-common.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.0/dist/semantic.min.css">
     <title>プレゼント登録</title>
 </head>
 
-<body>
-    <header class="flex">
-        <a href="/" class="logo">
-            <img src="../static/images/logo.png">
-        </a>
+<body class="body-bg">
+    <header>
+        <div class="ui secondary menu stackable header-sticky">
+            <a href="/" class="logo">
+                <img src="../static/images/logo.png">
+            </a>
+            {% if current_user.is_authenticated %}
+                <a class="item" href="/">トップページ</a>
+                <a class="item" href="/preview_page">プレゼント登録</a>
+                <a class="item" href="/list">マイリスト</a>
+                <div class="right menu">
+                    <a class="ui item" href="/logout">ログアウト</a>
+                </div>
+            {% else %}
+                <div class="right menu">
+                    <a class="ui item" href="/register">新規会員登録</a>
+                    <a class="ui item" href="/login">ログイン</a>
+                </div>
+            {% endif %}
+        </div>
     </header>
 
     <main>
-        <div class="container flex">
+        <div class="container">
+
             <form method="POST" enctype="multipart/form-data">
-                <div class="title">
-                    <label for="title">プレゼント名</label>
-                    <input type="text" name="title" required>
+                <div class="preview-flex">
+                    <div class="left">
+                        <div class="image">
+                            <script class="jsbin"
+                            src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+                            <div class="file-upload">
+                                <button class="file-upload-btn" type="button"
+                                onclick="document.getElementById('fileInput').click();">ファイルを選択する</button>
+                                <!-- <img src="{{ url_for('static', filename='images/arrow2.png') }}" onclick="document.getElementById('fileInput').click();"> -->
+                                <input type="file" name="file" accept="image/*" id="fileInput" required>
+                                <img src="" id="previewImage">
+                                <div class="image-upload-wrap">
+                                    <input class="file-upload-input" type='file' onchange="readURL(this);"
+                                        accept="image/*" />
+                                    <div class="drag-text" onclick="document.getElementById('fileInput').click();">
+                                        <h3>ここにファイルをドロップ＆ドロップ
+                                            <br>
+                                            または
+                                            <br>
+                                            クリックしてファイル選択
+                                        </h3>
+                                    </div>
+                                </div>
+                                <div class="file-upload-content">
+                                    <img class="file-upload-image" src="#" alt="your image" />
+                                    <div class="image-title-wrap">
+                                        <button type="button" onclick="removeUpload()" class="remove-image">Remove <span
+                                                class="image-title">Uploaded Image</span></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 右側 -->
+                    <div class="right">
+                        <div class="title ui form">
+                            <label for="title">プレゼント名</label>
+                            <input type="text" name="title" required>
+                        </div>
+                        <div class="memo ui form">
+                            <label for="memo">メモ</label>
+                            <textarea name="memo" cols="30" rows="10"></textarea>
+                        </div>
+                        <!-- <input type="submit" class="register" value="登録"> -->
+                        <button type="submit" class="positive ui button">登録</button>
+                    </div>
                 </div>
-                <div class="memo">
-                    <label for="memo">メモ</label>
-                    <textarea name="memo" cols="30" rows="10"></textarea>
-                </div>
-                <div class="image">
-                    <img src="{{ url_for('static', filename='images/arrow2.png') }}" onclick="document.getElementById('fileInput').click();">
-                    <input type="file" name="file" accept="image/*" id="fileInput" required>
-                    <img src="" id="previewImage">
-                </div>
-                <input type="submit" class="register" value="登録">
+                
             </form>
         </div>
     </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 AITOTO. All rights reserved.</p>
+        </div>
+    </footer>
 
     <script>
         window.onload = function () {
@@ -47,12 +106,31 @@
                 if (file) {
                     var reader = new FileReader();
                     reader.onload = function (e) {
-                        previewImage.src = e.target.result;
+                        // previewImage.src = e.target.result;
+                        $('.image-upload-wrap').hide();
+
+                        $('.file-upload-image').attr('src', e.target.result);
+                        $('.file-upload-content').show();
+
+                        // $('.image-title').html(input.files[0].name);
                     };
                     reader.readAsDataURL(file);
+
                 }
             });
         };
+
+        function removeUpload() {
+            $('.file-upload-input').replaceWith($('.file-upload-input').clone());
+            $('.file-upload-content').hide();
+            $('.image-upload-wrap').show();
+        }
+        $('.image-upload-wrap').bind('dragover', function () {
+            $('.image-upload-wrap').addClass('image-dropping');
+        });
+        $('.image-upload-wrap').bind('dragleave', function () {
+            $('.image-upload-wrap').removeClass('image-dropping');
+        });
     </script>
 </body>
 

@@ -1,0 +1,234 @@
+#survey-form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-container {
+    padding-top: 10vh;
+}
+
+.form-container .container {
+    background: #fff;
+    border-radius: 10px;
+    padding: 36px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+label {
+    /* display: block; */
+    margin-bottom: 10px;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="radio"],
+input[type="password"],
+select,
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+.gender-buttons {
+    display: flex;
+
+}
+
+
+.css-button-sliding-to-left--rose {
+    min-width: 130px;
+    height: 40px;
+    color: #fff;
+    padding: 5px 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    outline: none;
+    border-radius: 5px;
+    z-index: 0;
+    background: #fff;
+    overflow: hidden;
+    border: 2px solid #ff0a78;
+    color: #ff0a78;
+}
+
+.css-button-sliding-to-left--rose:hover {
+    color: #fff;
+}
+
+.css-button-sliding-to-left--rose:hover:after {
+    width: 100%;
+}
+
+.css-button-sliding-to-left--rose:after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    transition: all 0.3s ease;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 100%;
+    background: #ff0a78;
+}
+
+.css-button-sliding-to-left--sky {
+    min-width: 130px;
+    height: 40px;
+    color: #fff;
+    padding: 5px 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    outline: none;
+    border-radius: 5px;
+    z-index: 0;
+    background: #fff;
+    overflow: hidden;
+    border: 2px solid #4433ff;
+    color: #4433ff;
+}
+
+.css-button-sliding-to-left--sky:hover {
+    color: #fff;
+}
+
+.css-button-sliding-to-left--sky:hover:after {
+    width: 100%;
+}
+
+.css-button-sliding-to-left--sky:after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    transition: all 0.3s ease;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 100%;
+    background: #4433ff;
+}
+
+.css-button-sliding-to-left--grey {
+    min-width: 130px;
+    height: 40px;
+    color: #fff;
+    padding: 5px 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    outline: none;
+    border-radius: 5px;
+    z-index: 0;
+    background: #fff;
+    overflow: hidden;
+    border: 2px solid #495057;
+    color: #495057;
+}
+
+.css-button-sliding-to-left--grey:hover {
+    color: #fff;
+}
+
+.css-button-sliding-to-left--grey:hover:after {
+    width: 100%;
+}
+
+.css-button-sliding-to-left--grey:after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    transition: all 0.3s ease;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 100%;
+    background: #495057;
+}
+
+.required-mark {
+    color: red;
+    /* 必須のマークの色 */
+    margin-left: 5px;
+    /* マークとラベルの間隔 */
+}
+
+.login_form_btm {
+    transform: translate(0%, 40%);
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.register_style {
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+
+
+.margin {
+    margin-bottom: 30px;
+}
+
+.UserID_Label {
+    margin-left: 25px;
+}
+
+#birthday {
+    display: flex;
+    justify-content: center;
+
+}
+
+#birthday div {
+    margin-right: 10px;
+}
+
+.register {
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 100%);
+    text-align: center;
+}
+
+.register a {
+    margin-left: 10px;
+    margin-top: 15px;
+    text-decoration: none;
+}
+
+.submit_button {
+    margin-top: 10px;
+}
+
+footer {
+    position: absolute;
+    display: inline-block;
+    width: 100%;
+    bottom: 0;
+    text-align: center;
+
+}

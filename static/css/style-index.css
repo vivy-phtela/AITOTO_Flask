@@ -22,7 +22,6 @@ body {
 
 /* ヘッダー */
 header {
-    padding: 10px 15px;
     color: #000000;
 }
 .logo img {
@@ -139,13 +138,4 @@ main {
     margin-bottom: 80px;
 }
 
-/* フッター */
-footer {
-    width: 100%;
-    padding: 3px 0;
-    background-color: rgb(35, 35, 35);
-    color: #fff;
-    text-align: center;
-    position: bottom;
-    bottom: 0;
-}
+

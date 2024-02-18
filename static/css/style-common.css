@@ -1,0 +1,50 @@
+/* ヘッダー */
+header {
+    color: #000000;
+}
+
+
+
+.ui.secondary.menu {
+    padding: 8px;
+    margin: 0 !important;
+    background: #fff!important;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+.header-sticky {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+
+.logo img {
+    width: 180px;
+    height: auto;
+}
+
+.right.menu{
+    justify-content: flex-end;
+    }
+
+/* メイン */
+/* body{
+    background-color: #edf2f7;
+} */
+.body-bg {
+    background: #edf2f7;
+}
+main {
+    min-height: 550px;
+}
+
+/* フッター */
+footer {
+    width: 100%;
+    padding: 3px 0;
+    /* background-color: rgb(35, 35, 35); */
+    color: #000000;
+    text-align: center;
+    position: bottom;
+    bottom: 0;
+}
