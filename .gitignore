@@ -1,6 +1,6 @@
 .DS_Store
 
-*.db
+/instance/info.db
 
 /static/up/*.png
 
