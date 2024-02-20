@@ -192,3 +192,19 @@ button {
     /* ホバー時は透明度を上げる */
     opacity: 0.7;
 }
+
+
+/* レスポンシブ対応（モバイル） */
+@media screen and (max-width: 600px) {
+    main {
+        padding: 50px 5%;
+    }
+    .flex_home{
+        margin: 0 0 20px 0;
+    }
+    .gender-buttons {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}

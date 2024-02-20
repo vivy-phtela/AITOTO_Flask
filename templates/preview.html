@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="static/css/style-index.css">
     <link rel="stylesheet" href="static/css/style-common.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.0/dist/semantic.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.0/dist/semantic.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- <script src="https://js.stripe.comz/v3/"></script> -->
+    <script src="/static/javascript/hamburger.js"></script>
     <title>プレゼント登録</title>
 </head>
 
@@ -18,19 +22,23 @@
                 <img src="../static/images/logo.png">
             </a>
             {% if current_user.is_authenticated %}
-                <a class="item" href="/">トップページ</a>
-                <a class="item" href="/preview_page">プレゼント登録</a>
-                <a class="item" href="/list">マイリスト</a>
-                <div class="right menu">
-                    <a class="ui item" href="/logout">ログアウト</a>
-                </div>
+            <a class="item" href="/">トップページ</a>
+            <a class="item" href="/preview_page">プレゼント登録</a>
+            <a class="item" href="/list">マイリスト</a>
+            <div class="right menu">
+                <a class="ui item" href="/logout">ログアウト</a>
+            </div>
             {% else %}
-                <div class="right menu">
-                    <a class="ui item" href="/register">新規会員登録</a>
-                    <a class="ui item" href="/login">ログイン</a>
-                </div>
+            <div class="right menu">
+                <a class="ui item" href="/register">新規会員登録</a>
+                <a class="ui item" href="/login">ログイン</a>
+            </div>
             {% endif %}
+            <div class="hamburger">
+                <i id="hamburger-toggle" class="icon bars"></i>
+            </div>
         </div>
+        
     </header>
 
     <main>
@@ -41,10 +49,11 @@
                     <div class="left">
                         <div class="image">
                             <script class="jsbin"
-                            src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+                                src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
                             <div class="file-upload">
+                                <!-- <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Add Image</button> -->
                                 <button class="file-upload-btn" type="button"
-                                onclick="document.getElementById('fileInput').click();">ファイルを選択する</button>
+                                    onclick="document.getElementById('fileInput').click();">ファイルを選択する</button>
                                 <!-- <img src="{{ url_for('static', filename='images/arrow2.png') }}" onclick="document.getElementById('fileInput').click();"> -->
                                 <input type="file" name="file" accept="image/*" id="fileInput" required>
                                 <img src="" id="previewImage">
@@ -52,7 +61,7 @@
                                     <input class="file-upload-input" type='file' onchange="readURL(this);"
                                         accept="image/*" />
                                     <div class="drag-text" onclick="document.getElementById('fileInput').click();">
-                                        <h3>ここにファイルをドロップ＆ドロップ
+                                        <h3>ここにファイルをドラッグ＆ドロップ
                                             <br>
                                             または
                                             <br>
@@ -63,8 +72,8 @@
                                 <div class="file-upload-content">
                                     <img class="file-upload-image" src="#" alt="your image" />
                                     <div class="image-title-wrap">
-                                        <button type="button" onclick="removeUpload()" class="remove-image">Remove <span
-                                                class="image-title">Uploaded Image</span></button>
+                                        <button type="button" onclick="removeUpload(this)" class="remove-image">Remove
+                                            <span class="image-title">Uploaded Image</span></button>
                                     </div>
                                 </div>
                             </div>
@@ -84,7 +93,7 @@
                         <button type="submit" class="positive ui button">登録</button>
                     </div>
                 </div>
-                
+
             </form>
         </div>
     </main>
@@ -97,13 +106,16 @@
 
     <script>
         window.onload = function () {
+
             var fileInput = document.getElementById('fileInput');
             var previewImage = document.getElementById('previewImage');
 
             fileInput.addEventListener('change', function (event) {
+
                 var file = event.target.files[0];
 
                 if (file) {
+                    alert('ok');
                     var reader = new FileReader();
                     reader.onload = function (e) {
                         // previewImage.src = e.target.result;
@@ -117,8 +129,33 @@
                     reader.readAsDataURL(file);
 
                 }
+                else {
+                removeUpload();
+                }
             });
         };
+
+        function readURL(input) {
+            alert('readURL起動');
+            if (input.files && input.files[0]) {
+
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('.image-upload-wrap').hide();
+
+                    $('.file-upload-image').attr('src', e.target.result);
+                    $('.file-upload-content').show();
+
+                    $('.image-title').html(input.files[0].name);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+
+            } else {
+                removeUpload();
+            }
+        }
 
         function removeUpload() {
             $('.file-upload-input').replaceWith($('.file-upload-input').clone());

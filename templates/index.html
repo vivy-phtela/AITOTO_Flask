@@ -9,7 +9,12 @@
     <link rel="stylesheet" href="static/css/style-index.css">
     <link rel="stylesheet" href="static/css/style-common.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.0/dist/semantic.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.0/dist/semantic.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://js.stripe.comz/v3/"></script>
+    <script src="/static/javascript/hamburger.js"></script>
+
     <title>おもいでノート</title>
 </head>
 
@@ -32,6 +37,9 @@
                     <a class="ui item" href="/login">ログイン</a>
                 </div>
             {% endif %}
+            <div class="hamburger">
+                <i id="hamburger-toggle" class="icon bars"></i>
+            </div>
         </div>
     </header>
     <main>

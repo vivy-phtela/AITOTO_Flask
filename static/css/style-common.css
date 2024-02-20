@@ -9,7 +9,7 @@ header {
     padding: 8px;
     margin: 0 !important;
     background: #fff!important;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1)!important;
 }
 
 .header-sticky {
@@ -19,7 +19,7 @@ header {
 }
 
 .logo img {
-    width: 180px;
+    width: 90px;
     height: auto;
 }
 
@@ -48,3 +48,63 @@ footer {
     position: bottom;
     bottom: 0;
 }
+
+.hamburger {
+    display: none
+}
+
+
+/* Mobile */
+@media only screen and (max-width: 767px) {
+
+    [class*="mobile hidden"],
+    [class*="tablet only"]:not(.mobile),
+    [class*="computer only"]:not(.mobile),
+    [class*="large screen only"]:not(.mobile),
+    [class*="widescreen only"]:not(.mobile),
+    [class*="or lower hidden"] {
+        display: none !important;
+    }
+
+    .right.menu {
+        display: none;
+    }
+
+    .hamburger {
+        width: 36px;
+        height: 36px;
+        position: absolute;
+        right: 16px;
+        top: 8px;
+        cursor: pointer;
+        display: block;
+    }
+
+    .hamburger i {
+        color: #666;
+        font-size: 30px!important;
+        line-height: 80px!important;
+    }
+
+    .ui.stackable.menu .item:not(.header) {
+        height: 0;
+        opacity: 0;
+        transition: all .5s, opacity .25s;
+        padding: 0 10px;
+    }
+
+    .ui.stackable.menu.open .item:not(.header) {
+        height: auto;
+        opacity: 1;
+        transition: all .5s, opacity .25s;
+        padding: 10px;
+        margin: 2px 0;
+    }
+
+    .ui.stackable.menu.open {
+        padding-bottom: 12px;
+        border-radius: 0 0 24px 24px;
+        transition: all .5s ease;
+    }
+}
+

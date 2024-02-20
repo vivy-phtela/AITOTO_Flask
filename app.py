@@ -5,8 +5,10 @@ from enum import unique
 
 import pytz
 import stripe
-from flask import (Flask, flash, redirect, render_template, request, session, url_for)
-from flask_login import (LoginManager, UserMixin, current_user, login_required, login_user, logout_user)
+from flask import (Flask, flash, redirect, render_template, request, session,
+                   url_for)
+from flask_login import (LoginManager, UserMixin, current_user, login_required,
+                         login_user, logout_user)
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 # from sqlalchemy.orm import Session
@@ -233,10 +235,6 @@ def preview():
 
 @app.route('/list')
 @login_required
-# def list():
-#     # posts = Database.query.filter_by(user_id=current_user.id).all() 
-#     posts = Database.query.all()
-#     return render_template('list.html', posts=posts)
 def list():
     # 現在のユーザーのIDを取得
     user_id = current_user.id

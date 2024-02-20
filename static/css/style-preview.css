@@ -208,3 +208,52 @@ input[type="file"] {
   }
 
   /* ********************************* */
+
+
+  /* レスポンシブ対応（モバイル） */
+  @media screen and (max-width: 768px) {
+    .left {
+        width: 100%;
+        margin: 0 auto;
+        position: relative;
+        text-align: center;
+    }
+    .right {
+        width: 100%;
+        margin: 0 auto;
+        position: relative;
+        text-align: left;
+        padding: 20px 4%;
+        line-height: 2.5;
+    }
+    .container {
+        width: 100%;
+        margin: 0 4%;
+        position: relative;
+        text-align: center;
+    }
+    .flex {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        text-align: center;
+    }
+    .preview-flex{
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        text-align: center;
+        margin-top: 10px;
+    }
+    .image img {
+        display: inline-block;
+        max-width: 100px;
+        max-height: 100px;
+        cursor: pointer;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    input,textarea {
+        width: 100%;
+    }
+  }

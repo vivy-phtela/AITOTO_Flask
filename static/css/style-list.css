@@ -85,3 +85,26 @@ a.go-list {
 footer {
     padding: 20px 0;
 }
+
+
+/* レスポンシブ対応（モバイル） */
+@media screen and (max-width: 768px) {
+    .title {
+        margin: 0px 20px;
+    }
+    .image img{
+        width: 100%;
+        padding: 7%;
+    }
+    .card {
+        width: 100%!important;
+        font-size: 1.2rem!important;
+        line-height: 2.3rem!important;
+    }
+    .ui.centered.cards {
+        padding: 0 7%;
+    }
+    .flex-container{
+        padding: 0 7%;
+    }
+}
