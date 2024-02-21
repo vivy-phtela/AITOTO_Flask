@@ -61,12 +61,14 @@
                                     <input class="file-upload-input" type='file' onchange="readURL(this);"
                                         accept="image/*" />
                                     <div class="drag-text" onclick="document.getElementById('fileInput').click();">
-                                        <h3>ここにファイルをドラッグ＆ドロップ
+                                        <!-- <h3>ここにファイルをドラッグ＆ドロップ
                                             <br>
                                             または
                                             <br>
                                             クリックしてファイル選択
-                                        </h3>
+                                        </h3> -->
+                                        <!-- ドラッグ&ドロップ機能が実装できないのでとりあえずクリックだけで -->
+                                        <h3 style="line-height: 9;">クリックしてファイル選択</h3>
                                     </div>
                                 </div>
                                 <div class="file-upload-content">
@@ -115,7 +117,6 @@
                 var file = event.target.files[0];
 
                 if (file) {
-                    alert('ok');
                     var reader = new FileReader();
                     reader.onload = function (e) {
                         // previewImage.src = e.target.result;
@@ -136,7 +137,6 @@
         };
 
         function readURL(input) {
-            alert('readURL起動');
             if (input.files && input.files[0]) {
 
                 var reader = new FileReader();
