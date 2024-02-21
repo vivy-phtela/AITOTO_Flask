@@ -296,7 +296,11 @@ def delete_entry(id):
 @app.route('/gift_return', methods=['GET', 'POST'])
 @login_required
 def gift_return():
-    if request.method == 'GET':
+    if request.method == 'POST':
+        
+        return redirect('/gift_return')
+    else:   
+
         return render_template('gift_return.html')
 
 @app.route('/create-checkout-session', methods=['POST'])
