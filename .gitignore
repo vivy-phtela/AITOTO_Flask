@@ -1,7 +1,5 @@
 .DS_Store
 
-/instance/info.db
-
 /static/up/*.png
 
 /static/up/*.jpg
@@ -9,3 +7,5 @@
 /static/images/*.png
 
 /static/images/*.jpg
+
+instance/info.db
