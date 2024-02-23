@@ -4,19 +4,19 @@ import random
 from enum import unique
 
 import pytz
-import stripe
-from flask import (Flask, flash, redirect, render_template, request, session,
-                   url_for)
-from flask_login import (LoginManager, UserMixin, current_user, login_required,
-                         login_user, logout_user)
+from flask import (Flask, flash, redirect, render_template, request, session, url_for)
+from flask_login import (LoginManager, UserMixin, current_user, login_required, login_user, logout_user)
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 # from sqlalchemy.orm import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.utils import secure_filename
 
-# This is your test secret API key.
+# 決済システムstripeの導入
+import stripe
 stripe.api_key = 'sk_test_51OiS9FBJcq3dnxpdURiiEeGjg3ItDVUk9Z3kZUv1300ZMJATHqu2rdAU77W5HL4MyCVVGUWHZy90JyjvgOI1MbVY00uOkzgyyg'
+
+import pandas as pd
 
 app = Flask(__name__)
 
@@ -168,7 +168,7 @@ def register():
         else:
             # ユーザー情報をデータベースに登録
             user = User(
-                username=username, 
+                username=username,
                 password=password,
                 birthday=birthday,
                 gender=gender,
@@ -292,17 +292,22 @@ def delete_entry(id):
 
     return redirect('/list')
 
-
 @app.route('/gift_return', methods=['GET', 'POST'])
 @login_required
 def gift_return():
+    # Excelファイルを読み込む
+    df = pd.read_excel('./static/excel/recommend_table.xlsx')
+
+    # DataFrameをリストの辞書に変換して、HTMLでの処理を容易にする
+    data = df.to_dict(orient='records')
+
     if request.method == 'POST':
-        
         return redirect('/gift_return')
-    else:   
+    else:
+        # テンプレートにデータを渡す
+        return render_template('gift_return.html', data=data)
 
-        return render_template('gift_return.html')
-
+# 決済
 @app.route('/create-checkout-session', methods=['POST'])
 @login_required
 def create_checkout_session():

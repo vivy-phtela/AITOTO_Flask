@@ -48,31 +48,27 @@
             <h2 id="editor-title" class="ui center aligned">おすすめプレゼントはこちら</h2>
             <div class="ui form">
                 <form method="POST" enctype="multipart/form-data" action="">
+                    <!-- データの各行をイテレート -->
+                    {% for row in data %}
                     <div class="flex">
                         <div class="image">
-                            <img src="/static/images/present1.jpeg" class="preview">
+                            <!-- 画像のパスが提供されている場合、画像を表示 -->
+                            {% if row.image %}
+                            <img src="{{ row.image }}" class="preview">
+                            {% endif %}
                         </div>
                         <div class="content">
-                            <h2>agnès b.のショルダーバッグ</h3>
+                            <h2>{{ row.商品名 }}</h3>
                             <div class="description">
-                                <!-- ボタンでリンクに繋がる -->
-                                <a href="https://www.agnesb.co.jp/f/dsg-2610773" class="ui orange large button" target="_blank">購入はこちらから</a>
+                                <!-- URLが提供されている場合は、製品ページへのリンク -->
+                                {% if row.リンク %}
+                                <a href="{{ row.リンク}}" class="ui orange large button" target="_blank">購入はこちらから</a>
+                                {% endif %}
                             </div>
-
-                            <div class="button_flex">
-                                <button id="submit-button" class="ui fluid large teal submit button"
-                                    type="submit">このプレゼントをセーブする</button>
-                                <a href="/gift_return" class="negative ui button" target="_blank">もう一度考えてもらう</a>
-
-                            </div>
-                            <div class="button_back"><a href="/submit_survey"
-                                    class="ui button large submit button">プレゼント提案書を見直す</a>
-                            </div>
-                            <div class="button_back"><a href="/"
-                                class="ui button large submit button">HOMEへ戻る</a>
-                        </div>
+                            <!-- 必要に応じてここにさらに要素を追加 -->
                         </div>
                     </div>
+                    {% endfor %}
                 </form>
             </div>
         </div>
