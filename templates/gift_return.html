@@ -54,7 +54,15 @@
                         <h2 id="product-name">{{ data[0].商品名 }}</h2>
                         <div class="description">
                             <a href="{{ data[0].リンク }}" class="ui orange large button" target="_blank" id="product-link">購入はこちらから</a>
-                            <button class="ui large button" id="next-button">次へ</button>
+                        </div>
+                        <div class="button_flex">
+                            <button id="submit-button" class="ui fluid large teal submit button"
+                                type="submit">このプレゼントをセーブする</button>
+                            <button class="negative ui button" id="next-button">次へ</button>
+                        </div>
+                        <div class="button_back">
+                            <a href="/submit_survey" class="ui button large submit button">アンケートへ戻る</a>
+                            <a href="/" class="ui button large submit button">トップページへ戻る</a>
                         </div>
                     </div>
                 </div>
