@@ -65,12 +65,11 @@
                         <button type="button" id="female" class="css-button-sliding-to-left--rose" name="genderFemale"
                             value="female">女性</button>
                     </label>
-                    <label class="gender-button" onclick="changeColor('gray')">
+                    <!-- <label class="gender-button" onclick="changeColor('gray')">
                         <input type="hidden" id="otherHidden" name="genderOther" value="">
-                        <!-- Flaskで取得するため追加（非表示）value値はJSの関数changeColorで挿入 -->
                         <button type="button" id="other" class="css-button-sliding-to-left--grey" name="genderOther"
                             value="other">その他</button>
-                    </label>
+                    </label> -->
                 </div>
     
     
@@ -111,12 +110,12 @@
                 <label>予算<span class="required-mark">*</span>:</label>
                 <select name="budget" id="budget">
                     <option value="" disabled selected>選択してください</option>
-                    <option value="birthday">~1千円</option>
-                    <option value="graduation">~3千円</option>
-                    <option value="jobCelebration">~5千円</option>
-                    <option value="marriageCelebration">~1万円</option>
-                    <option value="babyCelebration">~2万円</option>
-                    <option value="acknowledgment">2万円~</option>
+                    <option value="Up to 1000">~1千円</option>
+                    <option value="Up to 3000">~3千円</option>
+                    <option value="Up to 5000">~5千円</option>
+                    <option value="Up to 10000">~1万円</option>
+                    <option value="Up to 20000">~2万円</option>
+                    <option value="More than 20000">2万円~</option>
                 </select>
     
                 <label for="additionalNotes">その他の注意事項:</label>
