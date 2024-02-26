@@ -139,15 +139,15 @@
         function changeColor(color) {
             var male = document.getElementById('male');
             var female = document.getElementById('female');
-            var other = document.getElementById('other');
+            // var other = document.getElementById('other');
 
             // 初期化
             male.style.backgroundColor = '';
             male.style.color = '#4433ff';
             female.style.backgroundColor = '';
             female.style.color = '#ff0a78';
-            other.style.backgroundColor = '';
-            other.style.color = '#495057';
+            // other.style.backgroundColor = '';
+            // other.style.color = '#495057';
 
             // 色を設定
             if (color === 'blue') {
@@ -160,11 +160,11 @@
                 female.style.backgroundColor = '#ff0a78';
                 female.style.color = '#fff';
                 document.getElementById('femaleHidden').value = 'female';
-            } else if (color === 'gray') {
-                other.style.backgroundColor = '#495057';
-                other.style.color = '#fff';
-                document.getElementById('otherHidden').value = 'other';
-            }
+            } //else if (color === 'gray') {
+            //     other.style.backgroundColor = '#495057';
+            //     other.style.color = '#fff';
+            //     document.getElementById('otherHidden').value = 'other';
+            // }
         }
 
         function checkFormCompletion() {
