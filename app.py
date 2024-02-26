@@ -18,6 +18,8 @@ stripe.api_key = 'sk_test_51OiS9FBJcq3dnxpdURiiEeGjg3ItDVUk9Z3kZUv1300ZMJATHqu2r
 
 import pandas as pd
 
+from flask_mail import Mail, Message
+
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///info.db"
@@ -36,6 +38,14 @@ app.config['PASSWORD'] = 'pass'
 
 UPLOAD_FOLDER = './static/up'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USERNAME'] = 'biz.tsubasa.watanabe@gmail.com'
+app.config['MAIL_PASSWORD'] = 'jhhxvrvitsle bgni'
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USE_SSL'] = False
+mail = Mail(app)
 
 class Database(db.Model):
     __tablename__ = 'database'
@@ -332,6 +342,23 @@ def create_checkout_session():
 def success():
     if request.method == 'GET':
         return render_template('success.html')
+
+@app.route('/send', methods=['POST'])
+def send():
+    if request.method == 'POST':
+        name = request.form['name']
+        email = request.form['email']
+
+        msg = Message('プレミアムプランが購入されました', sender='biz.tsubasa.watanabe@gmail.com', recipients=['biz.tsubasa.watanabe@gmail.com'])
+        msg.body = f"Name: {name}\nEmail: {email}"
+        mail.send(msg)
+
+        return redirect(url_for('thank'))
+
+@app.route('/thank', methods=['GET', 'POST'])
+def thank():
+    if request.method == 'GET':
+        return render_template('thank.html')
 
 @app.route('/cancel', methods=['GET', 'POST'])
 def cancel():

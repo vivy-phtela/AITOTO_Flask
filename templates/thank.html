@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="static/css/style-success.css">
+    <link rel="stylesheet" href="static/css/style-thank.css">
     <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.0/dist/semantic.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://js.stripe.comz/v3/"></script>
@@ -20,12 +20,9 @@
     </header>
 
     <main class="container">
-        <h2>ご購入ありがとうございます</h2>
-        <form method="post" action="/send">
-            <input type="text" name="name" placeholder="Name">
-            <input type="email" name="email" placeholder="Email">
-            <input type="submit" value="Send">
-        </form>
+        <h2>ご入力ありがとうございます</h2>
+        <p>24時間以内にご入力いただいたメールアドレスにご案内をお送りします</p>
+        <a href="{{ url_for('index') }}">ホームに戻る</a>
     </main>
 
 </body>
