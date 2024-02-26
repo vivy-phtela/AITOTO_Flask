@@ -4,7 +4,7 @@ import random
 from enum import unique
 
 import pytz
-from flask import (Flask, flash, redirect, render_template, request, session, url_for)
+from flask import (Flask, flash, redirect, render_template, request, session, url_for, jsonify)
 from flask_login import (LoginManager, UserMixin, current_user, login_required, login_user, logout_user)
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
@@ -46,6 +46,10 @@ app.config['MAIL_PASSWORD'] = 'jhhxvrvitsle bgni'
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False
 mail = Mail(app)
+
+# Excelファイルを読み込む
+df = pd.read_excel('./static/excel/recommend_table.xlsx')
+data = df.to_dict(orient='records')
 
 class Database(db.Model):
     __tablename__ = 'database'
@@ -121,8 +125,8 @@ def submit_survey():
             gender = 'male'
         elif request.form.get('genderFemale') == 'female':
             gender = 'female'
-        elif request.form.get('genderOther') == 'other':
-            gender = 'other'
+        # elif request.form.get('genderOther') == 'other':
+        #     gender = 'other'
         else:
             gender = 'Null'
         age = request.form.get('age')
@@ -305,17 +309,17 @@ def delete_entry(id):
 @app.route('/gift_return', methods=['GET', 'POST'])
 @login_required
 def gift_return():
-    # Excelファイルを読み込む
-    df = pd.read_excel('./static/excel/recommend_table.xlsx')
-
-    # DataFrameをリストの辞書に変換して、HTMLでの処理を容易にする
-    data = df.to_dict(orient='records')
-
     if request.method == 'POST':
         return redirect('/gift_return')
     else:
         # テンプレートにデータを渡す
         return render_template('gift_return.html', data=data)
+
+@app.route('/get_item/<int:index>')
+def get_item(index):
+    # 指定されたインデックスのデータを取得
+    item = data[index % len(data)]
+    return jsonify(item)
 
 # 決済
 @app.route('/create-checkout-session', methods=['POST'])

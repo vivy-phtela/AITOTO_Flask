@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link rel="stylesheet" type="text/css"
         href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.css">
     <link rel="stylesheet" type="text/css" href="/static/css/style-common.css">
@@ -47,62 +46,41 @@
         <div class="ui ccontainer">
             <h2 id="editor-title" class="ui center aligned">おすすめプレゼントはこちら</h2>
             <div class="ui form">
-                <form method="POST" enctype="multipart/form-data" action="">
-                    <!-- データの各行をイテレート -->
-                    {% for row in data %}
-                    <div class="flex">
-                        <div class="image">
-                            <!-- 画像のパスが提供されている場合、画像を表示 -->
-                            {% if row.image %}
-                            <img src="{{ row.image }}" class="preview">
-                            {% endif %}
-                        </div>
-                        <div class="content">
-                            <h2>{{ row.商品名 }}</h3>
-                            <div class="description">
-                                <!-- URLが提供されている場合は、製品ページへのリンク -->
-                                {% if row.リンク %}
-                                <a href="{{ row.リンク}}" class="ui orange large button" target="_blank">購入はこちらから</a>
-                                {% endif %}
-                            </div>
-                            <!-- 必要に応じてここにさらに要素を追加 -->
+                <div class="flex" id="product-display">
+                    <div class="image">
+                        <img src="{{ data[0].image }}" class="preview" id="product-image">
+                    </div>
+                    <div class="content">
+                        <h2 id="product-name">{{ data[0].商品名 }}</h2>
+                        <div class="description">
+                            <a href="{{ data[0].リンク }}" class="ui orange large button" target="_blank" id="product-link">購入はこちらから</a>
+                            <button class="ui large button" id="next-button">次へ</button>
                         </div>
                     </div>
-                    {% endfor %}
-                </form>
+                </div>
             </div>
         </div>
     </div>
+
     <footer class="footer">
-        <!-- <div class="container"> -->
         <p>&copy; 2024 AITOTO. All rights reserved.</p>
-        <!-- </div> -->
     </footer>
 
     <script>
-        window.onload = function () {
-            var fileInput = document.getElementById('fileInput');
-            var previewImage = document.getElementById('previewImage');
-            var deleteButton = document.getElementById('delete-button');
-
-            fileInput.addEventListener('change', function (event) {
-                var file = event.target.files[0];
-
-                if (file) {
-                    var reader = new FileReader();
-                    reader.onload = function (e) {
-                        previewImage.src = e.target.result;
-                        previewImage.style.display = 'block'; // プレビュー画像を表示
-                        document.querySelector('.image img.preview').style.display = 'none'; // 元の画像を非表示
-                    };
-                    reader.readAsDataURL(file);
-                }
-                // フォームの submit を防ぐ
-                event.preventDefault();
+        $(document).ready(function() {
+            var currentIndex = 0;
+            $('#next-button').click(function() {
+                currentIndex += 1;
+                $.getJSON('/get_item/' + currentIndex, function(data) {
+                    $('#product-image').attr('src', data.image);
+                    $('#product-name').text(data.商品名);
+                    $('#product-link').attr('href', data.リンク);
+                });
             });
-
-        };
+        });
     </script>
+    
+
 </body>
 
 </html>
