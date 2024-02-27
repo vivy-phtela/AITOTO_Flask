@@ -4,18 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="static/css/style-cancel.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style-cancel.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.0/dist/semantic.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- <script src="https://js.stripe.comz/v3/"></script> -->
-    <script src="/static/javascript/hamburger.js"></script>
+    <script src="{{ url_for('static', filename='javascript/hamburger.js') }}"></script>
     <title>SUCCESS</title>
 </head>
 
 <body>
     <header class="container flex">
         <a href="/" class="logo">
-            <img src="../static/images/logo.png">
+            <img src="{{ url_for('static', filename='images/logo.png') }}">
         </a>
     </header>
 

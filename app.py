@@ -140,7 +140,7 @@ def submit_survey():
             db.session.add(survey_data)
             db.session.commit()
 
-            return redirect('/gift_return')
+            return redirect(url_for('gift_return'))
     else:
         return render_template('question.html')
 
@@ -164,7 +164,7 @@ def register():
         # ユーザー名が既に使用されているかどうかをチェック
         if User.query.filter_by(username=username).first():
             flash('ユーザ名は既に使用されています')
-            return redirect('/register')
+            return redirect(url_for('register'))
         else:
             # ユーザー情報をデータベースに登録
             user = User(
@@ -177,7 +177,7 @@ def register():
             db.session.commit()
 
         flash('会員登録が完了しました')
-        return redirect('/login')
+        return redirect(url_for('login'))
 
     else:
         return render_template('register.html')
@@ -193,7 +193,7 @@ def login():
         # パスワードはハッシュ化されているので、check_password_hashを使ってユーザー名、パスワードが正しいかチェック
         if (user.password == password):
             login_user(user)
-            return redirect('/')
+            return redirect(url_for('index'))
         else:
             flash('ユーザ名もしくはパスワードが異なります')
             return render_template('login.html')
@@ -206,7 +206,7 @@ def login():
 @login_required
 def logout():
     logout_user()
-    return redirect('/')
+    return redirect(url_for('index'))
 
 @app.route('/preview_page', methods=['GET', 'POST'])
 @login_required
@@ -221,7 +221,7 @@ def preview():
 
         if filename == '':
             flash("ファイルが選択されていません")
-            return redirect('/exit')
+            return redirect(url_for('exit'))
 
         savepath = os.path.join('static', 'up', filename)
         file.save(savepath)
@@ -229,7 +229,7 @@ def preview():
         db.session.add(data)
         db.session.commit()
 
-        return redirect('/list')
+        return redirect(url_for('list'))
     else:
         return render_template('preview.html')
 
@@ -276,7 +276,7 @@ def edit(id):
         # データベースの情報をコミット
         db.session.commit()
 
-        return redirect('/list')
+        return redirect(url_for('list'))
 
     return render_template('edit.html', post=post)
 
@@ -290,7 +290,7 @@ def delete_entry(id):
         db.session.delete(entry)
         db.session.commit()
 
-    return redirect('/list')
+    return redirect(url_for('list'))
 
 
 @app.route('/gift_return', methods=['GET', 'POST'])
@@ -298,7 +298,7 @@ def delete_entry(id):
 def gift_return():
     if request.method == 'POST':
         
-        return redirect('/gift_return')
+        return redirect(url_for('gift_return'))
     else:   
 
         return render_template('gift_return.html')
