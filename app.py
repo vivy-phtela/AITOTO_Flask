@@ -312,7 +312,6 @@ def gift_return():
     if request.method == 'POST':
         return redirect('/gift_return')
     else:
-        # テンプレートにデータを渡す
         return render_template('gift_return.html', data=data)
 
 @app.route('/get_item/<int:index>')
@@ -353,8 +352,8 @@ def send():
         name = request.form['name']
         email = request.form['email']
 
-        msg = Message('プレミアムプランが購入されました', sender='biz.tsubasa.watanabe@gmail.com', recipients=['biz.tsubasa.watanabe@gmail.com'])
-        msg.body = f"Name: {name}\nEmail: {email}"
+        msg = Message('おもいでノート', sender='biz.tsubasa.watanabe@gmail.com', recipients=['biz.tsubasa.watanabe@gmail.com'])
+        msg.body = f"プレミアムプランが購入されました！！\n購入者名: {name}\nメールアドレス: {email}"
         mail.send(msg)
 
         return redirect(url_for('thank'))
