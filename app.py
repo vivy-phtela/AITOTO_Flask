@@ -1,12 +1,13 @@
 import datetime
 import os
 import random
+import time
 from enum import unique
 
 import pytz
 import stripe
-from flask import (Flask, flash, redirect, render_template, request, session,
-                   url_for)
+from flask import (Flask, flash, jsonify, redirect, render_template, request,
+                   session, url_for)
 from flask_login import (LoginManager, UserMixin, current_user, login_required,
                          login_user, logout_user)
 from flask_migrate import Migrate
@@ -95,15 +96,27 @@ def load_user(user_id):
 with app.app_context():
     db.create_all()
 
+# 乱数パラメータを格納するためのグローバル変数
+success_param = None
+
+# 乱数を生成し、success_paramに設定する関数
+def generate_success_param():
+    global success_param
+    success_param = random.randint(1, 10000)
+
 # トップページはシンプルにindex.htmlを表示するだけ
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    if request.method == 'GET':
-        return render_template('index.html')
+    generate_success_param()
+    if request.method == 'POST':
+        return redirect(url_for('create_checkout_session'))
+    return render_template('index.html', success=success_param)
+	
 
 # アンケートページ
 @app.route('/submit_survey', methods=['GET', 'POST'])
 def submit_survey():
+    generate_success_param()
     if request.method == 'POST': # POST
         recipient_name = request.form.get('recipientName')
         # genderだけbuttonなのでif文で仕分け
@@ -124,7 +137,7 @@ def submit_survey():
         # すべてのデータが入力されているかチェック
         if not recipient_name or not gender or not age or not relationship or not occasion or not budget:
             flash('必須項目を入力してください。', 'error')
-            return redirect(request.url)
+            return redirect(url_for('submit_survey'))
         else:
             # データベースに送信
             survey_data = SurveyData(
@@ -142,7 +155,7 @@ def submit_survey():
 
             return redirect(url_for('gift_return'))
     else:
-        return render_template('question.html')
+        return render_template('question.html', success=success_param)
 
 # 会員登録機能を追加
 @app.route('/register', methods=['GET', 'POST'])
@@ -211,7 +224,9 @@ def logout():
 @app.route('/preview_page', methods=['GET', 'POST'])
 @login_required
 def preview():
+    generate_success_param()
     if request.method == 'POST':
+
         user_id = current_user.id
         title = request.form.get('title')
         note = request.form.get('memo')
@@ -229,23 +244,32 @@ def preview():
         db.session.add(data)
         db.session.commit()
 
-        return redirect(url_for('list'))
+        time.sleep(2)
+
+
+        return redirect(url_for('list', success=success_param))
+        #return jsonify({'success': 'データが正常に保存されました'}), 200
     else:
-        return render_template('preview.html')
+        return render_template('preview.html', success=success_param)
 
 @app.route('/list')
 @login_required
 def list():
+    generate_success_param()
+    #success = request.args.get('success')
     # 現在のユーザーのIDを取得
     user_id = current_user.id
     # ユーザーIDに基づいて投稿をフィルタリング
     posts = Database.query.filter_by(user_id=user_id).all()
-    return render_template('list.html', posts=posts)
+    success_param = random.randint(1, 10000)
+    return render_template('list.html', posts=posts, success=success_param)
 
 @app.route('/edit/<int:id>', methods=['GET', 'POST'])
 @login_required
 def edit(id):
+    generate_success_param()
     post = db.session.query(Database).get(id)
+    # success_param = random.randint(1, 10000)
 
     if request.method == 'POST':
         title = request.form.get('title')
@@ -275,33 +299,36 @@ def edit(id):
 
         # データベースの情報をコミット
         db.session.commit()
+        
+        return redirect(url_for('list', success=success_param))
 
-        return redirect(url_for('list'))
-
-    return render_template('edit.html', post=post)
+    return render_template('edit.html', post=post, success=success_param)
 
 @app.route('/delete/<int:id>', methods=['GET', 'POST'])
 @login_required
 def delete_entry(id):
+    generate_success_param()
     entry = Database.query.get(id)
 
     if entry:
         # データベースからエントリを削除
         db.session.delete(entry)
         db.session.commit()
+    # success_param = random.randint(1, 10000)
 
-    return redirect(url_for('list'))
+    return redirect(url_for('list', success=success_param))
 
 
 @app.route('/gift_return', methods=['GET', 'POST'])
 @login_required
 def gift_return():
+    generate_success_param()
     if request.method == 'POST':
         
-        return redirect(url_for('gift_return'))
+        return render_template('gift_return.html', success=success_param)
     else:   
 
-        return render_template('gift_return.html')
+        return render_template('gift_return.html', success=success_param)
 
 @app.route('/create-checkout-session', methods=['POST'])
 @login_required

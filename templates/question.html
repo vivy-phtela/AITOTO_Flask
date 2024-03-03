@@ -46,7 +46,7 @@
             <div class="title">
                 <h1>どの方にどんなプレゼントをされますか？</h1>
             </div>
-            <form action="/submit_survey" method="post">
+            <form action="{{ url_for('submit_survey') }}" method="POST">
                 <label for="recipientName">贈り先の名前<span class="required-mark">*</span>:</label>
                 <input type="text" id="recipientName" name="recipientName">
 
@@ -121,7 +121,7 @@
                 <label for="additionalNotes">その他の注意事項:</label>
                 <textarea id="additionalNotes" name="additionalNotes"></textarea>
                 <div class="flex_home">
-                    <button type="submit" onclick="submitSurvey()">送信しておすすめ返礼品を見る</button>
+                    <button type="submit">送信しておすすめ返礼品を見る</button>
                 </div>
             </form>
     
