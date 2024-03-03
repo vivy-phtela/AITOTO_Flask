@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style-list.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style-common.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.0/dist/semantic.min.js"></script>
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- <script src="https://js.stripe.comz/v3/"></script> -->
     <script src="{{ url_for('static', filename='javascript/hamburger.js') }}"></script>
     <title>LIST</title>
@@ -69,7 +69,6 @@
                         <span>
                             <a href="{{ url_for('edit', id=post.id, success=success) }}"><i class="edit icon"></i>編集</a>
                         </span>
-                        
                     </div>
                 </div>
                 {% endfor %}
