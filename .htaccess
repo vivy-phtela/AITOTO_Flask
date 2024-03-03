@@ -1,4 +1,9 @@
-RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^(.*)$ /omoidenote.com/index.cgi/$1 [QSA,L]
+<!-- ローカル環境では不要なファイル -->
 
+<!-- 本番サーバ用(Apache環境:今回はLOLIPOP)で必要なWebサーバ制御ファイル -->
+<!-- キャッシュを無効化 -->
+<FilesMatch "index\.cgi$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires 0
+</FilesMatch>
