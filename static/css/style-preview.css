@@ -18,6 +18,14 @@ main{
     text-align: center;
 }
 
+#loader {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000; /* 必要に応じて他の要素よりも前面に表示するための z-index */
+}
+
 .flex {
     display: flex;
     justify-content: space-between;

@@ -3,17 +3,17 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/destyle.css@3.0.2/destyle.css">
-    <link rel="stylesheet" href="static/css/style-index.css">
-    <link rel="stylesheet" href="static/css/style-common.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style-index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style-common.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.0/dist/semantic.min.css">
 
     <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.0/dist/semantic.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://js.stripe.comz/v3/"></script>
-    <script src="/static/javascript/hamburger.js"></script>
+    <script src="{{ url_for('static', filename='javascript/hamburger.js') }}"></script>
 
     <title>おもいでノート</title>
 </head>
@@ -21,20 +21,20 @@
 <body>
     <header>
         <div class="ui secondary menu stackable header-sticky">
-            <a href="/" class="logo">
-                <img src="../static/images/logo.png">
+            <a href="{{ url_for('index') }}" class="logo">
+                <img src="{{ url_for('static', filename='images/logo.png') }}">
             </a>
             {% if current_user.is_authenticated %}
-                <a class="item" href="/">トップページ</a>
-                <a class="item" href="/preview_page">プレゼント登録</a>
-                <a class="item" href="/list">マイリスト</a>
+                <a class="item" href="{{ url_for('index') }}">トップページ</a>
+                <a class="item" href="{{ url_for('preview') }}">プレゼント登録</a>
+                <a class="item" href="{{ url_for('list', success=success) }}">マイリスト</a>
                 <div class="right menu">
-                    <a class="ui item" href="/logout">ログアウト</a>
+                    <a class="ui item" href="{{ url_for('logout') }}">ログアウト</a>
                 </div>
             {% else %}
                 <div class="right menu">
-                    <a class="ui item" href="/register">新規会員登録</a>
-                    <a class="ui item" href="/login">ログイン</a>
+                    <a class="ui item" href="{{ url_for('register') }}">新規会員登録</a>
+                    <a class="ui item" href="{{ url_for('login') }}">ログイン</a>
                 </div>
             {% endif %}
             <div class="hamburger">
@@ -49,11 +49,11 @@
                 <p>お返し選びをサポートします</p>
                 <div class="button">
                     {% if current_user.is_authenticated %}
-                    <button class="ui button green big"><a href="/preview_page">プレゼント登録</a></button>
-                    <button class="ui button yellow big"><a href="/list">マイリスト</a></button>
+                    <button class="ui button green big"><a href="{{ url_for('preview') }}">プレゼント登録</a></button>
+                    <button class="ui button yellow big"><a href="{{ url_for('list', success=success) }}">マイリスト</a></button>
                     {% else %}
-                        <button class="ui button green big"><a href="/register">新規会員登録</a></button>
-                        <button class="ui button yellow big"><a href="/login">ログイン</a></button>
+                        <button class="ui button green big"><a href="{{ url_for('register') }}">新規会員登録</a></button>
+                        <button class="ui button yellow big"><a href="{{ url_for('login') }}">ログイン</a></button>
                     {% endif %}
                 </div>
                 <br>

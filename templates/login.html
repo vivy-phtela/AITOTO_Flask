@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/static/css/style-register.css">
-  <link rel="stylesheet" href="static/css/style-common.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style-register.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style-common.css') }}">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.0/dist/semantic.min.css">
   <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.0/dist/semantic.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <!-- <script src="https://js.stripe.comz/v3/"></script> -->
-  <script src="/static/javascript/hamburger.js"></script>
+  <script src="{{ url_for('static', filename='javascript/hamburger.js') }}"></script>
   <title>LOGIN</title>
 
 </head>
@@ -20,20 +20,20 @@
   <body class="body-bg">
     <header>
       <div class="ui secondary menu stackable header-sticky">
-        <a href="/" class="logo">
-          <img src="../static/images/logo.png">
+        <a href="{{ url_for('index') }}" class="logo">
+          <img src="{{ url_for('static', filename='images/logo.png') }}">
         </a>
         {% if current_user.is_authenticated %}
-        <a class="item" href="/">トップページ</a>
-        <a class="item" href="/preview_page">プレゼント登録</a>
-        <a class="item" href="/list">マイリスト</a>
+        <a class="item" href="{{ url_for('index') }}">トップページ</a>
+        <a class="item" href="{{ url_for('preview') }}">プレゼント登録</a>
+        <a class="item" href="{{ url_for('list') }}">マイリスト</a>
         <div class="right menu">
-          <a class="ui item" href="/logout">ログアウト</a>
+          <a class="ui item" href="{{ url_for('logout') }}">ログアウト</a>
         </div>
         {% else %}
         <div class="right menu">
-          <a class="ui item" href="/register">新規会員登録</a>
-          <a class="ui item" href="/login">ログイン</a>
+          <a class="ui item" href="{{ url_for('register') }}">新規会員登録</a>
+          <a class="ui item" href="{{ url_for('login') }}">ログイン</a>
         </div>
         {% endif %}
         <div class="hamburger">
@@ -65,7 +65,7 @@
               <button class="ui fluid large teal submit button" type="submit">ログイン</button>
             </div>
           </form>
-          <h4>アカウントをお持ちでない場合は<a href="/register">新規登録</a></h4>
+          <h4>アカウントをお持ちでない場合は<a href="{{ url_for('register') }}">新規登録</a></h4>
         </div>
       </div>
     </main>
@@ -86,7 +86,7 @@
     </form>
     <div class="register">
       <p>アカウントを持ちでない場合は</p>
-      <a href="/register">新規登録</a>
+      <a href="{{ url_for('register') }}">新規登録</a>
     </div> -->
 
 
