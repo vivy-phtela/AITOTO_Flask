@@ -38,9 +38,20 @@
     </header>
 
     <main class="container">
-        <h2>ご購入ありがとうございます<br>24時間以内に入力して頂いたメールアドレスにご連絡いたします</h2>
-        <a href="{{ url_for('index') }}">ホームに戻る</a>
+        <h1>ご購入ありがとうございます</h>
+        <h3>以下のフォームへご回答お願いします<br>メールアドレスは正しく入力してください</h3>
+        <form method="post" action="/send">
+            <input type="text" name="name" placeholder="Name">
+            <input type="email" name="email" placeholder="Email">
+            <input type="submit" value="Send">
+        </form>
     </main>
+    
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 AITOTO. All rights reserved.</p>
+        </div>
+    </footer>
 
 </body>
 

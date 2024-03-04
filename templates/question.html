@@ -64,12 +64,11 @@
                         <button type="button" id="female" class="css-button-sliding-to-left--rose" name="genderFemale"
                             value="female">女性</button>
                     </label>
-                    <label class="gender-button" onclick="changeColor('gray')">
+                    <!-- <label class="gender-button" onclick="changeColor('gray')">
                         <input type="hidden" id="otherHidden" name="genderOther" value="">
-                        <!-- Flaskで取得するため追加（非表示）value値はJSの関数changeColorで挿入 -->
                         <button type="button" id="other" class="css-button-sliding-to-left--grey" name="genderOther"
                             value="other">その他</button>
-                    </label>
+                    </label> -->
                 </div>
     
     
@@ -110,12 +109,12 @@
                 <label>予算<span class="required-mark">*</span>:</label>
                 <select name="budget" id="budget">
                     <option value="" disabled selected>選択してください</option>
-                    <option value="birthday">~1千円</option>
-                    <option value="graduation">~3千円</option>
-                    <option value="jobCelebration">~5千円</option>
-                    <option value="marriageCelebration">~1万円</option>
-                    <option value="babyCelebration">~2万円</option>
-                    <option value="acknowledgment">2万円~</option>
+                    <option value="Up to 1000">~1千円</option>
+                    <option value="Up to 3000">~3千円</option>
+                    <option value="Up to 5000">~5千円</option>
+                    <option value="Up to 10000">~1万円</option>
+                    <option value="Up to 20000">~2万円</option>
+                    <option value="More than 20000">2万円~</option>
                 </select>
     
                 <label for="additionalNotes">その他の注意事項:</label>
@@ -139,15 +138,15 @@
         function changeColor(color) {
             var male = document.getElementById('male');
             var female = document.getElementById('female');
-            var other = document.getElementById('other');
+            // var other = document.getElementById('other');
 
             // 初期化
             male.style.backgroundColor = '';
             male.style.color = '#4433ff';
             female.style.backgroundColor = '';
             female.style.color = '#ff0a78';
-            other.style.backgroundColor = '';
-            other.style.color = '#495057';
+            // other.style.backgroundColor = '';
+            // other.style.color = '#495057';
 
             // 色を設定
             if (color === 'blue') {
@@ -160,11 +159,11 @@
                 female.style.backgroundColor = '#ff0a78';
                 female.style.color = '#fff';
                 document.getElementById('femaleHidden').value = 'female';
-            } else if (color === 'gray') {
-                other.style.backgroundColor = '#495057';
-                other.style.color = '#fff';
-                document.getElementById('otherHidden').value = 'other';
-            }
+            } //else if (color === 'gray') {
+            //     other.style.backgroundColor = '#495057';
+            //     other.style.color = '#fff';
+            //     document.getElementById('otherHidden').value = 'other';
+            // }
         }
 
         function checkFormCompletion() {

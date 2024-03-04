@@ -5,19 +5,21 @@ import time
 from enum import unique
 
 import pytz
-import stripe
-from flask import (Flask, flash, jsonify, redirect, render_template, request,
-                   session, url_for)
-from flask_login import (LoginManager, UserMixin, current_user, login_required,
-                         login_user, logout_user)
+from flask import (Flask, flash, redirect, render_template, request, session, url_for, jsonify)
+from flask_login import (LoginManager, UserMixin, current_user, login_required, login_user, logout_user)
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 # from sqlalchemy.orm import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.utils import secure_filename
 
-# This is your test secret API key.
+# 決済システムstripeの導入
+import stripe
 stripe.api_key = 'sk_test_51OiS9FBJcq3dnxpdURiiEeGjg3ItDVUk9Z3kZUv1300ZMJATHqu2rdAU77W5HL4MyCVVGUWHZy90JyjvgOI1MbVY00uOkzgyyg'
+
+import pandas as pd
+
+from flask_mail import Mail, Message
 
 app = Flask(__name__)
 
@@ -37,6 +39,18 @@ app.config['PASSWORD'] = 'pass'
 
 UPLOAD_FOLDER = './static/up'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USERNAME'] = 'biz.tsubasa.watanabe@gmail.com'
+app.config['MAIL_PASSWORD'] = 'jhhxvrvitsle bgni'
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USE_SSL'] = False
+mail = Mail(app)
+
+# Excelファイルを読み込む
+df = pd.read_excel('./static/excel/recommend_table.xlsx')
+data = df.to_dict(orient='records')
 
 class Database(db.Model):
     __tablename__ = 'database'
@@ -124,8 +138,8 @@ def submit_survey():
             gender = 'male'
         elif request.form.get('genderFemale') == 'female':
             gender = 'female'
-        elif request.form.get('genderOther') == 'other':
-            gender = 'other'
+        # elif request.form.get('genderOther') == 'other':
+        #     gender = 'other'
         else:
             gender = 'Null'
         age = request.form.get('age')
@@ -181,7 +195,7 @@ def register():
         else:
             # ユーザー情報をデータベースに登録
             user = User(
-                username=username, 
+                username=username,
                 password=password,
                 birthday=birthday,
                 gender=gender,
@@ -316,7 +330,7 @@ def delete_entry(id):
         db.session.commit()
     # success_param = random.randint(1, 10000)
 
-    return redirect(url_for('list', success=success_param))
+    return redirect('/list')
 
 
 @app.route('/gift_return', methods=['GET', 'POST'])
@@ -330,6 +344,7 @@ def gift_return():
 
         return render_template('gift_return.html', success=success_param)
 
+# 決済
 @app.route('/create-checkout-session', methods=['POST'])
 @login_required
 def create_checkout_session():
@@ -354,6 +369,23 @@ def create_checkout_session():
 def success():
     if request.method == 'GET':
         return render_template('success.html')
+
+@app.route('/send', methods=['POST'])
+def send():
+    if request.method == 'POST':
+        name = request.form['name']
+        email = request.form['email']
+
+        msg = Message('おもいでノート', sender='biz.tsubasa.watanabe@gmail.com', recipients=['biz.tsubasa.watanabe@gmail.com'])
+        msg.body = f"プレミアムプランが購入されました！！\n購入者名: {name}\nメールアドレス: {email}"
+        mail.send(msg)
+
+        return redirect(url_for('thank'))
+
+@app.route('/thank', methods=['GET', 'POST'])
+def thank():
+    if request.method == 'GET':
+        return render_template('thank.html')
 
 @app.route('/cancel', methods=['GET', 'POST'])
 def cancel():
