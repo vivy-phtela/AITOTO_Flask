@@ -46,12 +46,12 @@
             <div class="ui form">
                 <div class="flex" id="product-display">
                     <div class="image">
-                        <img src="{{ data[0].image }}" class="preview" id="product-image">
+                        <img src="{{ df[0].image }}" class="preview" id="product-image">
                     </div>
                     <div class="content">
-                        <h2 id="product-name">{{ data[0].product_name }}</h2>
+                        <h2 id="product-name">{{ df[0].product_name }}</h2>
                         <div class="description">
-                            <a href="{{ data[0].link }}" class="ui orange large button" target="_blank" id="product-link">購入はこちらから</a>
+                            <a href="{{ df[0].link }}" class="ui orange large button" target="_blank" id="product-link">購入はこちらから</a>
                         </div>
                         <div class="button_flex">
                             <button id="submit-button" class="ui fluid large teal submit button"
@@ -77,10 +77,10 @@
             var currentIndex = 0;
             $('#next-button').click(function() {
                 currentIndex += 1;
-                $.getJSON('/get_item/' + currentIndex, function(data) {
-                    $('#product-image').attr('src', data.image);
-                    $('#product-name').text(data.product_name);
-                    $('#product-link').attr('href', data.link);
+                $.getJSON('/get_item/' + currentIndex, function(df) {
+                    $('#product-image').attr('src', df.image);
+                    $('#product-name').text(df.product_name);
+                    $('#product-link').attr('href', df.link);
                 });
             });
         });
