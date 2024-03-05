@@ -51,7 +51,7 @@ mail = Mail(app)
 
 # Excelファイルを読み込む
 df = pd.read_excel('./static/excel/recommend_table.xlsx')
-data = df.to_dict(orient='records')
+df = df.to_dict(orient='records')
 
 class Database(db.Model):
     __tablename__ = 'database'
@@ -340,10 +340,16 @@ def gift_return():
     generate_success_param()
     if request.method == 'POST':
         
-        return render_template('gift_return.html', success=success_param)
+        return render_template('gift_return.html', success=success_param, df = df)
     else:   
 
-        return render_template('gift_return.html', success=success_param)
+        return render_template('gift_return.html', success=success_param, df = df)
+
+@app.route('/get_item/<int:index>')
+def get_item(index):
+    # 指定されたインデックスのデータを取得
+    item = df[index % len(df)]
+    return jsonify(item)
 
 # 決済
 @app.route('/create-checkout-session', methods=['POST'])
