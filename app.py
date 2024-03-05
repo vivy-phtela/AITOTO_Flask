@@ -5,20 +5,21 @@ import time
 from enum import unique
 
 import pytz
-from flask import (Flask, flash, redirect, render_template, request, session, url_for, jsonify)
-from flask_login import (LoginManager, UserMixin, current_user, login_required, login_user, logout_user)
+# 決済システムstripeの導入
+import stripe
+from flask import (Flask, flash, jsonify, redirect, render_template, request,
+                   session, url_for)
+from flask_login import (LoginManager, UserMixin, current_user, login_required,
+                         login_user, logout_user)
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 # from sqlalchemy.orm import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.utils import secure_filename
 
-# 決済システムstripeの導入
-import stripe
 stripe.api_key = 'sk_test_51OiS9FBJcq3dnxpdURiiEeGjg3ItDVUk9Z3kZUv1300ZMJATHqu2rdAU77W5HL4MyCVVGUWHZy90JyjvgOI1MbVY00uOkzgyyg'
 
 import pandas as pd
-
 from flask_mail import Mail, Message
 
 app = Flask(__name__)
