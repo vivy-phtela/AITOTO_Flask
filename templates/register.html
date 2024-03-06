@@ -76,12 +76,11 @@
                             <button type="button" id="female" class="css-button-sliding-to-left--rose"
                                 name="genderFemale" value="female">女性</button>
                         </label>
-                        <label class="gender-button" onclick="changeColor('gray')">
+                        <!-- <label class="gender-button" onclick="changeColor('gray')">
                             <input type="hidden" id="otherHidden" name="genderOther" value="">
-                            <!-- Flaskで取得するため追加（非表示）value値はJSの関数changeColorで挿入 -->
                             <button type="button" id="other" class="css-button-sliding-to-left--grey" name="genderOther"
                                 value="other">その他</button>
-                        </label>
+                        </label> -->
                     </div>
                     <button class="ui fluid large teal submit button" type="submit">登録</button>
                 </div>
@@ -130,11 +129,11 @@
                 female.style.backgroundColor = '#ff0a78';
                 female.style.color = '#fff';
                 document.getElementById('femaleHidden').value = 'female';
-            } else if (color === 'gray') {
-                other.style.backgroundColor = '#495057';
-                other.style.color = '#fff';
-                document.getElementById('otherHidden').value = 'other';
-            }
+            } //else if (color === 'gray') {
+            //     other.style.backgroundColor = '#495057';
+            //     other.style.color = '#fff';
+            //     document.getElementById('otherHidden').value = 'other';
+            // }
         }
 
 
