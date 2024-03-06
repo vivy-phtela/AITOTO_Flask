@@ -51,6 +51,7 @@ mail = Mail(app)
 # Excelファイルを読み込む
 df = pd.read_excel('./static/excel/recommend_table.xlsx')
 df = df.to_dict(orient='records')
+# print(df)
 
 class Database(db.Model):
     __tablename__ = 'database'
@@ -131,17 +132,10 @@ def index():
 @app.route('/submit_survey', methods=['GET', 'POST'])
 def submit_survey():
     generate_success_param()
-    if request.method == 'POST': # POST
+    if request.method == 'POST':
+        # フォームからのデータを取得
         recipient_name = request.form.get('recipientName')
-        # genderだけbuttonなのでif文で仕分け
-        if request.form.get('genderMale') == 'male':
-            gender = 'male'
-        elif request.form.get('genderFemale') == 'female':
-            gender = 'female'
-        # elif request.form.get('genderOther') == 'other':
-        #     gender = 'other'
-        else:
-            gender = 'Null'
+        gender = 'male' if request.form.get('genderMale') == 'male' else 'female'
         age = request.form.get('age')
         relationship = request.form.get('relationship')
         occasion = request.form.get('occasion')
@@ -153,20 +147,16 @@ def submit_survey():
             flash('必須項目を入力してください。', 'error')
             return redirect(url_for('submit_survey'))
         else:
-            # データベースに送信
-            survey_data = SurveyData(
-                recipient_name=recipient_name,
-                gender=gender,
-                age=age,
-                relationship=relationship,
-                occasion=occasion,
-                budget=budget,
-                additional_notes=additional_notes
-            )
-
-            db.session.add(survey_data)
-            db.session.commit()
-
+            # データをセッションに保存
+            session['survey_result'] = {
+                'recipient_name': recipient_name,
+                'gender': gender,
+                'age': age,
+                'relationship': relationship,
+                'occasion': occasion,
+                'budget': budget,
+                'additional_notes': additional_notes
+            }
             return redirect(url_for('gift_return'))
     else:
         return render_template('question.html', success=success_param)
@@ -337,12 +327,16 @@ def delete_entry(id):
 @login_required
 def gift_return():
     generate_success_param()
-    if request.method == 'POST':
-        
-        return render_template('gift_return.html', success=success_param, df = df)
-    else:   
+    # セッションからデータを取得
+    survey_result = session.get('survey_result', {})
 
-        return render_template('gift_return.html', success=success_param, df = df)
+    # genderの値に基づいてdfからデータをフィルタリング
+    if survey_result.get('gender') == 'female':
+        df2 = [item for item in df if item['gender'] == 1]
+        return render_template('gift_return.html', success=success_param, df=df2)
+    else: 
+        df3 = [item for item in df if item['gender'] == 0]
+        return render_template('gift_return.html', success=success_param, df=df3)
 
 @app.route('/get_item/<int:index>')
 def get_item(index):
