@@ -60,6 +60,7 @@ class Database(db.Model):
     title = db.Column(db.String(100), nullable=True) # タイトル
     note = db.Column(db.Text, nullable=True) # メモ
     file_path = db.Column(db.String(255), nullable=True)
+    saved = db.Column(db.Boolean, default=False)  # 保存フラグ
 
     # ユーザーの投稿管理
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))  # ユーザーID
@@ -67,12 +68,13 @@ class Database(db.Model):
     # ユーザーとの関連付け
     user = db.relationship('User', back_populates='posts')
 
-    def __init__(self, title, note, file_path, user_id):
+    def __init__(self, title, note, file_path, user_id, saved=False):
         self.title = title
         self.note = note
         self.file_path = file_path
         self.user_id = user_id
         self.date = datetime.datetime.now(pytz.timezone('Asia/Tokyo'))
+        self.saved = saved
 
 # ユーザー情報を管理するデータベース
 class User(UserMixin, db.Model):
@@ -103,6 +105,8 @@ class SurveyData(db.Model):
     budget = db.Column(db.String(50))
     additional_notes = db.Column(db.Text)
 
+    post_id = db.Column(db.Integer, db.ForeignKey('database.id'), nullable=False)  # 投稿のIDを参照
+
 # ユーザーローダー関数を設定
 @login_manager.user_loader
 def load_user(user_id):
@@ -129,8 +133,8 @@ def index():
 	
 
 # アンケートページ
-@app.route('/submit_survey', methods=['GET', 'POST'])
-def submit_survey():
+@app.route('/submit_survey/<int:id>', methods=['GET', 'POST'])
+def submit_survey(id):
     generate_success_param()
     if request.method == 'POST': # POST
         recipient_name = request.form.get('recipientName')
@@ -152,10 +156,11 @@ def submit_survey():
         # すべてのデータが入力されているかチェック
         if not recipient_name or not gender or not age or not relationship or not occasion or not budget:
             flash('必須項目を入力してください。', 'error')
-            return redirect(url_for('submit_survey'))
+            return redirect(url_for('submit_survey', id=id))
         else:
             # データベースに送信
             survey_data = SurveyData(
+                post_id=id,  # 投稿の ID を追加
                 recipient_name=recipient_name,
                 gender=gender,
                 age=age,
@@ -168,9 +173,11 @@ def submit_survey():
             db.session.add(survey_data)
             db.session.commit()
 
-            return redirect(url_for('gift_return'))
+            return redirect(url_for('gift_return', success=success_param, id=id))
+
     else:
-        return render_template('question.html', success=success_param)
+        return render_template('question.html', success=success_param, id=id)
+
 
 # 会員登録機能を追加
 @app.route('/register', methods=['GET', 'POST'])
@@ -333,17 +340,51 @@ def delete_entry(id):
 
     return redirect('/list')
 
-
-@app.route('/gift_return', methods=['GET', 'POST'])
+@app.route('/gift_return/<int:id>', methods=['GET', 'POST'])
 @login_required
-def gift_return():
+def gift_return(id):
     generate_success_param()
+    post = Database.query.get_or_404(id)
     if request.method == 'POST':
-        
-        return render_template('gift_return.html', success=success_param, df = df)
-    else:   
+        # POST メソッドでの処理
+        post.saved = True  # saved を True に設定
+        db.session.commit()  # データベースに保存
+        return redirect(url_for('list', success=success_param, df=df, id=id))
+    else:
+        # GET メソッドでの処理
+        return render_template('gift_return.html', success=success_param, df=df, id=id)
 
-        return render_template('gift_return.html', success=success_param, df = df)
+@app.route('/view_survey/<int:id>', methods=['GET', 'POST'])
+def view_survey(id):
+    survey_data = SurveyData.query.filter_by(post_id=id).first_or_404()
+    if request.method == 'POST':
+        recipient_name = request.form.get('recipientName')
+        gender = request.form.get('gender')
+        age = request.form.get('age')
+        relationship = request.form.get('relationship')
+        occasion = request.form.get('occasion')
+        budget = request.form.get('budget')
+        additional_notes = request.form.get('additionalNotes')
+
+        # 必須項目の入力チェック
+        if not recipient_name or not gender or not age or not relationship or not occasion or not budget:
+            flash('必須項目を入力してください。', 'error')
+            return redirect(url_for('view_survey', id=id))
+
+        # データベースに保存
+        survey_data.recipient_name = recipient_name
+        survey_data.gender = gender
+        survey_data.age = age
+        survey_data.relationship = relationship
+        survey_data.occasion = occasion
+        survey_data.budget = budget
+        survey_data.additional_notes = additional_notes
+
+        db.session.commit()
+
+        return redirect(url_for('gift_return', success=success_param, id=id))
+
+    return render_template('view_survey.html', survey_data=survey_data)
 
 @app.route('/get_item/<int:index>')
 def get_item(index):

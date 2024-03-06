@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.0/dist/semantic.min.css">
     <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.0/dist/semantic.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <!-- <script src="https://js.stripe.comz/v3/"></script> -->
     <script src="{{ url_for('static', filename='javascript/hamburger.js') }}"></script>
     <title>プレゼントアンケート</title>
 </head>
@@ -41,87 +40,69 @@
     </header>
     
     <main>
-
         
         <div id="survey-form" class="ui form">
             <div class="title">
-                <h1>どの方にどんなプレゼントをされますか？</h1>
+                <h1>アンケート内容</h1>
             </div>
-            <form action="{{ url_for('submit_survey', id=id) }}" method="POST">
+            <form action="{{ url_for('view_survey', id=survey_data.post_id) }}" method="POST">
                 <label for="recipientName">贈り先の名前<span class="required-mark">*</span>:</label>
-                <input type="text" id="recipientName" name="recipientName">
+                <input type="text" id="recipientName" name="recipientName" value="{{ survey_data.recipient_name }}">
 
                 <label for="gender">性別<span class="required-mark">*</span>:</label>
-                <div class="gender-buttons">
-                    <label class="gender-button" onclick="changeColor('blue')">
-                        <input type="hidden" id="maleHidden" name="genderMale" value="">
-                        <!-- Flaskで取得するため追加（非表示）value値はJSの関数changeColorで挿入 -->
-                        <button type="button" id="male" class="css-button-sliding-to-left--sky" name="genderMale"
-                            value="male">男性</button>
-                    </label>
-                    <label class="gender-button" onclick="changeColor('red')">
-                        <input type="hidden" id="femaleHidden" name="genderFemale" value="">
-                        <!-- Flaskで取得するため追加（非表示）value値はJSの関数changeColorで挿入 -->
-                        <button type="button" id="female" class="css-button-sliding-to-left--rose" name="genderFemale"
-                            value="female">女性</button>
-                    </label>
-                    <!-- <label class="gender-button" onclick="changeColor('gray')">
-                        <input type="hidden" id="otherHidden" name="genderOther" value="">
-                        <button type="button" id="other" class="css-button-sliding-to-left--grey" name="genderOther"
-                            value="other">その他</button>
-                    </label> -->
-                </div>
-    
-    
+                <select name="gender" id="gender">
+                    <option value="male" {% if survey_data.gender == 'male' %} selected {% endif %}>男性</option>
+                    <option value="female" {% if survey_data.gender == 'female' %} selected {% endif %}>女性</option>
+                </select>
+
                 <label>年齢<span class="required-mark">*</span>:</label>
                 <select name="age" id="age">
-                    <!-- 最初は空欄に -->
                     <option value="" disabled selected>選択してください</option>
-                    <option value="10s">~10代</option>
-                    <option value="20s">20代</option>
-                    <option value="30s">30代</option>
-                    <option value="40s">40代</option>
-                    <option value="50s">50代</option>
-                    <option value="60s">60代以上</option>
+                    <option value="10s" {% if survey_data.age == '10s' %} selected {% endif %}>~10代</option>
+                    <option value="20s" {% if survey_data.age == '20s' %} selected {% endif %}>20代</option>
+                    <option value="30s" {% if survey_data.age == '30s' %} selected {% endif %}>30代</option>
+                    <option value="40s" {% if survey_data.age == '40s' %} selected {% endif %}>40代</option>
+                    <option value="50s" {% if survey_data.age == '50s' %} selected {% endif %}>50代</option>
+                    <option value="60s" {% if survey_data.age == '60s' %} selected {% endif %}>60代以上</option>
                 </select>
-    
+
                 <label>関係<span class="required-mark">*</span>:</label>
                 <select name="relationship" id="relationship">
                     <option value="" disabled selected>選択してください</option>
-                    <option value="family">家族</option>
-                    <option value="friends">友達</option>
-                    <option value="partner">恋人</option>
-                    <option value="acquaintance">知人</option>
-                    <option value="otherRelation">その他</option>
+                    <option value="family" {% if survey_data.relationship == 'family' %} selected {% endif %}>家族</option>
+                    <option value="friends" {% if survey_data.relationship == 'friends' %} selected {% endif %}>友達</option>
+                    <option value="partner" {% if survey_data.relationship == 'partner' %} selected {% endif %}>恋人</option>
+                    <option value="acquaintance" {% if survey_data.relationship == 'acquaintance' %} selected {% endif %}>知人</option>
+                    <option value="otherRelation" {% if survey_data.relationship == 'otherRelation' %} selected {% endif %}>その他</option>
                 </select>
-    
+
                 <label>お祝いの種類<span class="required-mark">*</span>:</label>
                 <select name="occasion" id="occasion">
                     <option value="" disabled selected>選択してください</option>
-                    <option value="birthday">誕生日</option>
-                    <option value="graduation">卒業</option>
-                    <option value="jobCelebration">就職</option>
-                    <option value="marriageCelebration">結婚</option>
-                    <option value="babyCelebration">出産</option>
-                    <option value="acknowledgment">感謝</option>
-                    <option value="otherOccasion">その他</option>
+                    <option value="birthday" {% if survey_data.occasion == 'birthday' %} selected {% endif %}>誕生日</option>
+                    <option value="graduation" {% if survey_data.occasion == 'graduation' %} selected {% endif %}>卒業</option>
+                    <option value="jobCelebration" {% if survey_data.occasion == 'jobCelebration' %} selected {% endif %}>就職</option>
+                    <option value="marriageCelebration" {% if survey_data.occasion == 'marriageCelebration' %} selected {% endif %}>結婚</option>
+                    <option value="babyCelebration" {% if survey_data.occasion == 'babyCelebration' %} selected {% endif %}>出産</option>
+                    <option value="acknowledgment" {% if survey_data.occasion == 'acknowledgment' %} selected {% endif %}>感謝</option>
+                    <option value="otherOccasion" {% if survey_data.occasion == 'otherOccasion' %} selected {% endif %}>その他</option>
                 </select>
-    
+
                 <label>予算<span class="required-mark">*</span>:</label>
                 <select name="budget" id="budget">
                     <option value="" disabled selected>選択してください</option>
-                    <option value="Up to 1000">~1千円</option>
-                    <option value="Up to 3000">~3千円</option>
-                    <option value="Up to 5000">~5千円</option>
-                    <option value="Up to 10000">~1万円</option>
-                    <option value="Up to 20000">~2万円</option>
-                    <option value="More than 20000">2万円~</option>
+                    <option value="Up to 1000" {% if survey_data.budget == 'Up to 1000' %} selected {% endif %}>~1千円</option>
+                    <option value="Up to 3000" {% if survey_data.budget == 'Up to 3000' %} selected {% endif %}>~3千円</option>
+                    <option value="Up to 5000" {% if survey_data.budget == 'Up to 5000' %} selected {% endif %}>~5千円</option>
+                    <option value="Up to 10000" {% if survey_data.budget == 'Up to 10000' %} selected {% endif %}>~1万円</option>
+                    <option value="Up to 20000" {% if survey_data.budget == 'Up to 20000' %} selected {% endif %}>~2万円</option>
+                    <option value="More than 20000" {% if survey_data.budget == 'More than 20000' %} selected {% endif %}>2万円~</option>
                 </select>
-    
+
                 <label for="additionalNotes">その他の注意事項:</label>
-                <textarea id="additionalNotes" name="additionalNotes"></textarea>
+                <textarea id="additionalNotes" name="additionalNotes">{{ survey_data.additional_notes }}</textarea>
                 <div class="flex_home">
-                    <button type="submit">送信しておすすめ返礼品を見る</button>
+                    <button type="submit">変更を保存する</button>
                 </div>
             </form>
     

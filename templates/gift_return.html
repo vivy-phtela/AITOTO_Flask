@@ -41,31 +41,35 @@
 
 <body>
     <div class="form-container">
-        <div class="ui ccontainer">
-            <h2 id="editor-title" class="ui center aligned">おすすめプレゼントはこちら</h2>
-            <div class="ui form">
-                <div class="flex" id="product-display">
-                    <div class="image">
-                        <img src="{{ df[0].image }}" class="preview" id="product-image">
-                    </div>
-                    <div class="content">
-                        <h2 id="product-name">{{ df[0].product_name }}</h2>
-                        <div class="description">
-                            <a href="{{ df[0].link }}" class="ui orange large button" target="_blank" id="product-link">購入はこちらから</a>
+        <form id="registrationForm" method="POST" enctype="multipart/form-data">
+            <div class="ui ccontainer">
+                <h2 id="editor-title" class="ui center aligned">おすすめプレゼントはこちら</h2>
+                <div class="ui form">
+                    <div class="flex" id="product-display">
+                        <div class="image">
+                            <img src="{{ df[0].image }}" class="preview" id="product-image">
                         </div>
-                        <div class="button_flex">
-                            <button id="submit-button" class="ui fluid large teal submit button"
-                                type="submit">このプレゼントをセーブする</button>
-                            <button class="negative ui button" id="next-button">次へ</button>
-                        </div>
-                        <div class="button_back">
-                            <a href="/submit_survey" class="ui button large submit button">アンケートへ戻る</a>
-                            <a href="/" class="ui button large submit button">トップページへ戻る</a>
+                        <div class="content">
+                            <h2 id="product-name">{{ df[0].product_name }}</h2>
+                            <div class="description">
+                                <a href="{{ df[0].link }}" class="ui orange large button" target="_blank"
+                                    id="product-link">購入はこちらから</a>
+                            </div>
+                            <div class="button_flex">
+                                <button id="submit-button" class="ui fluid large teal submit button"
+                                    type="submit">このプレゼントをセーブする</button>
+                                <button class="negative ui button" id="next-button">次へ</button>
+                            </div>
+                            <div class="button_back">
+                                <a href="{{ url_for('view_survey', id=id) }}"
+                                    class="ui button large submit button">アンケートへ戻る</a>
+                                <a href="{{ url_for('index') }}" class="ui button large submit button">トップページへ戻る</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
 
     <footer class="footer">
@@ -73,11 +77,11 @@
     </footer>
 
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             var currentIndex = 0;
-            $('#next-button').click(function() {
+            $('#next-button').click(function () {
                 currentIndex += 1;
-                $.getJSON('/get_item/' + currentIndex, function(df) {
+                $.getJSON('/get_item/' + currentIndex, function (df) {
                     $('#product-image').attr('src', df.image);
                     $('#product-name').text(df.product_name);
                     $('#product-link').attr('href', df.link);
@@ -85,7 +89,7 @@
             });
         });
     </script>
-    
+
 
 </body>
 

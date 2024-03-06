@@ -37,7 +37,7 @@
                 <i id="hamburger-toggle" class="icon bars"></i>
             </div>
         </div>
-        
+
     </header>
 
     <main>
@@ -53,7 +53,8 @@
                 {% for post in posts %}
                 <div class="card">
                     <div class="content">
-                        <div class="header"><a href="{{ url_for('edit', id=post.id, success=success) }}">{{ post.title }}</a></div>
+                        <div class="header"><a href="{{ url_for('edit', id=post.id, success=success) }}">{{ post.title
+                                }}</a></div>
                         <div class="meta"><span><i class="calendar icon"></i> {{ post.date.strftime('%Y-%m-%d %H:%M')
                                 }}</span></div>
                         <div class="memo">
@@ -64,7 +65,11 @@
                     </div>
                     <div class="extra content">
                         <span class="right floated">
-                            <a href="{{ url_for('submit_survey') }}"><i class="gift icon"></i>おすすめ返礼品</a>
+                            {% if post.saved %}
+                            <a href="{{ url_for('gift_return', id=post.id) }}"><i class="gift icon"></i>おすすめ返礼品</a>
+                            {% else %}
+                            <a href="{{ url_for('submit_survey', id=post.id) }}"><i class="gift icon"></i>おすすめ返礼品</a>
+                            {% endif %}
                         </span>
                         <span>
                             <a href="{{ url_for('edit', id=post.id, success=success) }}"><i class="edit icon"></i>編集</a>
@@ -76,11 +81,11 @@
             <!-- <div class="centered-contents">
                 <div id="pagination" class="ui pagination menu">
                     <a class="item" id="prev-page"><i class="angle double left icon"></i></a> -->
-                    <!-- ページ番号はここに追加されます -->
-                    <!-- <a class="item" id="next-page"><i class="angle double right icon"></i></a>
+            <!-- ページ番号はここに追加されます -->
+            <!-- <a class="item" id="next-page"><i class="angle double right icon"></i></a>
                 </div>
             </div> -->
-            
+
         </div>
     </main>
 
@@ -133,7 +138,7 @@
             });
         });
     </script> -->
-    
+
     <!-- <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.0/dist/semantic.min.js"></script> -->
 </body>
 
