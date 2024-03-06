@@ -3,13 +3,17 @@
 
 <head>
     <meta charset="UTF-8">
+    <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style-common.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style-success.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.0/dist/semantic.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://js.stripe.comz/v3/"></script>
+    <!-- <script src="https://js.stripe.comz/v3/"></script> -->
     <script src="{{ url_for('static', filename='javascript/hamburger.js') }}"></script>
-    <title>SUCCESS</title>
+    <title>支払い完了</title>
 </head>
 
 <body>
@@ -19,17 +23,17 @@
                 <img src="{{ url_for('static', filename='images/logo.png') }}">
             </a>
             {% if current_user.is_authenticated %}
-                <a class="item" href="{{ url_for('index') }}">トップページ</a>
-                <a class="item" href="{{ url_for('preview_page') }}">プレゼント登録</a>
-                <a class="item" href="{{ url_for('list') }}">マイリスト</a>
-                <div class="right menu">
-                    <a class="ui item" href="{{ url_for('logout') }}">ログアウト</a>
-                </div>
+            <a class="item" href="{{ url_for('index') }}">トップページ</a>
+            <a class="item" href="{{ url_for('preview') }}">プレゼント登録</a>
+            <a class="item" href="{{ url_for('list', success=success) }}">マイリスト</a>
+            <div class="right menu">
+                <a class="ui item" href="{{ url_for('logout') }}">ログアウト</a>
+            </div>
             {% else %}
-                <div class="right menu">
-                    <a class="ui item" href="{{ url_for('register') }}">新規会員登録</a>
-                    <a class="ui item" href="{{ url_for('login') }}">ログイン</a>
-                </div>
+            <div class="right menu">
+                <a class="ui item" href="{{ url_for('register') }}">新規会員登録</a>
+                <a class="ui item" href="{{ url_for('login') }}">ログイン</a>
+            </div>
             {% endif %}
             <div class="hamburger">
                 <i id="hamburger-toggle" class="icon bars"></i>
@@ -38,13 +42,23 @@
     </header>
 
     <main class="container">
-        <h1>ご購入ありがとうございます</h>
-        <h3>以下のフォームへご回答お願いします<br>メールアドレスは正しく入力してください</h3>
-        <form method="post" action="/send">
-            <input type="text" name="name" placeholder="Name">
-            <input type="email" name="email" placeholder="Email">
-            <input type="submit" value="Send">
-        </form>
+        <div class="inner">
+            <h1 class="title">ご購入ありがとうございます！</h1>
+                <h3>以下のフォームへご回答お願いします．メールアドレスは正しく入力してください．</h3>
+                    <form method="post" action="/send">
+                        <div class="ui form">
+                            <div class="field">
+                                <label>ユーザ名</label>
+                                <input type="text" name="name" placeholder="ユーザ名">
+                            </div>
+                            <div class="field">
+                                <label>パスワード</label>
+                                <input type="email" name="email" placeholder="メールアドレス">
+                            </div>
+                            </div>
+                            <div class="btn"><button class="ui fluid large teal submit button submit_button" type="submit">登録</button></div>
+                    </form>
+        </div>
     </main>
     
     <footer class="footer">
