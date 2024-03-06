@@ -177,7 +177,7 @@ def submit_survey(id):
             db.session.add(survey_data)
             db.session.commit()
 
-            return redirect(url_for('gift_return'))
+            return redirect(url_for('gift_return', id=id, success=success_param))
     else:
         return render_template('question.html', success=success_param, id=id)
 
