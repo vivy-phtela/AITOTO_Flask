@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" type="text/css"
         href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style-common.css') }}">
@@ -44,49 +45,66 @@
         <div class="ui ccontainer">
             <h2 id="editor-title" class="ui center aligned">おすすめプレゼントはこちら</h2>
             <div class="ui form">
-                <div class="flex" id="product-display">
-                    <div class="image">
-                        <img src="{{ df[0].image }}" class="preview" id="product-image">
+                <form method="POST" enctype="multipart/form-data" action="">
+                    <div class="flex">
+                        <div class="image">
+                            <img src="/static/images/present1.jpeg" class="preview">
+                        </div>
+                        <div class="content">
+                            <h2>agnès b.のショルダーバッグ</h3>
+                            <div class="description">
+                                <!-- ボタンでリンクに繋がる -->
+                                <a href="https://www.agnesb.co.jp/f/dsg-2610773" class="ui orange large button" target="_blank">購入はこちらから</a>
+                            </div>
+
+                            <div class="button_flex">
+                                <button id="submit-button" class="ui fluid large teal submit button"
+                                    type="submit">このプレゼントをセーブする</button>
+                                <a href="{{ url_for('gift_return') }}" class="negative ui button" target="_blank">もう一度考えてもらう</a>
+
+                            </div>
+                            <div class="button_back"><a href="{{ url_for('submit_survey') }}"
+                                    class="ui button large submit button">プレゼント提案書を見直す</a>
+                            </div>
+                            <div class="button_back"><a href="{{ url_for('index') }}"
+                                class="ui button large submit button">HOMEへ戻る</a>
+                        </div>
+                        </div>
                     </div>
-                    <div class="content">
-                        <h2 id="product-name">{{ df[0].product_name }}</h2>
-                        <div class="description">
-                            <a href="{{ df[0].link }}" class="ui orange large button" target="_blank" id="product-link">購入はこちらから</a>
-                        </div>
-                        <div class="button_flex">
-                            <button id="submit-button" class="ui fluid large teal submit button"
-                                type="submit">このプレゼントをセーブする</button>
-                            <button class="negative ui button" id="next-button">次へ</button>
-                        </div>
-                        <div class="button_back">
-                            <a href="/submit_survey" class="ui button large submit button">アンケートへ戻る</a>
-                            <a href="/" class="ui button large submit button">トップページへ戻る</a>
-                        </div>
-                    </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
-
     <footer class="footer">
+        <!-- <div class="container"> -->
         <p>&copy; 2024 AITOTO. All rights reserved.</p>
+        <!-- </div> -->
     </footer>
 
     <script>
-        $(document).ready(function() {
-            var currentIndex = 0;
-            $('#next-button').click(function() {
-                currentIndex += 1;
-                $.getJSON('/get_item/' + currentIndex, function(df) {
-                    $('#product-image').attr('src', df.image);
-                    $('#product-name').text(df.product_name);
-                    $('#product-link').attr('href', df.link);
-                });
-            });
-        });
-    </script>
-    
+        window.onload = function () {
+            var fileInput = document.getElementById('fileInput');
+            var previewImage = document.getElementById('previewImage');
+            var deleteButton = document.getElementById('delete-button');
 
+            fileInput.addEventListener('change', function (event) {
+                var file = event.target.files[0];
+
+                if (file) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        previewImage.src = e.target.result;
+                        previewImage.style.display = 'block'; // プレビュー画像を表示
+                        document.querySelector('.image img.preview').style.display = 'none'; // 元の画像を非表示
+                    };
+                    reader.readAsDataURL(file);
+                }
+                // フォームの submit を防ぐ
+                event.preventDefault();
+            });
+
+        };
+    </script>
 </body>
 
 </html>
