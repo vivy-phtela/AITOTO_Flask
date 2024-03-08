@@ -66,7 +66,8 @@
                     <div class="extra content">
                         <span class="right floated">
                             {% if post.saved %}
-                            <a href="{{ url_for('gift_return', id=post.id) }}"><i class="gift icon"></i>おすすめ返礼品</a>
+                            <!-- dfも必要だと思う多分 -->
+                            <a href="{{ url_for('gift_return', id=post.id, df=df) }}"><i class="gift icon"></i>おすすめ返礼品</a>
                             {% else %}
                             <a href="{{ url_for('submit_survey', id=post.id) }}"><i class="gift icon"></i>おすすめ返礼品</a>
                             {% endif %}

@@ -354,7 +354,7 @@ def gift_return(id):
         # POST メソッドでの処理
         post.saved = True  # saved を True に設定
         db.session.commit()  # データベースに保存
-        return redirect(url_for('list', success=success_param, df=df, id=id))
+        return redirect(url_for('list', success=success_param, id=id))
     else:
         # GET メソッドでの処理
         # genderの値に基づいてdfからデータをフィルタリング
