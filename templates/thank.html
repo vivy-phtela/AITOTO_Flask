@@ -3,26 +3,51 @@
 
 <head>
     <meta charset="UTF-8">
+    <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="static/css/style-thank.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style-common.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style-thank.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.0/dist/semantic.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://js.stripe.comz/v3/"></script>
-    <script src="/static/javascript/hamburger.js"></script>
+    <!-- <script src="https://js.stripe.comz/v3/"></script> -->
+    <script src="{{ url_for('static', filename='javascript/hamburger.js') }}"></script>
     <title>SUCCESS</title>
 </head>
 
 <body>
-    <header class="container flex">
-        <a href="/" class="logo">
-            <img src="../static/images/logo.png">
-        </a>
+    <header>
+        <div class="ui secondary menu stackable header-sticky">
+            <a href="{{ url_for('index') }}" class="logo">
+                <img src="{{ url_for('static', filename='images/logo.png') }}">
+            </a>
+            {% if current_user.is_authenticated %}
+            <a class="item" href="{{ url_for('index') }}">トップページ</a>
+            <a class="item" href="{{ url_for('preview') }}">プレゼント登録</a>
+            <a class="item" href="{{ url_for('list', success=success) }}">マイリスト</a>
+            <div class="right menu">
+                <a class="ui item" href="{{ url_for('logout') }}">ログアウト</a>
+            </div>
+            {% else %}
+            <div class="right menu">
+                <a class="ui item" href="{{ url_for('register') }}">新規会員登録</a>
+                <a class="ui item" href="{{ url_for('login') }}">ログイン</a>
+            </div>
+            {% endif %}
+            <div class="hamburger">
+                <i id="hamburger-toggle" class="icon bars"></i>
+            </div>
+        </div>
     </header>
 
     <main class="container">
-        <h2>ご入力ありがとうございます</h2>
-        <p>24時間以内にご入力いただいたメールアドレスにご案内をお送りします</p>
-        <a href="{{ url_for('index') }}">ホームに戻る</a>
+        <div class="inner">
+            <h1>ありがとうございます！</h1>
+            <p>24時間以内にご入力いただいたメールアドレスに今後の流れをお送りします</p>
+            <a href="{{ url_for('index') }}">トップへ戻る</a>
+        </div>
+
     </main>
 
     <footer class="footer">

@@ -18,17 +18,18 @@ body {
     align-items: center;
 }
 
-/* ヘッダー */
-header {
-    padding: 10px 5px;
-    color: #000000;
+.inner {
+    text-align: center;
+    margin-top: 200px;
 }
-.logo img {
-    width: 220px;
-    height: 150px;
+.inner h1 {
+    font-weight: 700;
+    font-size: 50px;
+    margin-bottom: 30px;
 }
 
-/* メイン */
-main h2 {
-    margin: 0 auto;
+.inner p {
+    font-weight: 200;
+    font-size: 15px;
+    margin-bottom: 50px;
 }
