@@ -152,16 +152,16 @@ def submit_survey(id):
             flash('必須項目を入力してください。', 'error')
             return redirect(url_for('submit_survey', id=id))
         else:
-            # データをセッションに保存
-            session['survey_result'] = {
-                'recipient_name': recipient_name,
-                'gender': gender,
-                'age': age,
-                'relationship': relationship,
-                'occasion': occasion,
-                'budget': budget,
-                'additional_notes': additional_notes
-            }
+            # # データをセッションに保存
+            # session['survey_result'] = {
+            #     'recipient_name': recipient_name,
+            #     'gender': gender,
+            #     'age': age,
+            #     'relationship': relationship,
+            #     'occasion': occasion,
+            #     'budget': budget,
+            #     'additional_notes': additional_notes
+            # }
             # データベースに送信
             survey_data = SurveyData(
                 post_id=id,  # 投稿の ID を追加
@@ -286,8 +286,10 @@ def list():
     user_id = current_user.id
     # ユーザーIDに基づいて投稿をフィルタリング
     posts = Database.query.filter_by(user_id=user_id).all()
-    success_param = random.randint(1, 10000)
-    return render_template('list.html', posts=posts, success=success_param)
+    # success_param = random.randint(1, 10000)
+    # currentIndexを取得
+    currentIndex = request.args.get('currentIndex')
+    return render_template('list.html', posts=posts, success=success_param, currentIndex=currentIndex)
 
 @app.route('/edit/<int:id>', methods=['GET', 'POST'])
 @login_required
@@ -341,24 +343,27 @@ def delete_entry(id):
         db.session.commit()
     # success_param = random.randint(1, 10000)
 
-    return redirect('/list')
+    return redirect(url_for('list', success=success_param))
 
 @app.route('/gift_return/<int:id>', methods=['GET', 'POST'])
 @login_required
 def gift_return(id):
     generate_success_param()
+    currentIndex = request.args.get('currentIndex', default=0, type=int)
     post = Database.query.get_or_404(id)
-    # セッションからデータを取得
-    survey_result = session.get('survey_result', {})
+    # データベースからデータを取得
+    survey_data = SurveyData.query.filter_by(post_id=id).first()
     if request.method == 'POST':
         # POST メソッドでの処理
+        currentIndex = request.args.get('currentIndex', default=0, type=int)
+        print(currentIndex)
         post.saved = True  # saved を True に設定
         db.session.commit()  # データベースに保存
-        return redirect(url_for('list', success=success_param, id=id))
+        return redirect(url_for('list', success=success_param, id=id, currentIndex=currentIndex))
     else:
         # GET メソッドでの処理
         # genderの値に基づいてdfからデータをフィルタリング
-        if survey_result.get('gender') == 'female':
+        if survey_data.gender == 'female':
             df2 = [item for item in df if item['gender'] == 1]
             return render_template('gift_return.html', success=success_param, df=df2, id=id)
         else: 

@@ -77,18 +77,29 @@
     </footer>
 
     <script>
-        $(document).ready(function () {
-            var currentIndex = 0;
-            $('#next-button').click(function () {
-                currentIndex += 1;
-                $.getJSON('/get_item/' + currentIndex, function (df) {
-                    $('#product-image').attr('src', df.image);
-                    $('#product-name').text(df.product_name);
-                    $('#product-link').attr('href', df.link);
-                });
-            });
+    $(document).ready(function () {
+        var currentIndex = 0;
+        
+        $('#next-button').click(function () {
+            currentIndex += 1;
+            updateProduct(currentIndex);
         });
-    </script>
+
+        $('#save-button').click(function () {
+            // currentIndexをサーバーに送信する
+            
+        });
+
+        function updateProduct(currentIndex) {
+            $.getJSON('/get_item/' + currentIndex, function (df) {
+                $('#product-image').attr('src', df.image);
+                $('#product-name').text(df.product_name);
+                $('#product-link').attr('href', df.link);
+            });
+        }
+    });
+</script>
+
 
 
 </body>
