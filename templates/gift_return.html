@@ -42,23 +42,17 @@
 <body>
     <div class="form-container">
         <div class="ui ccontainer">
-            <h2 id="editor-title" class="ui center aligned">おすすめプレゼントはこちら</h2>
+            <h1 id="editor-title" class="ui center aligned title">おすすめプレゼントはこちら！！！</h1>
             <div class="ui form">
                 <div class="flex" id="product-display">
                     <div class="image">
                         <img src="{{ df[0].image }}" class="preview" id="product-image">
                     </div>
                     <div class="content">
-                        <h2 id="product-name">{{ df[0].product_name }}</h2>
-                        <div class="description">
+                        <h1 id="product-name" class="title">{{ df[0].product_name }}</h1>
+                        <div class="button_flex">
                             <a href="{{ df[0].link }}" class="ui orange large button" target="_blank"
                                 id="product-link">購入はこちらから</a>
-                        </div>
-                        <div class="button_flex">
-                            <form id="registrationForm" method="POST" enctype="multipart/form-data">
-                                <button id="save-button" class="ui fluid large teal submit button" type="submit"
-                                    name="action" value="save">このプレゼントをセーブする</button>
-                            </form>
                             <button class="negative ui button" id="next-button">次へ</button>
                         </div>
                         <div class="button_back">
